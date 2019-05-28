@@ -8,9 +8,9 @@ import { shallow } from 'enzyme';
 
 configure({ adapter: new Adapter() });
 
-describe('First React component test with Enzyme', () => {
+describe('When using enzyme', () => {
   it('renders without crashing', () => {
-     shallow(<App />);
+      shallow(<App />);
    });
 });
 
