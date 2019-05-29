@@ -1,3 +1,5 @@
+//This file contains an example of how we might best structure our e2e tests for readability
+
 import { Selector } from "testcafe";
 
 fixture `Getting Started`
