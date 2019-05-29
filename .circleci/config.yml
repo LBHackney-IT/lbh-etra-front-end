@@ -1,14 +1,11 @@
-
 version: 2.1
-
-executors:
-  node:
+jobs:
+  build: working_directory: ~/lbh-etra-front-end
     docker:
       - image: circleci/node:10.12.0
-
-jobs:
   test:
-    executor: node
+    docker:
+      - image: circleci/node:10.12.0
     steps:
       - checkout
       - restore_cache:
@@ -22,3 +19,12 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+
