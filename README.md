@@ -26,7 +26,7 @@ You can run these tests by running the application locally in development mode a
 make test-e2e
 ```
 
-### Storybook
+### [Storybook](https://storybook.js.org/)
 Storybook can be used to view components in isolation. To run storybook, use:
 ```
 make storybook
