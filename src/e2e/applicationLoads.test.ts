@@ -1,10 +1,13 @@
 import getBaseUrl from './url-helper';
-import { Selector } from "testcafe";
+import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
 fixture `Application Loads`
     .page(getBaseUrl())
+    .beforeEach(async () => {
+        await waitForReact();
+    });
 
-test("Displays react welcome message", async t => {
-    await t.expect(Selector("#react-body").innerText)
-    .eql("Edit src/App.tsx and save to reload.");
+test("App is rendered", async t => {
+    await t.expect(ReactSelector("App").exists)
+    .eql(true);
 });
