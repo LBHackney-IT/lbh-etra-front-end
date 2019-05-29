@@ -1,12 +1,14 @@
 version: 2.1
-jobs:
+
+executors:
+  node:
+    docker:
+      - image: circleci/node:10.12.0
+
+job:
   build: 
     working_directory: ~/lbh-etra-front-end
-    docker:
-      - image: circleci/node:10.12.0
-  test:
-    docker:
-      - image: circleci/node:10.12.0
+    executor: node
     steps:
       - checkout
       - restore_cache:
@@ -25,7 +27,4 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build
 
