@@ -37,7 +37,7 @@ To [add stories](https://storybook.js.org/docs/basics/writing-stories/) for a ne
 ```
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import MyComponent from './MyComponent';
+import MyComponent from './index';
 
 storiesOf('MyComponent', module)
   .add("opens correctly", () => (
