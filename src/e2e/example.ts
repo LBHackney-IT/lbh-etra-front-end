@@ -3,15 +3,22 @@ import { Selector } from "testcafe";
 fixture `Getting Started`
     .page `http://devexpress.github.io/testcafe/example`;
 
-test('Given developer name of John Smith, when I click submit, correct thank you message is displayed', async t => {
+test("Given developer name of John Smith, when I click submit, correct thank you message is displayed", async t => {
     const developerName = "John Smith";
-    await t
-    .typeText("#developer-name", developerName)
-    .click("#submit-button")
-    .expect(Selector("#article-header").innerText)
-    .eql(ExpectedThankYouMessage(developerName));
+    await GivenDeveloperName(t, developerName);
+    await WhenISubmit(t);
+    await ThankYouMessageIsDisplayed(t, developerName);
 });
 
-function ExpectedThankYouMessage(developerName: string) : string {
-    return `Thank you, ${developerName}!`;
+async function GivenDeveloperName(t : TestController, developerName : string) {
+    await t.typeText("#developer-name", developerName);
+}
+
+async function WhenISubmit(t: TestController){
+    await t.click("#submit-button");
+}
+
+async function ThankYouMessageIsDisplayed(t : TestController, developerName : string){
+    await t.expect(Selector("#article-header").innerText)
+        .eql(`Thank you, ${developerName}!`);
 }
