@@ -5,8 +5,13 @@ executors:
     docker:
       - image: circleci/node:10.12.0
 
+<<<<<<< HEAD
 jobs:
   build_and_test: 
+=======
+job:
+  build: 
+>>>>>>> parent of 437fd42... fix typo
     working_directory: ~/lbh-etra-front-end
     executor: node
     steps:
