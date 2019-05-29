@@ -6,7 +6,7 @@ executors:
       - image: circleci/node:10.12.0
 
 jobs:
-  build: 
+  build_and_test: 
     working_directory: ~/lbh-etra-front-end
     executor: node
     steps:
