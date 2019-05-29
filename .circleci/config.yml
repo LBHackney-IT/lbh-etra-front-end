@@ -1,6 +1,7 @@
 version: 2.1
 jobs:
-  build: working_directory: ~/lbh-etra-front-end
+  build: 
+    working_directory: ~/lbh-etra-front-end
     docker:
       - image: circleci/node:10.12.0
   test:
