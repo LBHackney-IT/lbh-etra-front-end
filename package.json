@@ -19,6 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test-e2e": "testcafe chrome src/e2e/",
+    "test-e2e-headless": "testcafe chrome:headless src/e2e/",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
