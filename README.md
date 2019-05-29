@@ -16,3 +16,12 @@ make serve
 ```
 make test
 ```
+
+### [Run e2e browser tests](https://devexpress.github.io/testcafe/documentation/using-testcafe/)
+This project uses testcafe for e2e browser tests. It also uses an extension of testcafe called [testcafe-react-selectors](https://github.com/DevExpress/testcafe-react-selectors) that allows you to select react components in your browser tests.
+
+You can run these tests by running the application locally in development mode and then running:
+
+```
+make test-e2e
+```
