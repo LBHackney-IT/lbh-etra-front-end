@@ -20,6 +20,7 @@
     "test": "react-scripts test",
     "test-e2e": "testcafe chrome src/e2e/",
     "test-e2e-headless": "testcafe chrome:headless src/e2e/",
+    "storybook": "start-storybook",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@storybook/react": "^5.0.11",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "testcafe": "^1.2.0",
