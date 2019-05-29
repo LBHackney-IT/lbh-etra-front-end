@@ -5,7 +5,7 @@ executors:
     docker:
       - image: circleci/node:10.12.0
 
-job:
+jobs:
   build: 
     working_directory: ~/lbh-etra-front-end
     executor: node
