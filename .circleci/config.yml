@@ -22,10 +22,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
-      - run: npm start
       - run: 
           name: Run TestCafe Tests
-          command: npm run test-e2e
+          command: npm run test-e2e --app 'npm start' --app-init-delay 10000
 workflows:
   version: 2
   build_and_test:
