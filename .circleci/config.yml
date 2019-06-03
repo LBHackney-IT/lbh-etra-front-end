@@ -24,7 +24,7 @@ jobs:
       - run: npm test
       - run: 
         name: Run TestCafe Tests
-        command:
+        command: |
           npm start
           npm run test-e2e
 workflows:
