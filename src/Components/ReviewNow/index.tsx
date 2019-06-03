@@ -24,7 +24,6 @@ import './index.css';
     };
 
     handleReviewNow(){
-        debugger;
         this.setState({isReviewingNow:true});
     }
 
