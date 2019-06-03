@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Meeting } from './Meeting'
+import { Meeting } from './Components/Meeting'
 
 const App: React.FC = () => {
   return (
