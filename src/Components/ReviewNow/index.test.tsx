@@ -11,15 +11,14 @@ it('Meeting component loads', () => {
    shallow(<ReviewNow />);
 });
 
-describe('When we go to click "Review now with TRA""', () => {
+describe('When we go to click "Review now with TRA"', ()  => {
     it('Then the save "Review now with TRA" button is NOT displayed', () => {
-        
-        const wrapper = shallow(<ReviewNow />);; 
-        let button = wrapper.find('#review-now')
+        const wrapper = shallow(<ReviewNow isReviewingNow={false} />);; 
+        let button = wrapper.find('#review-now');
         button.simulate('click');
+
         //button should be hidden
-        button = wrapper.find('#review-now')
-        expect(button.isEmpty()).toBe(true);
-          
+        var hiddenButton = wrapper.find('#review-now');
+        expect(hiddenButton.exists()).toBe(false); 
     });
 });

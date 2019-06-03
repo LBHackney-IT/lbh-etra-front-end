@@ -31,16 +31,3 @@ describe('When we go to render the meeting', () => {
         expect(element.text()).toBe('Ready for review by TRA representative?');
     });
 });
-
-describe('When we go to click "Review now with TRA""', () => {
-    it('Then the save "Review now with TRA" button is NOT displayed', () => {
-        
-        const wrapper = shallow(<Meeting />);; 
-        let button = wrapper.find('#review-now')
-        button.simulate('click');
-        //button should be hidden
-        button = wrapper.find('#review-now')
-        expect(button.isEmpty()).toBe(true);
-          
-    });
-});
