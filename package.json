@@ -20,8 +20,9 @@
     "test": "react-scripts test",
     "test-e2e": "testcafe chrome src/e2e/",
     "test-e2e-headless": "testcafe chrome:headless src/e2e/ --app 'npm start' --app-init-delay 10000",
-    "storybook": "start-storybook",
-    "eject": "react-scripts eject"
+    "storybook": "start-storybook -p 9009 -s public",
+    "eject": "react-scripts eject",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,10 +40,15 @@
     ]
   },
   "devDependencies": {
-    "@storybook/react": "^5.0.11",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "testcafe": "^1.2.0",
-    "testcafe-react-selectors": "^3.1.0"
+    "testcafe-react-selectors": "^3.1.0",
+    "@storybook/react": "^5.0.11",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@babel/core": "^7.4.5",
+    "babel-loader": "^8.0.6"
   }
 }
