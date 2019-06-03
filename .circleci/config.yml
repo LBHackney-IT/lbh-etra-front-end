@@ -3,7 +3,7 @@ version: 2.1
 executors:
   node:
     docker:
-      - image: circleci/node:10.12.0
+      - image: circleci/node:10.16-browsers
 
 jobs:
   build: 
@@ -22,6 +22,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
+      - run: 
+          name: Run TestCafe Tests
+          command: npm run test-e2e-headless
 workflows:
   version: 2
   build_and_test:
