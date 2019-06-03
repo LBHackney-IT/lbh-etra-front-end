@@ -24,7 +24,7 @@ jobs:
       - run: npm test
       - run: 
           name: Run TestCafe Tests
-          command: npm run test-e2e --app 'npm start' --app-init-delay 20000
+          command: npm run test-e2e --app "npm start" --app-init-delay 15000
 workflows:
   version: 2
   build_and_test:
