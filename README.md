@@ -32,7 +32,7 @@ Storybook can be used to view components in isolation. To run storybook, use:
 make storybook
 ```
 
-To [add stories](https://storybook.js.org/docs/basics/writing-stories/) for a new component, add a new file alongside your component's `index.tsx` called `index.stories.js`. In that file you can define as many stories as you need for that component. It will look something like this:
+To [add stories](https://storybook.js.org/docs/basics/writing-stories/) for a new component, add a new file alongside your component's `index.tsx` called `index.stories.tsx`. In that file you can define as many stories as you need for that component. It will look something like this:
 
 ```
 import React from 'react';
