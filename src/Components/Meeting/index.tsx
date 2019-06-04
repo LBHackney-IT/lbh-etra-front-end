@@ -4,11 +4,15 @@ import './index.css';
 import ReviewNow from '../ReviewNow';
 
   export interface IMeetingProps{
-
+    issues: Array<IIssue>,
+    isReviewingNow:boolean,
+    isAttemptingToSave:false
   }
 
   export interface IMeetingState{
     issues: Array<IIssue>,
+    isReviewingNow:boolean,
+    isAttemptingToSave:false
   }
 
   export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
@@ -18,21 +22,27 @@ import ReviewNow from '../ReviewNow';
     }
 
     public static defaultProps: Partial<IMeetingProps> = {
-      
+      issues: Array<IIssue>(),
+      isReviewingNow:false,
+      isAttemptingToSave:false
     };
 
     public state: IMeetingState = {
-      issues: Array<IIssue>()
+      issues: Array<IIssue>(),
+      isReviewingNow:false,
+      isAttemptingToSave:false
     };
+
+    handleReviewNow(){
+      this.setState({isReviewingNow:true});
+    }
   
     render() {
       return (
         <div>
-          <div className="ready-for-review-by">
-            Ready for review by TRA representative?
-          </div>
+
           <div>
-            <ReviewNow isReviewingNow={false} />
+            <ReviewNow isReviewingNow={this.state.isReviewingNow} isAttemptingToSave={this.state.isAttemptingToSave} handleIsReviewingNow={this.handleReviewNow} />
           </div>
           <div>
             <button className="button" id="review-later">TRA representative to review later</button>

@@ -13,17 +13,13 @@ it('Confirmation component loads', () => {
 
 describe('Given that start a new meeting', () => {
     describe('When we go to save the meeting', () => {
-
-        
         it('Then the confirmation page is shown', () => {
             
-        
+            const wrapper = shallow(<Confirmation />);
+            const div = wrapper.find('#issue-confirmed')
+            expect(div.text()).toBe('Issue Confirmed'); 
 
 
          });
       });
   });
-
-  function GivenThatWeStartANewMeeting(){
-
-  }

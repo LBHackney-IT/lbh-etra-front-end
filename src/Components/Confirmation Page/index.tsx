@@ -28,7 +28,8 @@ import React from 'react';
     render() {
       return (
         <div>
-            {this.props.TRAName} ETRA meeting {this.props.DateOfMeeting.toLocaleDateString('en-GB')}
+            <div id="meeting-name-date">{this.props.TRAName} ETRA meeting {this.props.DateOfMeeting.toLocaleDateString('en-GB')}</div>
+            <div id="issue-confirmed">Issue Confirmed</div>
         </div>
       );
     }

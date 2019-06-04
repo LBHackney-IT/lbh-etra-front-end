@@ -32,8 +32,40 @@ describe('When we go to click "Review now with TRA"', ()  => {
         expect(element.text()).toBe('Role of TRA representative');
     });
 
-    it('Then the save "Chair" radio button is displayed', () => {
+    it('Then the Chair radio button is displayed', () => {
         const element = wrapper.find('#chair')
-        expect(element.prop("value").toBe('Chair');
+        expect(element.prop('name')).toBe('tra-role');
+    });
+
+    it('Then the Vice Chair radio button is displayed', () => {
+        const element = wrapper.find('#vice-chair')
+        expect(element.prop('name')).toBe('tra-role');
+    });
+
+    it('Then the Secretary radio button is displayed', () => {
+        const element = wrapper.find('#secretary')
+        expect(element.prop('name')).toBe('tra-role');
+    });
+
+    it('Then the Treasurer radio button is displayed', () => {
+        const element = wrapper.find('#treasurer')
+        expect(element.prop('name')).toBe('tra-role');
+    });
+
+    it('Then the Save and email issue list to TRA button is displayed', () => {
+        const element = wrapper.find('#save-meeting')
+        expect(element.text()).toBe('Save and email issue list to TRA');
+    });
+
+    describe('And we go to select a "TRA role from the options"', ()  => {
+        it('Then the Save and email issue list to TRA button is displayed', () => {
+
+            const radio = wrapper.find('#secretary')
+            radio.simulate('click');
+
+            
+            
+        });
+
     });
 });

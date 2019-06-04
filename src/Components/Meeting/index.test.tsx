@@ -25,7 +25,7 @@ describe('When we go to render the meeting', () => {
         expect(button.text()).toBe('TRA representative to review later');  
     });
 
-    it('Then the save "TRA representative to review later" button is displayed', () => {
+    it('Then the save Ready for review by TRA representative?" header is displayed', () => {
         const wrapper = shallow(<Meeting />);; 
         const element = wrapper.find('.ready-for-review-by')
         expect(element.text()).toBe('Ready for review by TRA representative?');
