@@ -37,7 +37,7 @@ import ReviewNow from '../ReviewNow';
           <div>
             <button className="button" id="review-later">TRA representative to review later</button>
           </div>
-            <input type="submit" id="submit-button" value="Save meeting" />
+            
         </div>
       );
     }
