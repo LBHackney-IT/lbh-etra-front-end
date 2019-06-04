@@ -19,7 +19,6 @@ export default class Signature extends Component<ISignatureProps> {
     super(props);
 
     this.sigCanvas = null;
-    this.clearCanvasButtonClicked = this.clearCanvasButtonClicked.bind(this);
   }
 
   public render() {
@@ -45,9 +44,16 @@ export default class Signature extends Component<ISignatureProps> {
       />);
   }
 
-  private clearCanvasButtonClicked() : void {
+  private clearCanvasButtonClicked = () : void => {
     if(this.sigCanvas != null){
       this.sigCanvas.clear();
     }
+  }
+
+  public getBase64String() : string {
+    if(this.sigCanvas != null){
+      return this.sigCanvas.toDataURL();
+    }
+    return "";
   }
 }

@@ -20,6 +20,7 @@ declare module 'react-signature-canvas' {
     }
 
     export default class SignatureCanvas extends React.Component<SignatureCanvasProps> {
-        clear: function();
+        clear: () => void;
+        toDataURL: (mimetype?: string, encoderOptions?: number) => string;
     }
 }
