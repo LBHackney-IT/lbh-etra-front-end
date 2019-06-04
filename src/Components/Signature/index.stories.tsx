@@ -11,4 +11,7 @@ storiesOf('Signature', module)
   ))
   .add("displays without clear button", () => (
     <Signature displayClearButton={false} />
+  ))
+  .add("onUpdated callback works", () => (
+    <Signature onUpdated={console.log}/>
   ));

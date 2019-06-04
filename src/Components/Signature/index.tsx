@@ -4,13 +4,15 @@ import './index.css';
 
 interface ISignatureProps {
   height: number,
-  displayClearButton : boolean
+  displayClearButton : boolean,
+  onUpdated: (base64string: string) => void
 }
 
 export default class Signature extends Component<ISignatureProps> {
   static defaultProps = {
     height: 300,
-    displayClearButton: true
+    displayClearButton: true,
+    onUpdated: null
   }
 
   sigCanvas : SignatureCanvas | null;
@@ -21,6 +23,10 @@ export default class Signature extends Component<ISignatureProps> {
     this.sigCanvas = null;
   }
 
+  public componentDidMount(){
+    this.canvasUpdated();
+  }
+
   public render() {
     return (
       <>
@@ -28,6 +34,7 @@ export default class Signature extends Component<ISignatureProps> {
           clearOnResize={false} 
           canvasProps={{height: this.props.height, className: "signature"}}
           ref={(ref) => { this.sigCanvas = ref }}
+          onEnd={this.canvasUpdated}
         />
         {this.props.displayClearButton && this.clearButton()}
       </>
@@ -48,10 +55,18 @@ export default class Signature extends Component<ISignatureProps> {
   private clearCanvasButtonClicked = () : void => {
     if(this.sigCanvas != null){
       this.sigCanvas.clear();
+      this.canvasUpdated();
     }
   }
 
-  public getBase64String() : string {
+  private canvasUpdated = () : void => {
+    const base64string = this.getBase64String();
+    if(this.props.onUpdated != null){
+      this.props.onUpdated(base64string);
+    }
+  }
+
+  private getBase64String() : string {
     if(this.sigCanvas != null){
       return this.sigCanvas.toDataURL();
     }
