@@ -1,0 +1,10 @@
+.signature {
+    box-sizing: border-box;
+    border: solid 2px #0b0c0c;
+    width: 100%;
+}
+
+.clear-button {
+    font-size: 20px;
+    width: 100%;
+}
