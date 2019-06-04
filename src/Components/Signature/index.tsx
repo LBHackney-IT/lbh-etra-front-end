@@ -36,12 +36,13 @@ export default class Signature extends Component<ISignatureProps> {
 
   private clearButton() {
     return(
-      <input
-        type="button" 
-        value="Clear Signature" 
-        onClick={this.clearCanvasButtonClicked} 
-        className="clear-button"
-      />);
+      <div className="button-wrapper">
+        <button
+          onClick={this.clearCanvasButtonClicked} 
+          className="button-rectangle">
+          <span className="button-text">Clear Signature</span>
+        </button>
+      </div>);
   }
 
   private clearCanvasButtonClicked = () : void => {
