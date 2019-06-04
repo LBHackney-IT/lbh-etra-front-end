@@ -24,7 +24,7 @@ export default class Signature extends Component<ISignatureProps> {
   }
 
   public componentDidMount(){
-    this.canvasUpdated();
+    this.onCanvasUpdated();
   }
 
   public render() {
@@ -34,32 +34,32 @@ export default class Signature extends Component<ISignatureProps> {
           clearOnResize={false} 
           canvasProps={{height: this.props.height, className: "signature"}}
           ref={(ref) => { this.sigCanvas = ref }}
-          onEnd={this.canvasUpdated}
+          onEnd={this.onCanvasUpdated}
         />
-        {this.props.displayClearButton && this.clearButton()}
+        {this.props.displayClearButton && this.renderClearButton()}
       </>
     )
   }
 
-  private clearButton() {
+  private renderClearButton() {
     return(
       <div className="button-wrapper">
         <button
-          onClick={this.clearCanvasButtonClicked} 
+          onClick={this.onClearCanvasButtonClicked} 
           className="button-rectangle">
           <span className="button-text">Clear Signature</span>
         </button>
       </div>);
   }
 
-  private clearCanvasButtonClicked = () : void => {
+  private onClearCanvasButtonClicked = () : void => {
     if(this.sigCanvas != null){
       this.sigCanvas.clear();
-      this.canvasUpdated();
+      this.onCanvasUpdated();
     }
   }
 
-  private canvasUpdated = () : void => {
+  private onCanvasUpdated = () : void => {
     const base64string = this.getBase64String();
     if(this.props.onUpdated != null){
       this.props.onUpdated(base64string);
