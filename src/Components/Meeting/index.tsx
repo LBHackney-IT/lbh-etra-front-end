@@ -3,7 +3,9 @@ import { IIssue } from '../Issues';
 import './index.css';
 import ReviewNow from '../ReviewNow';
 
-  export interface IMeetingProps{
+  export interface IMeetingProps {
+    traName: string,
+    dateOfMeeting: Date,
     issues: Array<IIssue>,
     isReviewingNow:boolean,
     isAttemptingToSave:boolean
@@ -27,6 +29,7 @@ import ReviewNow from '../ReviewNow';
     }
 
     public static defaultProps: Partial<IMeetingProps> = {
+      dateOfMeeting: new Date(),
       issues: Array<IIssue>(),
       isReviewingNow:false,
       isAttemptingToSave:false
@@ -35,10 +38,17 @@ import ReviewNow from '../ReviewNow';
     handleReviewNow(){
       this.setState({isReviewingNow:true});
     }
+
+    getMeetingDateString = () : string => {
+      const date = this.props.dateOfMeeting;
+      return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+      //return this.props.dateOfMeeting.toLocaleDateString("en-GB");
+    }
   
     render() {
       return (
         <div>
+          <h1>{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
           <div>
             <ReviewNow 
               isReviewingNow={this.state.isReviewingNow} 
