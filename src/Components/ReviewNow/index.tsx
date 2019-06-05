@@ -32,7 +32,7 @@ import {IIssue} from '../Issues'
         issues:Array<IIssue>()
     };
 
-    handleIsReviewingNow(){
+    handleIsReviewingNow = () => {
         this.setState({isReviewingNow:true});
     }
 
@@ -51,7 +51,7 @@ import {IIssue} from '../Issues'
         return (
             <div>
                 <div className="ready-for-review-by">Ready for review by TRA representative?</div>
-                <button className="button" id="review-now" onClick={this.handleIsReviewingNow.bind(this)}>Review now with TRA</button>
+                <button className="button" id="review-now" onClick={this.handleIsReviewingNow}>Review now with TRA</button>
             </div>
         ); 
     }
