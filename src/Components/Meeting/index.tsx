@@ -39,12 +39,10 @@ import ReviewNow from '../ReviewNow';
     render() {
       return (
         <div>
-
           <div>
             <ReviewNow 
               isReviewingNow={this.state.isReviewingNow} 
               isAttemptingToSave={this.state.isAttemptingToSave} 
-              handleIsReviewingNow={this.handleReviewNow} 
               issues={this.state.issues}
               />
           </div>
