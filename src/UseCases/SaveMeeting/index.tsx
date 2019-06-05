@@ -2,13 +2,16 @@ import React from 'react';
 import { IIssue } from '../../Components/Issues';
 
 export interface ISaveMeetingInputModel{
-    issues:Array<IIssue>
+    issues:Array<IIssue>,
+    signatureBase64: string
 }
 
 export class SaveMeetingInputModel implements ISaveMeetingInputModel{
     public issues:Array<IIssue>;
-    constructor(issues: Array<IIssue>){
+    public signatureBase64: string;
+    constructor(issues: Array<IIssue>, signatureBase64: string){
         this.issues = issues;
+        this.signatureBase64 = signatureBase64;
     }
 }
 

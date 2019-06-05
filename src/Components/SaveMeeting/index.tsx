@@ -8,12 +8,12 @@ import {SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel } from '.
     isAttemptingToSave:boolean,
     isSaveConfirmed:boolean,
     issues:Array<IIssue>,
+    signature: string;
   }
 
   export interface ISaveMeetingState{
     isAttemptingToSave:boolean,
     isSaveConfirmed:boolean,
-    issues:Array<IIssue>,
   }
 
   export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
@@ -21,8 +21,7 @@ import {SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel } from '.
       super(props);
       this.state = {
         isAttemptingToSave : props.isAttemptingToSave,
-        isSaveConfirmed:props.isSaveConfirmed,
-        issues:props.issues,
+        isSaveConfirmed:props.isSaveConfirmed
       }
     }
 
@@ -35,7 +34,7 @@ import {SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel } from '.
     handleSaveMeeting(){
       this.setState({isAttemptingToSave:true});
       let saveMeetingUseCase = new SaveMeetingUseCase();
-      let outputModel = saveMeetingUseCase.Execute(new SaveMeetingInputModel(this.state.issues));
+      let outputModel = saveMeetingUseCase.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature));
       this.setState({isAttemptingToSave:false, isSaveConfirmed : outputModel.successful});
     }
 
@@ -71,7 +70,7 @@ import {SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel } from '.
     private renderShowConfirmation(){
       return (
         <div>
-          <Confirmation  />
+          <Confirmation SignatureImage={this.props.signature}  />
         </div>
       ); 
     }
