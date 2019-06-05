@@ -14,7 +14,7 @@ it('Meeting component loads', () => {
 
 describe('When we go to render the meeting', () => {
     it('Then the save "Review now with TRA" button is displayed', () => {
-        const wrapper = shallow(<Meeting />);; 
+        const wrapper = shallow(<Meeting />); 
         const button = wrapper.find('#review-now')
         expect(button.text()).toBe('Review now with TRA'); 
     });

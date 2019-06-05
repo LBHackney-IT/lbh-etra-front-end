@@ -13,13 +13,39 @@ it('Confirmation component loads', () => {
 
 describe('Given that start a new meeting', () => {
     describe('When we go to save the meeting', () => {
+        const wrapper = shallow(<Confirmation />);
+
         it('Then the confirmation page is shown', () => {
-            
             const wrapper = shallow(<Confirmation />);
-            const div = wrapper.find('#issue-confirmed')
-            expect(div.text()).toBe('Issue Confirmed'); 
+         });
 
+         it('Then the back link is shown', () => {
+            const wrapper = shallow(<Confirmation />);
+            const lnkBack=wrapper.find('#lnkBack')
+            expect(lnkBack.text()).toBe('Back'); 
+         });
 
+         it('Then the "Issues confirmed" header is shown', () => {
+            const wrapper = shallow(<Confirmation />);
+            const divIssueConfirm=wrapper.find('.issue-confirmed')
+            expect(divIssueConfirm.text()).toBe('Issues confirmed'); 
+         });
+
+         it('Then the "Signature of TRA representative" header is shown', () => {
+            const wrapper = shallow(<Confirmation />);
+            const divSignatureHeader=wrapper.find('.signature-header')
+            expect(divSignatureHeader.text()).toBe('Signature of TRA representative'); 
+         });
+
+         it('Then the image control is displayed', () => {
+            const wrapper = shallow(<Confirmation />);
+            expect(wrapper.find("img").prop("alt")).toEqual("signature"); 
+         });
+
+        
+         it('Then the image control is displayed', () => {
+            const wrapper = shallow(<Confirmation />);
+            expect(wrapper.find("img").prop("alt")).toEqual("signature"); 
          });
       });
   });

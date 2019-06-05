@@ -12,7 +12,7 @@ it('Meeting component loads', () => {
 });
 
 describe('When we go to click "Review now with TRA"', ()  => {
-    const wrapper = shallow(<ReviewNow isReviewingNow={false} />);; 
+    const wrapper = shallow(<ReviewNow isReviewingNow={false} />);
     let button = wrapper.find('#review-now');
     button.simulate('click');
 
@@ -62,9 +62,6 @@ describe('When we go to click "Review now with TRA"', ()  => {
 
             const radio = wrapper.find('#secretary')
             radio.simulate('click');
-
-            
-            
         });
 
     });

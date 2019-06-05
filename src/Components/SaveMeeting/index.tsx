@@ -1,43 +1,54 @@
 import React from 'react';
 import './index.css';
 import Confirmation from '../Confirmation Page'
+import {IIssue} from '../Issues'
+import {SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 
   export interface ISaveMeetingProps{
     isAttemptingToSave:boolean,
-    isSaveConfirmed:boolean
+    isSaveConfirmed:boolean,
+    issues:Array<IIssue>,
   }
 
   export interface ISaveMeetingState{
     isAttemptingToSave:boolean,
-    isSaveConfirmed:boolean
+    isSaveConfirmed:boolean,
+    issues:Array<IIssue>,
   }
 
   export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
-
     public constructor(props:ISaveMeetingProps){
       super(props);
+      this.state = {
+        isAttemptingToSave : props.isAttemptingToSave,
+        isSaveConfirmed:props.isSaveConfirmed,
+        issues:props.issues,
+      }
     }
 
     public static defaultProps: Partial<ISaveMeetingProps> = {
-      isAttemptingToSave:false
-    };
-
-    public state: ISaveMeetingState = {
-      isAttemptingToSave : false,
-      isSaveConfirmed:false
+      isAttemptingToSave:false,
+      isSaveConfirmed:false,
+      issues: new Array<IIssue>(),
     };
 
     handleSaveMeeting(){
-        this.setState({isAttemptingToSave:true});
+      this.setState({isAttemptingToSave:true});
+      let saveMeetingUseCase = new SaveMeetingUseCase();
+      let outputModel = saveMeetingUseCase.Execute(new SaveMeetingInputModel(this.state.issues));
+      this.setState({isAttemptingToSave:false, isSaveConfirmed : outputModel.successful});
     }
 
     render() {
-        if(this.state.isAttemptingToSave === false){
-          return this.renderSaveMeeting();
-        }
-        else if(this.state.isSaveConfirmed)
+        if(this.state.isSaveConfirmed)
         {
           return this.renderShowConfirmation(); 
+        }
+        else if(!this.state.isAttemptingToSave){
+          return this.renderSaveMeeting();
+        }
+        else if(this.state.isAttemptingToSave){
+          return this.renderAttemptingToSaveMeeting();
         }
     }
 
@@ -49,10 +60,18 @@ import Confirmation from '../Confirmation Page'
       ); 
     }
 
+    private renderAttemptingToSaveMeeting(){
+      return (
+        <div className="spinner">
+          SPINNER
+        </div>
+      ); 
+    }
+
     private renderShowConfirmation(){
       return (
         <div>
-          <Confirmation />
+          <Confirmation  />
         </div>
       ); 
     }

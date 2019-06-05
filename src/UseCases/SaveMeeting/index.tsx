@@ -1,23 +1,40 @@
 import React from 'react';
+import { IIssue } from '../../Components/Issues';
 
 export interface ISaveMeetingInputModel{
-    
+    issues:Array<IIssue>
+}
+
+export class SaveMeetingInputModel implements ISaveMeetingInputModel{
+    public issues:Array<IIssue>;
+    constructor(issues: Array<IIssue>){
+        this.issues = issues;
+    }
 }
 
 export interface ISaveMeetingOutputModel{
+    successful :boolean
+}
 
+export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
+    public successful:boolean;
+    constructor(successful: boolean){
+        this.successful = successful;
+    }
 }
 
 export interface ISaveMeetingUseCase{
-    SaveMeeting(inputModel:ISaveMeetingInputModel):ISaveMeetingOutputModel
+    Execute(inputModel:ISaveMeetingInputModel):ISaveMeetingOutputModel
 }
 
-export class CreateMeetingUseCase implements ISaveMeetingUseCase{
+export class SaveMeetingUseCase implements ISaveMeetingUseCase{
 
-    SaveMeeting(inputModel: ISaveMeetingInputModel): ISaveMeetingOutputModel {
-        throw new Error("Method not implemented.");
+    Execute(inputModel: ISaveMeetingInputModel): ISaveMeetingOutputModel {
+        return new SaveMeetingOutputModel(true);
     }
 }
+
+
 
 // { 
 //     "estateOfficerId": "1f1bb727-ce1b-e811-8118-70106faa6a31",

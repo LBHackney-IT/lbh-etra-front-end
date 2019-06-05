@@ -29,4 +29,9 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
         const element = wrapper.find('#save-meeting')
         expect(element.exists()).toBe(false);
     });
+
+    it('Then the spinner is displayed', () => {
+        const element = wrapper.find('.spinner')
+        expect(element.exists()).toBe(true);
+    });
 });

@@ -1,51 +1,57 @@
 import React from 'react';
 import './index.css';
 import SaveMeeting from '../SaveMeeting';
+import {IIssue} from '../Issues'
 
   export interface IReviewNowProps{
     isReviewingNow:boolean,
     isAttemptingToSave: boolean,
-    handleIsReviewingNow():void
-
+    issues:Array<IIssue>,
   }
 
   export interface IReviewNowState{
     isReviewingNow:boolean,
-    isAttemptingToSave: boolean
+    isAttemptingToSave: boolean,
+    issues:Array<IIssue>
   }
 
   export class ReviewNow extends React.Component<IReviewNowProps, IReviewNowState> {
 
     public constructor(props:IReviewNowProps){
       super(props);
+      this.state={
+        isReviewingNow : props.isReviewingNow,
+        isAttemptingToSave: props.isAttemptingToSave,
+        issues:props.issues
+      }
     }
 
     public static defaultProps: Partial<IReviewNowProps> = {
-      isReviewingNow:false
+        isReviewingNow:false,
+        isAttemptingToSave: false,
+        issues:Array<IIssue>()
     };
 
-    public state: IReviewNowState = {
-        isReviewingNow : false,
-        isAttemptingToSave: false
-    };
-
-
+    handleIsReviewingNow(){
+        this.setState({isReviewingNow:true});
+    }
 
     render() {
-        if(this.state.isReviewingNow === false){
-            return this.isNotReviewingNow();  
-        }
-        else{
+        if(this.state.isReviewingNow)
+        {
             return this.isReviewingNow();
+        }
+        else
+        {
+            return this.isNotReviewingNow();
         }
     }
 
     private isNotReviewingNow(){
         return (
-            
             <div>
                 <div className="ready-for-review-by">Ready for review by TRA representative?</div>
-                <button className="button" id="review-now" onClick={this.props.handleIsReviewingNow.bind(this)}>Review now with TRA</button>
+                <button className="button" id="review-now" onClick={this.handleIsReviewingNow.bind(this)}>Review now with TRA</button>
             </div>
         ); 
     }
@@ -64,7 +70,7 @@ import SaveMeeting from '../SaveMeeting';
                 <div><input id="secretary" className="radio-unselected" type="radio" name="tra-role" value="Secretary"></input><span className="radio-text">Secretary</span></div>
                 <div><input id="treasurer" className="radio-unselected" type="radio" name="tra-role" value="Treasurer"></input><span className="radio-text">Treasurer</span></div>
 
-                <div><SaveMeeting isAttemptingToSave={this.state.isAttemptingToSave} /></div>
+                <div><SaveMeeting isAttemptingToSave={this.state.isAttemptingToSave} issues={this.state.issues} /></div>
             </div>
         ); 
     }
