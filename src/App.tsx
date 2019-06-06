@@ -5,7 +5,9 @@ import { Meeting } from './Components/Meeting'
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Meeting traName="Test Group"></Meeting>
+      <div className="page-wrapper">
+          <Meeting traName="Test Group"></Meeting>
+      </div>
     </div>
   );
 }

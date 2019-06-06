@@ -5,6 +5,15 @@
   src: url('./Fonts/Montserrat/Montserrat-Medium.ttf') format('truetype'),   
 }
 
+.App {
+  width: 1024px;
+  margin: 0 auto;
+}
+
+.page-wrapper {
+  padding: 60px;
+}
+
 .button {
   width:320px;
   height: 47px;
