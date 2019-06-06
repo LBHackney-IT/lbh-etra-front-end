@@ -31,3 +31,7 @@
   border: solid 1px #00664f;
   background-color: #ffffff;
 }
+
+.btn-stacked {
+  display: block;
+}
