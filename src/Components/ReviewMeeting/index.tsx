@@ -27,7 +27,7 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
         }
     }
 
-    public static defaultProps: Partial<IReviewMeetingProps> = {
+    public static defaultProps = {
         issues: Array<IIssue>()
     };
 

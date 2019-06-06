@@ -4,5 +4,5 @@ import SaveMeeting from '.';
 
 storiesOf('Save Meeting', module)
   .add("opens correctly", () => (
-    <SaveMeeting />
+    <SaveMeeting signature="" issues={[]} onSaveComplete={() => {}}/>
   ));

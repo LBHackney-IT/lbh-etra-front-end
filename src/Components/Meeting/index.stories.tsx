@@ -4,7 +4,5 @@ import Meeting from '.';
 
 storiesOf('Meeting', module)
   .add("opens correctly", () => (
-    <Meeting />
-  )).add("Meeting is Reviewing Now ", () => (
-    <Meeting isReviewingNow={true} />
+    <Meeting traName="Gotham City"/>
   ));

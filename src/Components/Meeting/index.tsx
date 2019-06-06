@@ -23,7 +23,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     }
   }
 
-  public static defaultProps: Partial<IMeetingProps> = {
+  public static defaultProps = {
     dateOfMeeting: new Date()
   };
 
