@@ -19,7 +19,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test-e2e": "testcafe chrome src/e2e/",
+    "test-e2e": "testcafe chrome src/e2e/ --app 'npm start' --app-init-delay 10000",
     "test-e2e-headless": "testcafe chrome:headless src/e2e/ --app 'npm start' --app-init-delay 10000",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",

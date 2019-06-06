@@ -1,0 +1,19 @@
+.back-arrow
+{
+  float: left;
+  padding-right:4px;
+}
+
+.ready-for-review-by {
+    width: 555px;
+    height: 30px;
+    font-family: Montserrat;
+    font-size: 27px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #000000;
+}
+
