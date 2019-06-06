@@ -8,11 +8,11 @@ import { shallow } from 'enzyme';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<SaveMeeting />);
+   shallow(<SaveMeeting issues={[]} signature="" onSaveComplete={() => {}}/>);
 });
 
 describe('When we render the "Save Meeting component"', ()  => {
-    const wrapper = shallow(<SaveMeeting isAttemptingToSave={false} />);; 
+    const wrapper = shallow(<SaveMeeting issues={[]} signature="" onSaveComplete={() => {}}/>);; 
 
     it('Then the "Save and email issue list to TRA" button is displayed', () => {
         const element = wrapper.find('#save-meeting')
@@ -21,7 +21,8 @@ describe('When we render the "Save Meeting component"', ()  => {
 });
 
 describe('When we click the "Save and email issue list to TRA" button', ()  => {
-    const wrapper = shallow(<SaveMeeting isAttemptingToSave={false} />);; 
+    const onSaveComplete = jest.fn();
+    const wrapper = shallow(<SaveMeeting issues={[]} signature="" onSaveComplete={onSaveComplete}/>);; 
     const element = wrapper.find('#save-meeting');
     element.simulate('click');
 
@@ -33,5 +34,9 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     it('Then the spinner is displayed', () => {
         const element = wrapper.find('.spinner')
         expect(element.exists()).toBe(true);
+    });
+
+    it('Then onSaveComplete method is called', () => {
+        expect(onSaveComplete).toHaveBeenCalled();
     });
 });

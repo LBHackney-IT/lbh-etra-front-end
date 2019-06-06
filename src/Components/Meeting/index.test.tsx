@@ -4,6 +4,7 @@ import Meeting from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
+import ReviewMeeting from '../ReviewMeeting';
 
 configure({ adapter: new Adapter() });
 
@@ -22,21 +23,10 @@ describe('When we go to render the meeting', () => {
         expect(header.text()).toBe(`${traName} ETRA meeting 5/6/2019`); 
     });
 
-    it('Then the save "Review now with TRA" button is displayed', () => {
-        const wrapper = shallow(<Meeting />); 
-        const button = wrapper.find('#review-now')
-        expect(button.text()).toBe('Review now with TRA'); 
-    });
+    it("review meeting component is rendered", () => {
+        const wrapper = shallow(<Meeting traName={"Test"}/>); 
+        const reviewMeeting = wrapper.find(ReviewMeeting);
 
-    it('Then the save "TRA representative to review later" button is displayed', () => {
-        const wrapper = shallow(<Meeting />);; 
-        const button = wrapper.find('#review-later')
-        expect(button.text()).toBe('TRA representative to review later');  
-    });
-
-    it('Then the save Ready for review by TRA representative?" header is displayed', () => {
-        const wrapper = shallow(<Meeting />);; 
-        const element = wrapper.find('.ready-for-review-by')
-        expect(element.text()).toBe('Ready for review by TRA representative?');
-    });
+        expect(reviewMeeting).toHaveLength(1);
+    })
 });

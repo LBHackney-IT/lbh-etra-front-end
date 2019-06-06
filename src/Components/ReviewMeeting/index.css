@@ -11,13 +11,6 @@
     color: #000000;
   }
 
-  .TRA-signature-box {
-    width: 903px;
-    height: 139px;
-    border: solid 2px #0b0c0c;
-    background-color: #ffffff;
-  }
-
   .role-of-TRA-representative {
     width: 365px;
     height: 30px;
@@ -41,4 +34,8 @@
   .radio-text {
     font-family: Montserrat;
     font-size: 19px;
+  }
+
+  .button {
+    display: block;
   }
