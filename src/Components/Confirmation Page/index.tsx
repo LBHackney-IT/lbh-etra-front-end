@@ -30,31 +30,6 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
     issues: Array<IIssue>()
   };
 
-  // displayIssues()
-  // {
-  //   return( 
-  //     <div>
-  //         <div>
-  //             {
-  //               this.state.issues.map((item, key) => {
-  //                 return <div key={key} >
-  //                   <div className="issue-details">
-  //                     <div>
-  //                   <p className="label-title">Issue Type</p>
-  //                <p>{item.IssueType}</p> </div>
-  //                <p className="label-title"> Location Of Issue</p>
-  //                <p>{item.LocationOfIssue} </p>
-  //                <p className="label-title">Notes about the issue</p>
-  //                <p>{item.Notes}</p>
-  //                </div>
-  //                </div>
-  //             })
-  //             }
-  //         </div>
-  //     </div>
-  //   )
-  // }
-
   render() {
     return (
       <div className="signature">
