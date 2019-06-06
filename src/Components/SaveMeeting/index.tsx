@@ -1,8 +1,7 @@
 import React from 'react';
 import './index.css';
-import Confirmation from '../Confirmation Page'
 import { IIssue } from '../Issues'
-import { SaveMeetingUseCase, ISaveMeetingUseCase, SaveMeetingInputModel, ISaveMeetingOutputModel } from '../../UseCases/SaveMeeting'
+import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
