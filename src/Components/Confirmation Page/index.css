@@ -1,4 +1,18 @@
-#meeting-name-date
+.confirmation-body
+{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.back-arrow
+{
+  float: left;
+  padding-right:4px;
+}
+.meeting-name-date
 {
     width: 904px;
     height: 55px;
@@ -11,3 +25,70 @@
     letter-spacing: normal;
     color: #000000;
 }
+
+.issue-details{
+    width: 943px;
+    height: 258px;
+    background-color: rgba(34, 34, 34, 0.05);
+  }
+
+  .Signature-of-TRA-rep {
+    width: 438px;
+    height: 30px;
+    font-family: Montserrat;
+    font-size: 27px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #000000;
+  }
+  .signature-header
+  {
+    
+        width: 438px;
+        height: 30px;
+        font-family: Montserrat;
+        font-size: 27px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.11;
+        letter-spacing: normal;
+        color: #000000;
+      
+  }
+  #signature-image
+  {
+    width: 299.7px;
+    height: 131.6px;
+  }
+
+  .issue-confirmed
+  {
+    width: 236px;
+    height: 30px;
+    font-family: Montserrat;
+    font-size: 27px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #000000;
+  }
+
+  .label-title
+  {
+    width: 200px;
+    height: 30px;
+    font-family: Montserrat;
+    font-size: 19px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    color: #000000;
+  }

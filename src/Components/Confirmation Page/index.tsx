@@ -1,5 +1,6 @@
 import React from 'react';
 import {IIssue} from '../Issues';
+import './index.css';
 
   export interface IConfirmationProps{
       TRAName:string,
@@ -16,23 +17,13 @@ import {IIssue} from '../Issues';
 
   export class Confirmation extends React.Component<IConfirmationProps, IConfirmationState> {
 
-    jsonIssueResponse=[
-      {
-        "IssueType":"25",
-        "LocationOfIssue":"43234",
-        "Notes":"12537228724216704",
-       
-    },
-    {
-      "IssueType":"25",
-      "LocationOfIssue":"43234",
-      "Notes":"12537228724216704",
-    }]
+    jsonIssueResponse=[]
 
     public constructor(props:IConfirmationProps){
       super(props);
-
-      this.setState({issues :this.jsonIssueResponse})
+      
+      this.state={issues:this.jsonIssueResponse}
+      //this.setState({issues :this.jsonIssueResponse})
     }
 
     public static defaultProps: Partial<IConfirmationProps> = {
@@ -48,32 +39,42 @@ import {IIssue} from '../Issues';
 
     displayIssues()
     {
-      return(
+      return( 
         <div>
-            <ul>
+            <div>
                 {
-                  
                   this.state.issues.map((item, key) => {
-                    return <li key={key}>{item.IssueType} {item.LocationOfIssue} {item.Notes}</li>
+                    return <div key={key} >
+                      <div className="issue-details">
+                        <div>
+                      <p className="label-title">Issue Type</p>
+                   <p>{item.IssueType}</p> </div>
+                   <p className="label-title"> Location Of Issue</p>
+                   <p>{item.LocationOfIssue} </p>
+                   <p className="label-title">Notes about the issue</p>
+                   <p>{item.Notes}</p>
+                   </div>
+                   </div>
                 })
-                    })
+                   
                 }
-            </ul>
+            </div>
         </div>
-    )
-
+      )
     }
     render() {
       return (
-          <div>
-            <div className="back-link"><a id="lnkBack" href="#">Back</a></div>
+          <div className="confirmation-body">
+            <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
             <div className="meeting-name-date">{this.props.TRAName} ETRA meeting {this.props.DateOfMeeting.toLocaleDateString('en-GB')}</div>
             <div className="issue-confirmed">Issues confirmed</div>
+            <div className="display-Issues"> {this.displayIssues()}</div>
             <div className="signature">
             <div className="signature-header">Signature of TRA representative</div>
             <div>
               <img id="signature-image" src={this.props.SignatureImage} alt="signature"/>
             </div>
+            <div className="tra-chair-header">TRA Chair</div>
             </div>
         </div>
       );
