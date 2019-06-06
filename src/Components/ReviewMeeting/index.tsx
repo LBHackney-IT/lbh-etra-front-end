@@ -62,8 +62,8 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
         return (
             <div>
                 <div className="ready-for-review-by">Ready for review by TRA representative?</div>
-                <button className="button" id="review-now" onClick={this.handleIsReviewingNow}>Review now with TRA</button>
-                <button className="button" id="review-later">TRA representative to review later</button>
+                <button className="button btn-primary btn-stacked" id="review-now" onClick={this.handleIsReviewingNow}>Review now with TRA</button>
+                <button className="button btn-primary btn-stacked" id="review-later">TRA representative to review later</button>
             </div>
         );
     }

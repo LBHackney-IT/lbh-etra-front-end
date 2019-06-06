@@ -45,7 +45,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   private renderSaveMeetingButton() {
     return (
       <div>
-        <div><button id="save-meeting" className="button" onClick={this.handleSaveMeeting.bind(this)} >Save and email issue list to TRA</button></div>
+        <div><button id="save-meeting" className="button btn-primary" onClick={this.handleSaveMeeting.bind(this)} >Save and email issue list to TRA</button></div>
       </div>
     );
   }
