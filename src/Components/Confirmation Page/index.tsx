@@ -8,8 +8,6 @@ import './index.css';
       SignatureImage:string,
       issues:Array<IIssue>,
   }
-
-
  
   export interface IConfirmationState{
     issues:Array<IIssue>
@@ -56,7 +54,6 @@ import './index.css';
                    </div>
                    </div>
                 })
-                   
                 }
             </div>
         </div>
