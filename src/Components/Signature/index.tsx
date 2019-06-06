@@ -44,11 +44,10 @@ export default class Signature extends Component<ISignatureProps> {
   private renderClearButton() {
     return(
       <div className="button-wrapper">
-        <button
+        <input
           onClick={this.onClearCanvasButtonClicked} 
-          className="button-rectangle">
-          <span className="button-text">Clear Signature</span>
-        </button>
+          className="button btn-secondary"
+          value="Clear Signature" />
       </div>);
   }
 
