@@ -9,24 +9,26 @@ import ReviewMeeting from '../ReviewMeeting';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<Meeting />);
+   shallow(<Meeting traName="Test Name"/>);
 });
 
 describe('When we go to render the meeting', () => {
-    it('title is displayed with correct TRA Name and Date', () => {
-        const traName = "Gotham City"
-        const date = new Date("June 5, 2019")
+    const traName = "Gotham City"
+    const date = new Date("June 05, 2019")
+    const wrapper = shallow(<Meeting traName={traName} dateOfMeeting={date}/>); 
 
-        const wrapper = shallow(<Meeting traName={traName} dateOfMeeting={date}/>); 
+    it('Then the back link is shown', () => {
+        const lnkBack = wrapper.find('#lnkBack')
+        expect(lnkBack.text()).toBe('Back'); 
+     });
+
+    it('title is displayed with correct TRA Name', () => {
         const header = wrapper.find("h1");
-
-        expect(header.text()).toBe(`${traName} ETRA meeting 5/6/2019`); 
+        expect(header.text()).toContain(`${traName} ETRA meeting`); 
     });
 
     it("review meeting component is rendered", () => {
-        const wrapper = shallow(<Meeting traName={"Test"}/>); 
         const reviewMeeting = wrapper.find(ReviewMeeting);
-
         expect(reviewMeeting).toHaveLength(1);
     })
 });

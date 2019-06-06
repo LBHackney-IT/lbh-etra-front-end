@@ -1,3 +1,9 @@
+.back-arrow
+{
+  float: left;
+  padding-right:4px;
+}
+
 .ready-for-review-by {
     width: 555px;
     height: 30px;

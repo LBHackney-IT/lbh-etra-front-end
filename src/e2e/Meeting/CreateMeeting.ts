@@ -10,8 +10,6 @@ fixture `Getting Started`
 
 test("Can create a new meeting, review now and save"
 , async t => {
-    const traName = "Bob Jones"
-    const datetime = new Date();
     await WhenIClickTheReviewNowButton(t);
     await WhenIClickTheSaveButton(t);
     await ConfirmationScreenIsDisplayed(t);

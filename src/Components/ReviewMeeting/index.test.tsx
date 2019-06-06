@@ -10,11 +10,11 @@ import SaveMeeting from '../SaveMeeting';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting />);
+   shallow(<ReviewMeeting onReviewComplete={() => {}} />);
 });
 
 describe('When we go to click "Review now with TRA"', ()  => {
-    const wrapper = shallow(<ReviewMeeting />);
+    const wrapper = shallow(<ReviewMeeting onReviewComplete={() => {}}/>);
     let button = wrapper.find('#review-now');
     button.simulate('click');
 

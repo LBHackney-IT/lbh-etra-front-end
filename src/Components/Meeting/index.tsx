@@ -28,9 +28,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   };
 
   getMeetingDateString = (): string => {
-    const date = this.props.dateOfMeeting;
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    //return this.props.dateOfMeeting.toLocaleDateString("en-GB");
+    return this.props.dateOfMeeting.toLocaleDateString('en-GB');
   }
 
   onSaveComplete = (): void => {
@@ -40,6 +38,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   render() {
     return (
       <div>
+        <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
         <h1>{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
         <h2>Attendees Component</h2>
         <h2>Issues Component</h2>

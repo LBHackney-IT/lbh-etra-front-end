@@ -1,31 +1,3 @@
-.confirmation-body
-{
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.back-arrow
-{
-  float: left;
-  padding-right:4px;
-}
-.meeting-name-date
-{
-    width: 904px;
-    height: 55px;
-    font-family: Montserrat;
-    font-size: 36px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.53;
-    letter-spacing: normal;
-    color: #000000;
-}
-
 .issue-details{
     width: 943px;
     height: 258px;
@@ -44,6 +16,7 @@
     letter-spacing: normal;
     color: #000000;
   }
+
   .signature-header
   {
     
@@ -59,24 +32,11 @@
         color: #000000;
       
   }
+
   #signature-image
   {
     width: 299.7px;
     height: 131.6px;
-  }
-
-  .issue-confirmed
-  {
-    width: 236px;
-    height: 30px;
-    font-family: Montserrat;
-    font-size: 27px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.11;
-    letter-spacing: normal;
-    color: #000000;
   }
 
   .label-title
