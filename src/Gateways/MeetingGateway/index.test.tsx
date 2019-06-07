@@ -2,6 +2,10 @@ import MeetingGateway, { IMeetingGateway } from ".";
 
 const gateway: IMeetingGateway = new MeetingGateway();
 
+beforeEach(() => {
+    localStorage.clear();
+  });
+
 it("can save meeting data", async () => {
   const testData = "oihaefsoihsgohaoi";
 
