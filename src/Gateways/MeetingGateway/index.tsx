@@ -1,10 +1,12 @@
+import { ISaveMeetingInputModel } from "../../Boundary/SaveMeeting";
+
 export interface IMeetingGateway {
-    saveMeeting: (data: string) => Promise<void>;
+  saveMeeting: (data: ISaveMeetingInputModel) => Promise<void>;
 }
 
 export default class MeetingGateway implements IMeetingGateway {
 
-    public async saveMeeting(data: string): Promise<void> {
-        return await localStorage.setItem("currentMeeting", data);
-    }
+  public async saveMeeting(data: ISaveMeetingInputModel): Promise<void> {
+    return await localStorage.setItem("currentMeeting", JSON.stringify(data));
+  }
 }
