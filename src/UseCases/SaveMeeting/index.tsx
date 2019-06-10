@@ -1,10 +1,6 @@
-import { ISaveMeetingInputModel, ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
+import { ISaveMeetingInputModel, ISaveMeetingUseCase, ISaveMeetingOutputModel } from '../../Boundary/SaveMeeting';
 import { IIssue } from '../../Components/Issues';
 import { IMeetingGateway } from '../../Gateways/MeetingGateway';
-
-export interface ISaveMeetingOutputModel{
-    successful :boolean
-}
 
 export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
     public successful:boolean;
