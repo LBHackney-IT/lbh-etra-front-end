@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IServiceHash {
     [key: string]: any;
 }
@@ -26,3 +28,6 @@ export class ServiceContainer implements IServiceContainer {
         return this.services[serviceName];
     }
 }
+
+export const ServiceContext = React.createContext<IServiceProvider | null>(null);
+export const ServiceProvider = ServiceContext.Provider;

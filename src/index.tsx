@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ServiceContainer } from './Services/ServiceContainer';
+import { ServiceContainer, ServiceProvider } from './ServiceContext';
 import configureServices from './serviceConfiguration';
-import { ServiceProvider } from './Services/ServiceContext';
 
 const serviceContainer = new ServiceContainer();
 configureServices(serviceContainer);

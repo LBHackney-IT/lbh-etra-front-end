@@ -1,7 +1,7 @@
-import { IServiceContainer } from "./Services/ServiceContainer";
 import MeetingGateway, { IMeetingGateway } from "./Gateways/MeetingGateway";
 import { ISaveMeetingUseCase } from "./Boundary/SaveMeeting";
 import { SaveMeetingUseCase } from "./UseCases/SaveMeeting";
+import { IServiceContainer } from "./ServiceContext";
 
 export default function configureServices(container: IServiceContainer) {
     //Gateways

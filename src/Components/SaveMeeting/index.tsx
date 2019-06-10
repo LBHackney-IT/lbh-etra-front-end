@@ -2,9 +2,8 @@ import React from 'react';
 import './index.css';
 import { IIssue } from '../Issues'
 import { SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
-import { IServiceProvider } from '../../Services/ServiceContainer';
+import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
-import { ServiceContext } from '../../Services/ServiceContext';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,

@@ -1,7 +1,6 @@
 import { IMeetingGateway } from "../../Gateways/MeetingGateway";
 import { SaveMeetingUseCase, SaveMeetingInputModel } from ".";
 
-
 describe("SaveMeetingUseCase", () => {
   it("successfully saves meeting", async () => {
     const mockGateway: IMeetingGateway = {

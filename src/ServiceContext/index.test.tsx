@@ -1,4 +1,4 @@
-import { IServiceContainer, IServiceHash, ServiceContainer } from "./ServiceContainer";
+import { IServiceContainer, IServiceHash, ServiceContainer } from ".";
 
 describe("when getting a service", () => {
     it("returns the bound service", () => {

@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import SaveMeeting from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import { ServiceProvider } from '../../Services/ServiceContext';
 import { ISaveMeetingUseCase, ISaveMeetingInputModel } from '../../Boundary/SaveMeeting';
 import { SaveMeetingOutputModel } from '../../UseCases/SaveMeeting';
-import { IServiceProvider } from '../../Services/ServiceContainer';
+import { IServiceProvider, ServiceProvider } from '../../ServiceContext';
 
 configure({ adapter: new Adapter() });
 
