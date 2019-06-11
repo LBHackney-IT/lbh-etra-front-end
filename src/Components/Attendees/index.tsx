@@ -50,7 +50,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
             return(
                 <div>
                     {this.renderArrow()}
-                    <span className="attendance-header">Meeting Attendance</span>
+                    <span data-test="meeting-attendance-header"className="attendance-header">Meeting Attendance</span>
                     {!this.state.isCollapsed && this.renderInputs()}
                 </div>
             )
@@ -67,12 +67,12 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         renderInputs() {
             return (
                 <div className="border-left">
-                    <div className="input-label">Councillors</div>
-                    <input className="input-box wide-box" type="text" name="Councillors" onChange={this.onChangeForm} value={this.state.attendees.Councillors}/>
-                    <div className="input-label">Hackney Council Staff</div>
-                    <input className="input-box wide-box" type="text" name="HackneyStaff" onChange={this.onChangeForm} value={this.state.attendees.HackneyStaff}/>
-                    <div className="input-label">Number of attendees</div>
-                    <input className="input-box narrow-box" type="number" name="NumberOfAttendees"onChange={this.onChangeForm} value={this.state.attendees.NumberOfAttendees}/>
+                    <div data-test="councillor-label" className="input-label">Councillors</div>
+                    <input data-test="councillor-input" className="input-box wide-box" type="text" name="Councillors" onChange={this.onChangeForm} value={this.state.attendees.Councillors}/>
+                    <div data-test="hackney-council-staff-label" className="input-label">Hackney Council Staff</div>
+                    <input data-test="hackney-council-staff-input" className="input-box wide-box" type="text" name="HackneyStaff" onChange={this.onChangeForm} value={this.state.attendees.HackneyStaff}/>
+                    <div data-test="number-of-attendees-label" className="input-label">Number of attendees</div>
+                    <input data-test="number-of-attendees-input" className="input-box narrow-box" type="number" name="NumberOfAttendees"onChange={this.onChangeForm} value={this.state.attendees.NumberOfAttendees}/>
                 </ div>
             );
         }
