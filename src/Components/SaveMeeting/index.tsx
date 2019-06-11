@@ -1,7 +1,9 @@
 import React from 'react';
 import './index.css';
 import { IIssue } from '../Issues'
-import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
+import { SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
+import { IServiceProvider, ServiceContext } from '../../ServiceContext';
+import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
@@ -14,8 +16,13 @@ export interface ISaveMeetingState {
 }
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
-  public constructor(props: ISaveMeetingProps) {
-    super(props);
+  public static contextType = ServiceContext;
+  private readonly saveMeeting: ISaveMeetingUseCase;
+
+  public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
+    super(props, context);
+    this.saveMeeting = context.get<ISaveMeetingUseCase>("ISaveMeetingUseCase");
+
     this.state = {
       isAttemptingToSave: false
     }
@@ -23,8 +30,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting() {
     this.setState({ isAttemptingToSave: true });
-    let saveMeetingUseCase = new SaveMeetingUseCase();
-    let outputModel = saveMeetingUseCase.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature));
+    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature));
     if (outputModel.successful) {
       this.props.onSaveComplete();
     }
