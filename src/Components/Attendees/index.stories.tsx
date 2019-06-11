@@ -4,5 +4,5 @@ import Attendees from '.';
 
 storiesOf('Attendees', module)
   .add("opens correctly", () => (
-    <Attendees/>
+    <Attendees onChangeAttendees={() => {}}/>
   ));

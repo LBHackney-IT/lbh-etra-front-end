@@ -30,7 +30,8 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
     }
 
     public static defaultProps = {
-        issues: Array<IIssue>()
+        issues: Array<IIssue>(),
+        attendees: {}
     };
 
     handleIsReviewingNow = () => {

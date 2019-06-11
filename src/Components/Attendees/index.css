@@ -1,10 +1,10 @@
-.boarder-left
+.border-left
 {
-  width: 2px;
-  height: 273px;
-  background-color: #bec0c2;
+  border-left: solid 2px #bec0c2;
+  padding-left: 13px;
 }
-.meeting-attendance-header
+
+.attendance-header
 {
   height: 31px;
   font-family: Montserrat;
@@ -16,9 +16,9 @@
   letter-spacing: normal;
   color: #0072ce;
 }
-.councillor-label
+
+.input-label
 {
-  width: 108px;
   height: 30px;
   font-family: Montserrat;
   font-size: 19px;
@@ -28,55 +28,26 @@
   line-height: 1.58;
   letter-spacing: normal;
   color: #000000;
-}
-.councillor-input
-{
-  width: 450px;
-  height: 40px;
-  border: solid 2px #0b0c0c;
-  background-color: #ffffff;
-}
-.hackney-council-staff-label
-{
-  width: 272px;
-  height: 30px;
-  font-family: Montserrat;
-  font-size: 19px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.58;
-  letter-spacing: normal;
-  color: #000000;
-}
-.hackney-council-staff-input
-{
-  width: 450px;
-  height: 40px;
-  border: solid 2px #0b0c0c;
-  background-color: #ffffff;
 }
 
-.number-of-attendees-label
+.input-box
 {
-  width: 253px;
-  height: 30px;
-  font-family: Montserrat;
-  font-size: 19px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.58;
-  letter-spacing: normal;
-  color: #000000;
-}
-.number-of-attendees-input
-{
-  width: 86px;
+  width: 450px;
   height: 40px;
   border: solid 2px #0b0c0c;
   background-color: #ffffff;
+  font-size: 16px;
+  padding-left: 5px;
 }
+
+.wide-box {
+  width: 450px;
+}
+
+.narrow-box {
+  width: 86px;
+}
+
 .arrow-down
 {
   width: 12px;
