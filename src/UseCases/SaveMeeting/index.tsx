@@ -1,6 +1,7 @@
 import { ISaveMeetingInputModel, ISaveMeetingUseCase, ISaveMeetingOutputModel } from '../../Boundary/SaveMeeting';
 import { IIssue } from '../../Components/Issues';
 import { IMeetingGateway } from '../../Gateways/MeetingGateway';
+import { IAttendees } from '../../Components/Attendees';
 
 export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
     public successful:boolean;
@@ -12,9 +13,11 @@ export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
 export class SaveMeetingInputModel implements ISaveMeetingInputModel {
     public issues:Array<IIssue>;
     public signatureBase64: string;
-    constructor(issues: Array<IIssue>, signatureBase64: string){
+    public attendees: IAttendees;
+    constructor(issues: Array<IIssue>, signatureBase64: string, attendees: IAttendees){
         this.issues = issues;
         this.signatureBase64 = signatureBase64;
+        this.attendees = attendees;
     }
 }
 

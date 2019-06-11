@@ -4,11 +4,13 @@ import { IIssue } from '../Issues'
 import { SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
+import { IAttendees } from '../Attendees';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
   signature: string,
   onSaveComplete: () => void
+  attendees: IAttendees
 }
 
 export interface ISaveMeetingState {
@@ -30,7 +32,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting() {
     this.setState({ isAttemptingToSave: true });
-    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature));
+    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
     if (outputModel.successful) {
       this.props.onSaveComplete();
     }
