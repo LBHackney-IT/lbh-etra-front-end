@@ -1,4 +1,5 @@
 import { IIssue } from "../../Components/Issues";
+import { IAttendees } from "../../Components/Attendees";
 
 export interface ISaveMeetingOutputModel{
     successful: boolean
@@ -11,4 +12,5 @@ export interface ISaveMeetingUseCase{
 export interface ISaveMeetingInputModel {
     issues:Array<IIssue>,
     signatureBase64: string
+    attendees:IAttendees
 }
