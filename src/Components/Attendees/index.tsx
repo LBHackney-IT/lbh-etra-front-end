@@ -58,9 +58,9 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
 
         renderArrow() {
             return (
-                <a onClick={this.toggleCollapsed}>
-                    {this.state.isCollapsed ? <span>Expand</span> :  <span>Collapse</span>}
-                </a>
+                <span onClick={this.toggleCollapsed} className="arrow">
+                    {this.state.isCollapsed ? <>►</> :  <>▼</>}
+                </span>
             );
         }
 
