@@ -7,7 +7,7 @@ beforeEach(() => {
   });
 
 it("can save meeting data", async () => {
-  const testData = {issues: [], signatureBase64: "saiinosda"};
+  const testData = {issues: [], signatureBase64: "saiinosda", attendees: "asihuwaihusahiu"};
   const testDataString = JSON.stringify(testData);
 
   await gateway.saveMeeting(testData);

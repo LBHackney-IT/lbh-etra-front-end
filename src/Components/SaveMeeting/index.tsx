@@ -32,7 +32,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting() {
     this.setState({ isAttemptingToSave: true });
-    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature));
+    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
     if (outputModel.successful) {
       this.props.onSaveComplete();
     }

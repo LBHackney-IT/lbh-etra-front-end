@@ -6,22 +6,31 @@ import { configure, mount } from 'enzyme';
 import { ISaveMeetingUseCase, ISaveMeetingInputModel } from '../../Boundary/SaveMeeting';
 import { SaveMeetingOutputModel } from '../../UseCases/SaveMeeting';
 import { IServiceProvider, ServiceProvider } from '../../ServiceContext';
+import { IAttendees } from '../Attendees';
 
 configure({ adapter: new Adapter() });
 
 const mockServiceProvider = createMockServiceProvider();
 
+function mockAttendees() : IAttendees {
+    return {
+        Councillors: "Jim, Bob, Steve",
+        HackneyStaff: "Fleb",
+        NumberOfAttendees: 10
+    }
+}
+
 it('Meeting component loads', () => {
    mount(
     <ServiceProvider value={mockServiceProvider}>
-        <SaveMeeting issues={[]} signature="" onSaveComplete={() => {}}/>
+        <SaveMeeting issues={[]} signature="" onSaveComplete={() => {}} attendees={mockAttendees()}/>
     </ServiceProvider>);
 });
 
 describe('When we render the "Save Meeting component"', ()  => {
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onSaveComplete={() => {}}/>
+            <SaveMeeting issues={[]} signature="" onSaveComplete={() => {}}  attendees={mockAttendees()}/>
         </ServiceProvider>);
 
     it('Then the "Save and email issue list to TRA" button is displayed', () => {
@@ -34,7 +43,7 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     const onSaveComplete = jest.fn();
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onSaveComplete={onSaveComplete}/>
+            <SaveMeeting issues={[]} signature="" onSaveComplete={onSaveComplete} attendees={mockAttendees()}/>
         </ServiceProvider>);; 
     const element = wrapper.find('#save-meeting');
     element.simulate('click');
