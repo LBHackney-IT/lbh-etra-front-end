@@ -4,10 +4,12 @@ import SaveMeeting from '../SaveMeeting';
 import { IIssue } from '../Issues'
 import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
+import { IAttendees } from '../Attendees';
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
     onReviewComplete: () => void
+    attendees:IAttendees
 }
 
 export interface IReviewMeetingState {
@@ -82,7 +84,7 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
                 <div><input id="secretary" className="radio-unselected" type="radio" name="tra-role" value="Secretary"></input><span className="radio-text">Secretary</span></div>
                 <div><input id="treasurer" className="radio-unselected" type="radio" name="tra-role" value="Treasurer"></input><span className="radio-text">Treasurer</span></div>
 
-                <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} />
+                <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} attendees={this.props.attendees}/>
             </div>
         );
     }

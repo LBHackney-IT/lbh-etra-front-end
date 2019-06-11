@@ -2,11 +2,13 @@ import React from 'react';
 import './index.css';
 import { IIssue } from '../Issues'
 import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
+import { IAttendees } from '../Attendees';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
   signature: string,
   onSaveComplete: () => void
+  attendees: IAttendees
 }
 
 export interface ISaveMeetingState {
