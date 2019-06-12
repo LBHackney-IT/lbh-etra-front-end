@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
-import { IIssueType, IssueType } from '../../Domain/IssueType';
-import { IIssueLocation, IssueLocation } from '../../Domain/IssueLocation';
 import { IIssue, Issue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
-import { v4 as uuid } from 'uuid';
 import {IssueFactory} from '../../Factories/Issue/'
 
 interface IRecordIssueProps {
@@ -16,12 +13,13 @@ interface IRecordIssueState {
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
     private _issueFactory:IssueFactory;
-    constructor(props: IRecordIssueProps, issueFactory: IssueFactory) {
+    constructor(props: IRecordIssueProps) {
         super(props);
+
         this.state = {
             issues: props.issues
           };
-        this._issueFactory = issueFactory;
+        this._issueFactory = new IssueFactory();
     }
    
     addIssueComponent()

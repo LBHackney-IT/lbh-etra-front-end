@@ -2,6 +2,7 @@ import React from 'react';
 import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
+import RecordIssues from '../RecordIssues'
 
 export interface IMeetingProps {
   traName: string,
@@ -42,6 +43,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <h1>{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
         <h2>Attendees Component</h2>
         <h2>Issues Component</h2>
+        <RecordIssues issues={this.state.issues}/>
         <ReviewMeeting
           issues={this.state.issues}
           onReviewComplete={this.onSaveComplete}
