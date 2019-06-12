@@ -56,7 +56,6 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       let issue = this.state.issue;
       issue.Notes = value;
       this.setState({issue:issue});
-     // this.setState({issue: {...this.state.issue, newIssue}});
       this.props.onChangeIssues(this.state.issue)
     }
 
@@ -78,4 +77,3 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
   }
 
   export default AddIssue;
-  

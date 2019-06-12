@@ -5,6 +5,8 @@ import { IIssue, Issue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
 import { v4 as uuid } from 'uuid';
 
+import jsonData from '../../JsonFiles/IssueType.json'
+
 
 
 interface IRecordIssueProps {
@@ -44,19 +46,12 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
 
     onDeleteIssue(index:number){
         let issues = this.state.issues;
-        console.log("issues before splice");
-        console.log(issues);
         //remove issue from array at index
-        debugger;
         issues.splice(index, 1);
         this.setState({issues:issues});
-        console.log("issues after splice");
-        console.log(issues);
-
     }
 
     render() {
-        //const issues = 
         return (
             <div>
                 {this.state.issues.map((issue:IIssue, index) =>

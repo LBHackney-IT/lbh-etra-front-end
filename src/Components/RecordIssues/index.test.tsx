@@ -5,6 +5,7 @@ import RecordIssues from '.';
 
 
 configure ({adapter:new Adapter()});
+
 it('RecordIssues component loads', () => {
     shallow(<RecordIssues issues={[]}/>);
  });
@@ -29,7 +30,12 @@ it('RecordIssues component loads', () => {
     });
 
     it('Then we can delete the issue we added', () => {
-        let deleteButton = wrapper.find('[data-test="delete-issue"]');
+        let addIssue = wrapper.find('AddIssue');
+        expect(addIssue).toHaveLength(1);
+
+        let deleteButton = addIssue.find('#delete-issue');
+        expect(deleteButton).toHaveLength(1);
+
         deleteButton.simulate('click');
         expect(wrapper.find('AddIssue')).toHaveLength(0);
     });
