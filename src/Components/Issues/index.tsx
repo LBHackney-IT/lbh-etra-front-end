@@ -1,9 +1,10 @@
 import React from 'react';
+import  { IIssueType } from '../IssueType'
+import { ILocation } from '../Location'
 
-export interface IIssue 
+export interface IIssue  
 {
-   IssueType:string
-   Notes:string
-   LocationOfIssue:string
-} 
-
+  IssueType:IIssueType
+  Location:ILocation
+  Notes:string
+}
