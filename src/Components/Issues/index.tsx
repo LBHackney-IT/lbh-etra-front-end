@@ -4,7 +4,7 @@ import { ILocation } from '../Location'
 
 export interface IIssue  
 {
-  IssueType:IIssueType
-  Location:ILocation
+  IssueType:string
+  Location:string
   Notes:string
 }
