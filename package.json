@@ -51,6 +51,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
+    "jest-localstorage-mock": "^2.4.0",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "testcafe": "^1.2.0",
     "testcafe-react-selectors": "^3.1.0"

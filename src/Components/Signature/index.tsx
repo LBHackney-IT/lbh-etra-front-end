@@ -45,6 +45,7 @@ export default class Signature extends Component<ISignatureProps> {
     return(
       <div className="button-wrapper">
         <input
+          readOnly
           onClick={this.onClearCanvasButtonClicked} 
           className="button btn-secondary"
           value="Clear Signature" />

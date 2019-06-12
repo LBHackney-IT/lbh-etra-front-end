@@ -1,23 +1,9 @@
+
 import React from 'react';
 import { IIssue } from '../../Domain/Issues';
-
-export interface ISaveMeetingInputModel{
-    issues:Array<IIssue>,
-    signatureBase64: string
-}
-
-export class SaveMeetingInputModel implements ISaveMeetingInputModel{
-    public issues:Array<IIssue>;
-    public signatureBase64: string;
-    constructor(issues: Array<IIssue>, signatureBase64: string){
-        this.issues = issues;
-        this.signatureBase64 = signatureBase64;
-    }
-}
-
-export interface ISaveMeetingOutputModel{
-    successful :boolean
-}
+import { ISaveMeetingInputModel, ISaveMeetingUseCase, ISaveMeetingOutputModel } from '../../Boundary/SaveMeeting';
+import { IMeetingGateway } from '../../Gateways/MeetingGateway';
+import { IAttendees } from '../../Components/Attendees';
 
 export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
     public successful:boolean;
@@ -26,13 +12,27 @@ export class SaveMeetingOutputModel implements ISaveMeetingOutputModel{
     }
 }
 
-export interface ISaveMeetingUseCase{
-    Execute(inputModel:ISaveMeetingInputModel):ISaveMeetingOutputModel
+export class SaveMeetingInputModel implements ISaveMeetingInputModel {
+    public issues:Array<IIssue>;
+    public signatureBase64: string;
+    public attendees: IAttendees;
+    constructor(issues: Array<IIssue>, signatureBase64: string, attendees: IAttendees){
+        this.issues = issues;
+        this.signatureBase64 = signatureBase64;
+        this.attendees = attendees;
+    }
 }
 
 export class SaveMeetingUseCase implements ISaveMeetingUseCase{
+    private readonly gateway: IMeetingGateway;
+
+    constructor(gateway: IMeetingGateway) {
+      this.gateway = gateway;
+    }
 
     Execute(inputModel: ISaveMeetingInputModel): ISaveMeetingOutputModel {
+        this.gateway.saveMeeting(inputModel);
+
         return new SaveMeetingOutputModel(true);
     }
 }
