@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 import SaveMeeting from '../SaveMeeting';
-import { IIssue } from '../Issues'
+import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
 

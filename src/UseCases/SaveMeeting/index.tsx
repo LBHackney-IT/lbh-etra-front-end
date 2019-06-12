@@ -1,5 +1,5 @@
 import React from 'react';
-import { IIssue } from '../../Components/Issues';
+import { IIssue } from '../../Domain/Issues';
 
 export interface ISaveMeetingInputModel{
     issues:Array<IIssue>,

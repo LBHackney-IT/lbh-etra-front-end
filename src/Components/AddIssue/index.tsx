@@ -1,5 +1,5 @@
 import React from 'react';
-import { IIssue } from '../Issues';
+import { IIssue } from '../../Domain/Issues';
 import './index.css';
 
 export interface IAddIssuesProps
@@ -8,32 +8,26 @@ export interface IAddIssuesProps
   //  issueType:string;
   //  issueLocation:string;
   //  notes:string;
+  issue:IIssue
 }
 
 export interface IAddIssueState
 {
- issue:IIssue
+  issue:IIssue
 }
-
-
 
 export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
 
     constructor(props:IAddIssuesProps)
     {
-      super(props)
+      super(props);
 
       this.state={
-       
-        issue:{
-        IssueType:{ IssueId:"",IssueType:""},
-            Location:{ LocationId:"",LocationName:""},
-            Notes:""
-        }
+        issue:props.issue
       }
     }
 
-    deleteIssue=()=>{
+    deleteIssue(){
     
     }
 

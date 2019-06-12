@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { IIssue } from '../Issues'
+import { IIssue } from '../../Domain/Issues'
 import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 
 export interface ISaveMeetingProps {
