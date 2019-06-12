@@ -3,6 +3,8 @@ import { IIssueType, IssueType } from '../../Domain/IssueType';
 import { IIssueLocation, IssueLocation } from '../../Domain/IssueLocation';
 import { IIssue, Issue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
+import { v4 as uuid } from 'uuid';
+
 
 
 interface IRecordIssueProps {
@@ -24,7 +26,8 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
     addIssueComponent()
     {
         console.log("addIssueComponent called");
-        let issueType = new IssueType("", "");
+        let id = uuid();
+        let issueType = new IssueType("", id);
         let location = new IssueLocation("", "");
         let newIssue = new Issue(issueType, location,"" );
         const issues = this.state.issues;
@@ -34,7 +37,22 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
     }
 
     onChangeIssue(issue:IIssue, index:number){
-        this.state.issues[index] = issue;
+        let issues = this.state.issues;
+        issues[index] = issue;
+        this.setState({issues:issues});
+    }
+
+    onDeleteIssue(index:number){
+        let issues = this.state.issues;
+        console.log("issues before splice");
+        console.log(issues);
+        //remove issue from array at index
+        debugger;
+        issues.splice(index, 1);
+        this.setState({issues:issues});
+        console.log("issues after splice");
+        console.log(issues);
+
     }
 
     render() {
@@ -42,14 +60,10 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         return (
             <div>
                 {this.state.issues.map((issue:IIssue, index) =>
-                    <AddIssue key={index} onChangeIssues={()=> this.onChangeIssue(issue,index)} issue={issue}/>
+                    <AddIssue key={issue.IssueType.IssueId} index={index} onDeleteIssue={this.onDeleteIssue.bind(this)} onChangeIssues={()=> this.onChangeIssue(issue,index)} issue={issue}/>
                 )}
                 <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent.bind(this)}>Add Issues</button>
             </div>
             );
     }
 }
-
-
-
-

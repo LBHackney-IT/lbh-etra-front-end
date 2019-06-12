@@ -5,30 +5,35 @@ import './index.css';
 export interface IAddIssuesProps
 {
   onChangeIssues: (issues: IIssue) => void;
+  onDeleteIssue: (index:number) => void;
+  index:number;
   //  issueType:string;
   //  issueLocation:string;
   //  notes:string;
-  issue:IIssue
+  issue:IIssue;
 }
 
 export interface IAddIssueState
 {
-  issue:IIssue
+  issue:IIssue;
+  index:number;
 }
 
-export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
+export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
 
     constructor(props:IAddIssuesProps)
     {
       super(props);
 
       this.state={
-        issue:props.issue
+        issue:props.issue,
+        index:props.index
       }
     }
 
     deleteIssue(){
-    
+      console.log(`delete issues:${this.props.index}`)
+      this.props.onDeleteIssue(this.props.index);
     }
 
     handleChangeOfIssue=(event:React.ChangeEvent<HTMLInputElement>): void => {
@@ -48,28 +53,26 @@ export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     handleChangeOfIssueNote=(event:React.ChangeEvent<HTMLTextAreaElement>): void => {
       const name = event.target.name;
       const value = event.target.value;
-      this.setState({
-          issue: { 
-              ...this.state.issue,
-              [name]: [value]
-          }
-      });
+      let issue = this.state.issue;
+      issue.Notes = value;
+      this.setState({issue:issue});
      // this.setState({issue: {...this.state.issue, newIssue}});
       this.props.onChangeIssues(this.state.issue)
     }
 
     render() {
       return (
-        <form>
+        <div>
+          <div>{this.state.index}</div>
           <div><h4>Record issues at the meeting</h4></div>
           <p>Issue Type</p>
-          <input type="text" id="issue-type"  required onChange={ (e) => this.handleChangeOfIssue(e) } />
+          <input type="text" id="issue-type"  onChange={ (e) => this.handleChangeOfIssue(e) } />
           <p>Location</p>
-          <input type="text" id="location"  required onChange={ (e) => this.handleChangeOfIssue(e) }/>
+          <input type="text" id="location"  onChange={ (e) => this.handleChangeOfIssue(e) }/>
           <div><p>Issue Notes</p></div>
-          <textarea id="issue-note" onChange={ (e) => this.handleChangeOfIssueNote(e) }/>
-          <button className="button btn-primary btn-stacked" id="delete-issue" onClick={this.deleteIssue}>Delete Issue</button>
-        </form>
+          <textarea id="issue-note" value={this.state.issue.Notes} onChange={ (e) => this.handleChangeOfIssueNote(e) }/>
+          <button id="delete-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.deleteIssue.bind(this)}>Delete Issue</button>
+        </div>
       );
     }
   }

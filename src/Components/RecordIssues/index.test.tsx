@@ -20,13 +20,17 @@ it('RecordIssues component loads', () => {
  });
 
  describe('When we go to render the click the add issues button', () => {
-    const wrapper = shallow(<RecordIssues issues={[]}/>)
+    const wrapper = shallow(<RecordIssues issues={[]}/>);
+    var addIssueButton = wrapper.find('[data-test="add-issue"]');
+    addIssueButton.simulate('click');
 
-   it('Then the another issue can be added', () => {
-       //button should be hidden
-       var addIssueButton = wrapper.find('#add-issue');
-       addIssueButton.simulate('click');
-
+    it('Then another issue can be added', () => {
        expect(wrapper.find('AddIssue')).toHaveLength(1);
-   });
+    });
+
+    it('Then we can delete the issue we added', () => {
+        let deleteButton = wrapper.find('[data-test="delete-issue"]');
+        deleteButton.simulate('click');
+        expect(wrapper.find('AddIssue')).toHaveLength(0);
+    });
 });
