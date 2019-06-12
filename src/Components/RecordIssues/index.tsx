@@ -27,9 +27,9 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
     {
         console.log("addIssueComponent called");
         let id = uuid();
-        let issueType = new IssueType("", id);
+        let issueType = new IssueType("", "");
         let location = new IssueLocation("", "");
-        let newIssue = new Issue(issueType, location,"" );
+        let newIssue = new Issue(id, issueType, location,"" );
         const issues = this.state.issues;
         issues.push(newIssue);
         this.setState({issues:issues});
@@ -60,7 +60,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         return (
             <div>
                 {this.state.issues.map((issue:IIssue, index) =>
-                    <AddIssue key={issue.IssueType.IssueId} index={index} onDeleteIssue={this.onDeleteIssue.bind(this)} onChangeIssues={()=> this.onChangeIssue(issue,index)} issue={issue}/>
+                    <AddIssue key={issue.Id} index={index} onDeleteIssue={this.onDeleteIssue.bind(this)} onChangeIssues={()=> this.onChangeIssue(issue,index)} issue={issue}/>
                 )}
                 <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent.bind(this)}>Add Issues</button>
             </div>

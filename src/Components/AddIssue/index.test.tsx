@@ -6,7 +6,7 @@ import { configure, shallow } from 'enzyme';
 
 configure({adapter:new Adapter()});
 it('Add Issue component loads',()=>{
-    shallow(<AddIssue issueType="" issueLocation="" notes=""/>)
+    shallow(<AddIssue issue={}/>)
 })
 
 describe('when we go to render the Add Issue Component',()=>{
