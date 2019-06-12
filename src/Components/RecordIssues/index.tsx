@@ -4,10 +4,7 @@ import { IIssueLocation, IssueLocation } from '../../Domain/IssueLocation';
 import { IIssue, Issue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
 import { v4 as uuid } from 'uuid';
-
-import jsonData from '../../JsonFiles/IssueType.json'
-
-
+import {IssueFactory} from '../../Factories/Issue/'
 
 interface IRecordIssueProps {
     issues: Array<IIssue>
@@ -18,24 +15,21 @@ interface IRecordIssueState {
 }
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
-    constructor(props: IRecordIssueProps) {
+    private _issueFactory:IssueFactory;
+    constructor(props: IRecordIssueProps, issueFactory: IssueFactory) {
         super(props);
         this.state = {
             issues: props.issues
           };
+        this._issueFactory = issueFactory;
     }
    
     addIssueComponent()
     {
-        console.log("addIssueComponent called");
-        let id = uuid();
-        let issueType = new IssueType("", "");
-        let location = new IssueLocation("", "");
-        let newIssue = new Issue(id, issueType, location,"" );
+        let newIssue = this._issueFactory.create();
         const issues = this.state.issues;
         issues.push(newIssue);
         this.setState({issues:issues});
-        console.log(this.state.issues.length);
     }
 
     onChangeIssue(issue:IIssue, index:number){

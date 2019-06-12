@@ -5,7 +5,7 @@ import { IssueLocation } from '../../Domain/IssueLocation';
 import { IIssue, Issue } from '../../Domain/Issues';
 
 export class IssueFactory implements IFactory<IIssue>  {
-    create(): IIssue {
+    public create(): IIssue {
         let id = uuid();
         let issueType = new IssueType("", "");
         let location = new IssueLocation("", "");
