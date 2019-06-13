@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { IIssue, Issue } from '../../Domain/Issues';
+import React from 'react'
+import { IIssue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
 import {IssueFactory} from '../../Factories/Issue/'
 
@@ -22,21 +22,20 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         this._issueFactory = new IssueFactory();
     }
    
-    addIssueComponent()
-    {
+    addIssueComponent = () : void => {
         let newIssue = this._issueFactory.create();
         const issues = this.state.issues;
         issues.push(newIssue);
         this.setState({issues:issues});
     }
 
-    onChangeIssue(issue:IIssue, index:number){
+    onChangeIssue = (issue: IIssue, index: number) : void => {
         let issues = this.state.issues;
         issues[index] = issue;
         this.setState({issues:issues});
     }
 
-    onDeleteIssue(index:number){
+    onDeleteIssue = (index: number) : void => {
         let issues = this.state.issues;
         //remove issue from array at index
         issues.splice(index, 1);
@@ -46,10 +45,10 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
     render() {
         return (
             <div>
-                {this.state.issues.map((issue:IIssue, index) =>
-                    <AddIssue key={issue.Id} index={index} onDeleteIssue={this.onDeleteIssue.bind(this)} onChangeIssues={()=> this.onChangeIssue(issue,index)} issue={issue}/>
+                {this.state.issues.map((issue:IIssue, index: number) =>
+                    <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue}/>
                 )}
-                <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent.bind(this)}>Add Issues</button>
+                <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent}>Add Issues</button>
             </div>
             );
     }
