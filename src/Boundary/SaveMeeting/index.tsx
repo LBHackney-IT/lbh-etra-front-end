@@ -1,4 +1,4 @@
-import { IIssue } from "../../Components/Issues";
+import { IIssue } from "../../Domain/Issues";
 import { IAttendees } from "../../Components/Attendees";
 
 export interface ISaveMeetingOutputModel{

@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
-import { IIssue } from '../Issues'
-import { SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
+import { IIssue } from '../../Domain/Issues'
+import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
 import { IAttendees } from '../Attendees';

@@ -1,39 +1,55 @@
-import React, { Component } from 'react'
-import { IIssueType } from '../IssueType';
-import { ILocation } from '../Location';
-import { IIssue } from '../Issues';
-import {AddIssue} from '../AddIssue/index'
-import { ReactComponent } from '*.svg';
-import { array } from 'prop-types';
-
+import React from 'react'
+import { IIssue } from '../../Domain/Issues';
+import {AddIssue} from '../AddIssue/'
+import {IssueFactory} from '../../Factories/Issue/'
 
 interface IRecordIssueProps {
     issues: Array<IIssue>
-
 }
 
 interface IRecordIssueState {
-    counter:number
+    issues: Array<IIssue>
 }
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
+    private _issueFactory:IssueFactory;
     constructor(props: IRecordIssueProps) {
-        super(props)
-        this.state={counter:1}
+        super(props);
+
+        this.state = {
+            issues: props.issues
+          };
+        this._issueFactory = new IssueFactory();
     }
    
-    addIssueComponent=()=>
-    {
-        this.setState({counter: this.state.counter+1})
+    addIssueComponent = () : void => {
+        let newIssue = this._issueFactory.create();
+        const issues = this.state.issues;
+        issues.push(newIssue);
+        this.setState({issues:issues});
+    }
+
+    onChangeIssue = (issue: IIssue, index: number) : void => {
+        let issues = this.state.issues;
+        issues[index] = issue;
+        this.setState({issues:issues});
+    }
+
+    onDeleteIssue = (index: number) : void => {
+        let issues = this.state.issues;
+        //remove issue from array at index
+        issues.splice(index, 1);
+        this.setState({issues:issues});
     }
 
     render() {
         return (
-            
-        <button className="button btn-primary btn-stacked" id="add-issue" onClick={this.addIssueComponent}>Add Issues</button>);
+            <div>
+                {this.state.issues.map((issue:IIssue, index: number) =>
+                    <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue}/>
+                )}
+                <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent}>Add Issues</button>
+            </div>
+            );
     }
 }
-
-
-
-
