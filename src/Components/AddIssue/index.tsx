@@ -8,22 +8,32 @@ import { string } from 'prop-types';
 import { IIssueType } from '../IssueType';
 import { ILocation } from '../Location';
 
+export interface ILocation 
+{
+   estateId:string,
+   estateName:string,
+   blocks:ILocationBlock
+} 
+
+export interface ILocationBlock
+{
+   blockName:string,
+   blockId: string,
+   estateId:string,
+   estateName:string
+}
 export interface IAddIssuesProps
 {
   onChangeIssues: (issues: IIssue) => void;
-  issueType:string;
-  issueLocation:string;
-  notes:string;
-  onChange?: (e?: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface IAddIssueState
 {
  issue:IIssue
- issueTypes: IIssueType[]
- location: ILocation[]
 }
 
+const issueType = Array.from<IIssueType>(issuesData)
+const location = Array.from<ILocation>(locationData)
 
 export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
 
@@ -36,16 +46,15 @@ export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           IssueType:"",
           Location:"",
           Notes:""
-        },
-        issueTypes: Array.from<IIssueType>(issuesData),
-        location: Array.from<ILocation>(locationData)
+        }
       }
     }
+
   
     deleteIssue=() => {
     
     }
-    handleChangeOfNotes=(event:React.ChangeEvent<HTMLTextAreaElement>): void => {
+    handleChangeOfIssue1=(event:React.ChangeEvent<HTMLTextAreaElement>): void => {
       const name = event.target.name;
       const value = event.target.value;
       this.setState({
@@ -72,20 +81,21 @@ export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       this.props.onChangeIssues(this.state.issue)
 
     }
-    createSelectItemsForIssues() {
-      let items = [];         
-      for (let i = 0; i <= this.state.issueTypes.length -1 ; i++) {
-           items.push(<option key={i} value={this.state.issueTypes[i].IssueType}>{this.state.issueTypes[i].IssueType}</option>);
-      }
-      return items;
-    } 
-    createSelectItemsForLocation() {
-      let locationitems = [];         
-      for (let i = 0; i <= this.state.location.length -1 ; i++) {
-           locationitems.push(<option key={i} value={this.state.location[i].LocationName}>{this.state.location[i].LocationName}</option>);
-      }
-      return locationitems;
-    } 
+
+    renderIssueType(issueType: IIssueType, index: number) {
+      return (
+        <option key={index} value={issueType.IssueType}>{issueType.IssueType}</option>
+      );
+    }
+    renderLocation(location: ILocation, index: number) {
+      return (
+        <option key={index} value={location.estateName}>{location.estateName}</option>
+      );
+    }
+    
+    renderBlock(locationBlock:ILocationBlock){
+
+    }
 
     render() {
       return (
@@ -93,16 +103,16 @@ export  class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div><h4>Record issues at the meeting</h4></div>
           <div>Issue Types</div>
           <select onSelect={this.handleChangeOfIssueDropDownList} value={this.state.issue.IssueType} name="IssueType">
-            {this.createSelectItemsForIssues()}
+            {issueType.map(this.renderIssueType)}
           </select> 
           <div>Location</div>
           <select onSelect={this.handleChangeOfIssueDropDownList} value={this.state.issue.Location} name="IssueType">
-            {this.createSelectItemsForLocation()}
+            {location.map(this.renderLocation)}
           </select> 
           {/* <p>Location</p>
           <input type="text" id="location"  required onChange={this.handleChangeOfIssue2 }value={this.state.issue.Location} name="Location"/> */}
           <div>Issue Notes</div>
-          <textarea id="issue-note"  value={this.state.issue.Notes} name="Notes" onChange={this.handleChangeOfNotes } />
+          <textarea id="issue-note"  value={this.state.issue.Notes} name="Notes" onChange={this.handleChangeOfIssue1 } />
           <button className="button btn-primary btn-stacked" id="delete-issue" onClick={this.deleteIssue} name="Location" >Delete Issue</button>
           <div>{this.state.issue.IssueType}</div>
           <div>{this.state.issue.Location}</div>
