@@ -20,7 +20,7 @@ it('RecordIssues component loads', () => {
     });
  });
 
- describe('When we go to render the click the add issues button', () => {
+ describe('When we go to render the add issues button and simulate a click', () => {
     const wrapper = shallow(<RecordIssues issues={[]}/>);
     var addIssueButton = wrapper.find('[data-test="add-issue"]');
     addIssueButton.simulate('click');
@@ -29,14 +29,9 @@ it('RecordIssues component loads', () => {
        expect(wrapper.find('AddIssue')).toHaveLength(1);
     });
 
-    it('Then we can delete the issue we added', () => {
-        let addIssue = wrapper.find('AddIssue');
-        expect(addIssue).toHaveLength(1);
-
-        let deleteButton = addIssue.find('#delete-issue');
-        expect(deleteButton).toHaveLength(1);
-
-        deleteButton.simulate('click');
-        expect(wrapper.find('AddIssue')).toHaveLength(0);
-    });
+    it('Then we can add two more issues', () => {
+        addIssueButton.simulate('click');
+        addIssueButton.simulate('click');
+        expect(wrapper.find('AddIssue')).toHaveLength(3);
+     });
 });
