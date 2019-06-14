@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
 import { Meeting } from './Components/Meeting'
+import AppRouter from './AppRouter';
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <div className="page-wrapper">
-          <Meeting traName="Test Group"></Meeting>
+          <AppRouter />
       </div>
     </div>
   );
