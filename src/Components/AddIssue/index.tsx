@@ -62,12 +62,18 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     }
 
     handleChangeOfIssueDropDownList = (event: ChangeEvent<HTMLSelectElement>): void => {
-      const name = event.target.name;
       const value = event.target.value
       this.setState({
-         
+        issue: { 
+          ...this.state.issue,
+          IssueType: {
+            IssueId:"",
+            IssueType:value
+          }
+      }
       })
-      //this.props.onSelectIssue(this.state.issue)
+
+      this.props.onChangeIssue(this.state.issue, this.props.index)
     }
 
     createSelectItemsForIssues() {
@@ -82,10 +88,9 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     render() {
       return (
         <div>
-          <div>{this.props.index}</div>
           <div><h4>Record issues at the meeting</h4></div>
           <p>Issue Type</p>
-          <select onSelect={this.handleChangeOfIssueDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueType" >
+          <select onChange={this.handleChangeOfIssueDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueType" >
             {this.createSelectItemsForIssues()}
           </select>
           {/* <input type="text" id="issue-type" onChange={this.handleChangeOfIssue} />
@@ -94,6 +99,9 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div><p>Issue Notes</p></div>
           <textarea id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote }/>
           <button id="delete-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.deleteIssue.bind(this)}>Delete Issue</button>
+          <div>{this.state.issue.Notes}</div>
+          <div>{this.state.issue.IssueType.IssueType}</div>
+
         </div>
       );
     }
