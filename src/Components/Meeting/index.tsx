@@ -53,7 +53,6 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
         <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees}/>
-        <h2>Issues Component</h2>
         <RecordIssues issues={this.state.issues}/>
         <ReviewMeeting
           attendees={this.state.attendees}
