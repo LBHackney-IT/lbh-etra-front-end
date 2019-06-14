@@ -1,20 +1,29 @@
-import {IBlockLocation} from '../BlockLocation'
-import { IIssueLocation } from './index';
+export enum IssueLocationType{
+   Estate,
+   Block,
+   Other,
+}
 
 export interface IIssueLocation 
 {
-   estateId: string,
-   estateName:string,
-   blockLocation:IBlockLocation
+   key: string,
+   name: string,
+   estateId:string,
+   blockId?: string,
+   locationType: IssueLocationType
 } 
 
 export class IssueLocation implements IIssueLocation {
+   public key: string;
    public estateId: string;
-   public estateName: string;
-   public blockLocation: IBlockLocation;
-   public constructor(estateId: string, estateName: string, blockLocation: IBlockLocation) {
-        this.estateId = estateId;
-        this.estateName = estateName;
-        this.blockLocation = blockLocation;
+   public blockId: string;
+   public name: string;
+   public locationType: IssueLocationType;
+   public constructor(key: string, name: string, estateId: string, blockId:string, locationType: IssueLocationType) {
+      this.key = key;
+      this.estateId = estateId;
+      this.blockId = blockId;
+      this.name = name;
+      this.locationType = locationType;
    }
 }
