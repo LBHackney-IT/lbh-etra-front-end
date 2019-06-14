@@ -8,11 +8,12 @@ import { IIssueLocationFactory, IssueLocationFactory } from "./Factories/IssueLo
 
 export default function configureServices(container: IServiceContainer) {
     //Factories
-    container.bind<IIssueLocationFactory>("IIssueLocationGateway", new IssueLocationFactory());
+    container.bind<IIssueLocationFactory>("IIssueLocationFactory", new IssueLocationFactory());
 
     //Gateways
     container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway());
-    container.bind<ILoadIssueLocationGateway>("ILoadIssueLocationGateway", new LoadIssueLocationGateway());
+    container.bind<ILoadIssueLocationGateway>("ILoadIssueLocationGateway", 
+        new LoadIssueLocationGateway(container.get<IIssueLocationFactory>("IIssueLocationFactory")));
 
     //Use Cases
     container.bind<ISaveMeetingUseCase>("ISaveMeetingUseCase", new SaveMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));

@@ -1,10 +1,10 @@
 import {IIssueLocationGateway, ILoadIssuesOutputMeetingModel, LoadIssuesOutputMeetingModel} from '../../Boundary/IssueLocation';
 import { IEstateLocation } from '../../Domain/EstateLocation';
-import { IssueLocation, IIssueLocation } from '../../Domain/IssueLocation';
+import {  IIssueLocation } from '../../Domain/IssueLocation';
 import locationsData from "../../JsonFiles/IssueLocation.json";
 import { IIssueLocationFactory } from '../../Factories/IssueLocation';
 
-export default class IssueLocationGateway implements IIssueLocationGateway {
+export default class LoadIssueLocationGateway implements IIssueLocationGateway {
     private _estateLocations:Array<IEstateLocation>;
     private _issueLocationFactory:IIssueLocationFactory;
 
@@ -14,12 +14,12 @@ export default class IssueLocationGateway implements IIssueLocationGateway {
     }
 
     public loadIssueLocations() : Promise<ILoadIssuesOutputMeetingModel> {
-        let issueLocations: IssueLocation[] = new Array<IIssueLocation>();
+        let issueLocations: IIssueLocation[] = new Array<IIssueLocation>();
 
         for(let i = 0; i < this._estateLocations.length; i++){
             let estateLocation:IEstateLocation = this._estateLocations[i];
-            let issueLocation:IssueLocation = this._issueLocationFactory.createFromEstateLocation(estateLocation);
-            issueLocations.push(issueLocation);
+            let estateLocations = this._issueLocationFactory.createFromEstateLocation(estateLocation);
+            issueLocations.concat(estateLocations);
         }
         let outputModel = new LoadIssuesOutputMeetingModel(true,  issueLocations);
         return Promise.resolve(outputModel);

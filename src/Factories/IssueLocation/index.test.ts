@@ -1,6 +1,9 @@
 import { IssueLocationFactory } from '.'
 import { IssueType } from '../../Domain/IssueType';
 import {IssueLocationType} from '../../Domain/IssueLocation'
+import { IEstateLocation } from '../../Domain/EstateLocation';
+
+import locationsData from "../../JsonFiles/IssueLocation.json";
 
 describe('When we go to create an issue location', () => {
     let issueFactory = new IssueLocationFactory();
@@ -56,9 +59,20 @@ describe('When we go to create an issue location with Other Type', () => {
 
 describe('When we go to create an issue location from an estate location', () => {
     let issueFactory = new IssueLocationFactory();
-    let issue = issueFactory.createFromEstateLocation();
 
-    it('Then the issue location type is Other', () => {
-        expect(issue.locationType).toBe(IssueLocationType.Estate);
+    let estateLocations = Array.from<IEstateLocation>(locationsData);
+
+    let locations = issueFactory.createFromEstateLocation(estateLocations[0]);
+
+    it('Then the issue location type is Estate for the first location', () => {
+        let estate = locations[0];
+        expect(estate.locationType).toBe(IssueLocationType.Estate);
+        expect(estate.name).toBe("De Beauvoir Road  De Beauvoir Estate");
+    });
+
+    it('Then the issue location type is Block for the second location', () => {
+        let block = locations[1];
+        expect(block.locationType).toBe(IssueLocationType.Block);
+        expect(block.name).toBe("De Beauvoir Estate  1-126 Fermain Court");
     });
 });

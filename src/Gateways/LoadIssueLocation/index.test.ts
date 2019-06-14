@@ -1,14 +1,12 @@
-import IssueLocationGateway from ".";
+import LoadIssueLocationGateway from ".";
 import { IIssueLocationGateway } from '../../Boundary/IssueLocation'
 import { IssueLocationFactory } from "../../Factories/IssueLocation";
 const factory = new IssueLocationFactory();
-const gateway: IIssueLocationGateway = new IssueLocationGateway(factory);
+const gateway: IIssueLocationGateway = new LoadIssueLocationGateway(factory);
 
 beforeEach(() => {
     localStorage.clear();
-  });
-
-
+});
 
 describe('When we go to load issue location data', async () => {
     let issueLocationResponse = await gateway.loadIssueLocations();
