@@ -2,13 +2,11 @@ import React, { ChangeEvent } from 'react';
 import { IIssue, Issue } from '../../Domain/Issues';
 import './index.css';
 import issueTypesData from "../../JsonFiles/IssueType.json"
-import {IIssueType, IssueType} from "../../Domain/IssueType"
-import { IIssueLocation, IssueLocation } from "../../Domain/IssueLocation";
+import {IIssueType} from "../../Domain/IssueType"
+import { IIssueLocation } from "../../Domain/IssueLocation";
 import {IIssueLocationGateway as ILoadIssueLocationGateway} from '../../Boundary/IssueLocation/'
-import LoadIssueLocationGateway from '../../Gateways/LoadIssueLocation/';
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
-
-import locationsData from "../../JsonFiles/IssueLocation.json";
+import { v4 as uuid } from 'uuid';
 
 export interface IAddIssuesProps
 {
@@ -41,7 +39,6 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
 
       this._issueLoadLocationGateway.loadIssueLocations().then((data)=>{
         console.log("loadIssueLocations promise resolved");
-        console.log(locationsData);
         debugger;
         this._issueLocations = data.issueLocations;
         this.setState({issueLocations:data.issueLocations});
@@ -75,12 +72,9 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       debugger;
       const index = Number(event.target.value);
       let issueType = this.state.issueTypes[index];
-      this.setState({
-        issue: { 
-          ...this.state.issue,
-          IssueType: issueType
-        }
-      });
+      let issue = this.state.issue;
+      issue.IssueType = issueType;
+      this.setState({issue:issue});
 
       this.props.onChangeIssue(this.state.issue, this.props.index);
     }
@@ -103,7 +97,8 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     createSelectItemsForIssueTypes() {
       let items = [];         
       for (let i = 0; i < this.state.issueTypes.length ; i++) {
-           items.push(<option key={i} value={i}>{this.state.issueTypes[i].IssueType}</option>);
+        let issueType = this.state.issueTypes[i];
+        items.push(<option key={issueType.key} value={i}>{issueType.IssueType}</option>);
       }
       return items;
     } 
@@ -123,7 +118,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div>{this.props.index}</div>
           <div><h4>Record issues at the meeting</h4></div>
           <p>Issue Type</p>
-          <select onChange={this.handleChangeOfIssueTypeDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueType" >
+          <select onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" >
             {this.createSelectItemsForIssueTypes()}
           </select>
 
