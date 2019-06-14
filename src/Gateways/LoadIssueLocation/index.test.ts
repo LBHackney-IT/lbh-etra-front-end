@@ -1,15 +1,11 @@
 import LoadIssueLocationGateway from ".";
-import { IIssueLocationGateway } from '../../Boundary/IssueLocation'
+import { IIssueLocationGateway, ILoadIssuesOutputMeetingModel } from '../../Boundary/IssueLocation'
 import { IssueLocationFactory } from "../../Factories/IssueLocation";
-const factory = new IssueLocationFactory();
-const gateway: IIssueLocationGateway = new LoadIssueLocationGateway(factory);
-
-beforeEach(() => {
-    localStorage.clear();
-});
 
 describe('When we go to load issue location data', async () => {
-    let issueLocationResponse = await gateway.loadIssueLocations();
+    let factory = new IssueLocationFactory();
+    let gateway: IIssueLocationGateway = new LoadIssueLocationGateway(factory);
+    let issueLocationResponse:ILoadIssuesOutputMeetingModel = await gateway.loadIssueLocations();
 
     it("Then output model is not null", () => {
         expect(issueLocationResponse).not.toBeNull();

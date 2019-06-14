@@ -8,6 +8,8 @@ import {IIssueLocationGateway as ILoadIssueLocationGateway} from '../../Boundary
 import LoadIssueLocationGateway from '../../Gateways/LoadIssueLocation/';
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 
+import locationsData from "../../JsonFiles/IssueLocation.json";
+
 export interface IAddIssuesProps
 {
   onChangeIssue: (issues: IIssue, index: number) => void;
@@ -34,9 +36,15 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     {
       super(props);
       this._issueLoadLocationGateway = context.get<ILoadIssueLocationGateway>("ILoadIssueLocationGateway");
+      
+      debugger;
 
       this._issueLoadLocationGateway.loadIssueLocations().then((data)=>{
+        console.log("loadIssueLocations promise resolved");
+        console.log(locationsData);
+        debugger;
         this._issueLocations = data.issueLocations;
+        this.setState({issueLocations:data.issueLocations});
       });
       this.state={
         issue: this.props.issue,
@@ -50,6 +58,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     }
 
     handleChangeOfIssueNote=(event: ChangeEvent<HTMLTextAreaElement>): void => {
+      debugger;
       const value = event.target.value;
       this.setState({
         issue: { 
@@ -62,15 +71,14 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     }
 
     handleChangeOfIssueTypeDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
-      const name = event.target.name;
-      const value = event.target.value;
+      console.log("handleChangeOfIssueTypeDropDownList");
+      debugger;
+      const index = Number(event.target.value);
+      let issueType = this.state.issueTypes[index];
       this.setState({
         issue: { 
           ...this.state.issue,
-          IssueType: {
-            IssueId:"",
-            IssueType:value
-          }
+          IssueType: issueType
         }
       });
 
@@ -78,9 +86,10 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     }
 
     handleChangeOfIssueLocationDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
-
+      console.log("handleChangeOfIssueLocationDropDownList");
+      debugger;
       const index = Number(event.target.value);
-      let location = this._issueLocations[index];
+      let location = this.state.issueLocations[index];
       this.setState({
         issue: { 
           ...this.state.issue,
@@ -93,20 +102,19 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
 
     createSelectItemsForIssueTypes() {
       let items = [];         
-      for (let i = 0; i <= this.state.issueTypes.length -1 ; i++) {
-           items.push(<option key={i} value={this.state.issueTypes[i].IssueId}>{this.state.issueTypes[i].IssueType}</option>);
+      for (let i = 0; i < this.state.issueTypes.length ; i++) {
+           items.push(<option key={i} value={i}>{this.state.issueTypes[i].IssueType}</option>);
       }
       return items;
     } 
     createSelectItemsForIssueLocations() {
       let locationitems = [];         
-      for (let i = 0; i <= this.state.issueLocations.length -1 ; i++) {
+      for (let i = 0; i < this.state.issueLocations.length ; i++) {
         let issueLocation = this.state.issueLocations[i];
         locationitems.push(<option key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
       }
       return locationitems;
     } 
- 
 
 
     render() {
@@ -115,12 +123,12 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div>{this.props.index}</div>
           <div><h4>Record issues at the meeting</h4></div>
           <p>Issue Type</p>
-          <select onSelect={this.handleChangeOfIssueTypeDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueType" >
+          <select onChange={this.handleChangeOfIssueTypeDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueType" >
             {this.createSelectItemsForIssueTypes()}
           </select>
 
           <p>Issue Location</p>
-          <select onSelect={this.handleChangeOfIssueLocationDropDownList} value={this.state.issue.IssueType.IssueType} name="IssueLocation" >
+          <select onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation" >
             {this.createSelectItemsForIssueLocations()}
           </select>
           <div><p>Issue Notes</p></div>

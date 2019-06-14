@@ -9,6 +9,7 @@ export default class LoadIssueLocationGateway implements IIssueLocationGateway {
     private _issueLocationFactory:IIssueLocationFactory;
 
     public constructor(issueLocationFactory:IIssueLocationFactory){
+        debugger;
         this._estateLocations = Array.from<IEstateLocation>(locationsData);
         this._issueLocationFactory = issueLocationFactory;
     }
