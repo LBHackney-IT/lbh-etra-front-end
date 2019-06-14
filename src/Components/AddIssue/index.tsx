@@ -34,15 +34,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     {
       super(props);
       this._issueLoadLocationGateway = context.get<ILoadIssueLocationGateway>("ILoadIssueLocationGateway");
-      
-      debugger;
-
-      this._issueLoadLocationGateway.loadIssueLocations().then((data)=>{
-        console.log("loadIssueLocations promise resolved");
-        debugger;
-        this._issueLocations = data.issueLocations;
-        this.setState({issueLocations:data.issueLocations});
-      });
+      this.loadIssueLocations();
       this.state={
         issue: this.props.issue,
         issueTypes: this._issueTypes,
@@ -50,26 +42,34 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       }
     }
 
+    loadIssueLocations() {
+      this._issueLoadLocationGateway.loadIssueLocations().then((data) => {
+        this._issueLocations = data.issueLocations;
+        this.setState({ issueLocations: data.issueLocations });
+        let issue = this.state.issue;
+        issue.Location = this.state.issueLocations[0];
+        this.setState({ issue: issue });
+      });
+    }
+
     deleteIssue = (): void => {
       this.props.onDeleteIssue(this.props.index);
     }
 
     handleChangeOfIssueNote=(event: ChangeEvent<HTMLTextAreaElement>): void => {
-      debugger;
       const value = event.target.value;
-      this.setState({
-        issue: { 
-            ...this.state.issue,
-            Notes: value
-        }
-      });
+
+      let issue = this.state.issue;
+      issue.Notes = value;
+      this.setState({issue:issue});
 
       this.props.onChangeIssue(this.state.issue, this.props.index);
+      console.log(this.state.issue);
     }
 
     handleChangeOfIssueTypeDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
       console.log("handleChangeOfIssueTypeDropDownList");
-      debugger;
+      
       const index = Number(event.target.value);
       let issueType = this.state.issueTypes[index];
       let issue = this.state.issue;
@@ -77,22 +77,24 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       this.setState({issue:issue});
 
       this.props.onChangeIssue(this.state.issue, this.props.index);
+      console.log(issue);
     }
 
     handleChangeOfIssueLocationDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
       console.log("handleChangeOfIssueLocationDropDownList");
-      debugger;
+      
       const index = Number(event.target.value);
       let location = this.state.issueLocations[index];
-      this.setState({
-        issue: { 
-          ...this.state.issue,
-          Location:location
-        }
-      });
+
+      let issue = this.state.issue;
+      issue.Location = location;
+      this.setState({issue:issue });
 
       this.props.onChangeIssue(this.state.issue, this.props.index);
+      console.log(this.state.issue);
     }
+
+
 
     createSelectItemsForIssueTypes() {
       let items = [];         
