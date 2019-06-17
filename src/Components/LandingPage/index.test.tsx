@@ -14,6 +14,11 @@ it('Landing page component loads', () => {
 describe('When we go to render the landing page', () => {
     const wrapper = shallow(<LandingPage />);
 
+    it('Then form is not valid and button is disabled', () => {
+        expect(wrapper.state("valid")).toBe(false);
+        expect(wrapper.find('[data-test="start-meeting"]').props().disabled).toBe(true);
+    })
+
     it('Then the header text is shown', () => {
         const headerText = wrapper.find('[data-test="header-text"]')
         expect(headerText.text()).toBe('ETRA Meetings');
@@ -43,7 +48,7 @@ describe('When we go to render the landing page', () => {
         expect(wrapper.state("selectedTraId")).toBe("");
     })
 
-    it('Then selected TRA can be changed', () => {
+    it('Then selected TRA can be changed and form becomes valid', () => {
         const newValue = uuid();
         const event = {currentTarget: { value : newValue}};
         const dropdown = wrapper.find('[data-test="tra-selection"]');
@@ -51,6 +56,8 @@ describe('When we go to render the landing page', () => {
         dropdown.simulate("change", event);
 
         expect(wrapper.state("selectedTraId")).toBe(newValue);
+        expect(wrapper.state("valid")).toBe(true);
+        expect(wrapper.find('[data-test="start-meeting"]').props().disabled).toBe(false);
     })
 
     it('Then if state changes, dropdown value is updated automatically to reflect this', () => {
@@ -60,5 +67,15 @@ describe('When we go to render the landing page', () => {
         const dropdown = wrapper.find('[data-test="tra-selection"]');
 
         expect(dropdown.props().value).toBe(newValue);
+    })
+
+    it('Then if start meeting button is clicked, redirect is set to true', () => {
+        const newValue = uuid();
+        wrapper.setState({selectedTraId: newValue});
+
+        const button = wrapper.find('[data-test="start-meeting"]');
+        button.simulate('click');
+
+        expect(wrapper.state("redirect")).toBe(true);
     })
 });

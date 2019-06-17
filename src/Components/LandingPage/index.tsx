@@ -1,6 +1,7 @@
 import React, { Component, FormEvent } from "react";
 import './index.css';
 import { v4 as uuid } from 'uuid';
+import { Link, Redirect } from "react-router-dom";
 
 interface ITraDetails {
     id: string,
@@ -14,14 +15,20 @@ const options : Array<ITraDetails> = [
 ]
 
 export interface ILandingPageState {
-    selectedTraId: string
+    valid: boolean,
+    redirect: boolean,
+    selectedTraId: string,
 }
 
 export default class LandingPage extends Component<{}, ILandingPageState> { 
     public constructor(props: {}) {
         super(props);
     
-        this.state = { selectedTraId: "" }
+        this.state = { 
+            valid: false,
+            redirect: false,
+            selectedTraId: "",
+        }
     }
 
     private findSelectedTra(selectedId: string) : ITraDetails | undefined {
@@ -29,16 +36,34 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
-        this.setState({selectedTraId: event.currentTarget.value});
-        console.log(event.currentTarget.value);
+        this.setState({selectedTraId: event.currentTarget.value}, this.checkIsValid);
+    }
+
+    checkIsValid = () : void => {
+        const valid = !!this.state.selectedTraId;
+        this.setState({valid: valid});
+    }
+
+    onClickStart = () : void => {
+        this.setState({redirect: true});
     }
 
     public render(){
+        if (this.state.redirect) {
+            return <Redirect push to={`/meeting/${this.state.selectedTraId}`} />;
+        }
+
         return (
             <div className="landing-page-form">
                 <div className="landing-page-header" data-test="header-text">ETRA Meetings</div>
                 {this.renderDropdown()}
-                <button data-test="start-meeting" className="button btn-primary">Start ETRA Meeting</button>
+                <button 
+                    data-test="start-meeting" 
+                    className="button btn-primary" 
+                    onClick={this.onClickStart}
+                    disabled={!this.state.valid}>
+                    Start ETRA Meeting
+                </button>
             </div>
         )
     }
