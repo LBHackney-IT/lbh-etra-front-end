@@ -21,6 +21,12 @@
   text-align: center;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .btn-primary {
   background-color: #00664f;
   color: #ffffff;
