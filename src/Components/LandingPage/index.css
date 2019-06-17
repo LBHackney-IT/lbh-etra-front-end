@@ -1,0 +1,38 @@
+.landing-page-form {
+    display: block;
+}
+
+.landing-page-header {
+    font-size: 36px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.53;
+    letter-spacing: normal;
+    color: #000000;
+}
+
+.dropdown-label {
+    font-size: 19px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.32;
+    letter-spacing: normal;
+    color: #0b0c0c;
+}
+
+.tra-select {
+    padding-top: 6px;
+    width: 480px;
+    height: 55px;
+    border-radius: 5px;
+    border: solid 2px #222222;
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+.tra-select-group {
+    padding-top: 50px;
+    padding-bottom: 60px;
+}

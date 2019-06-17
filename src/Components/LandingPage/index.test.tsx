@@ -1,0 +1,63 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { default as Adapter } from 'enzyme-adapter-react-16';
+import { configure, shallow } from 'enzyme';
+import LandingPage from '.';
+
+configure({ adapter: new Adapter() });
+
+it('Landing page component loads', () => {
+    shallow(<LandingPage />);
+});
+
+describe('When we go to render the landing page', () => {
+    const wrapper = shallow(<LandingPage />);
+
+    it('Then the header text is shown', () => {
+        const headerText = wrapper.find('[data-test="header-text"]')
+        expect(headerText.text()).toBe('ETRA Meetings');
+    });
+
+    it('Then the TRA selection dropdown is shown', () => {
+        const dropdown = wrapper.find('[data-test="tra-selection"]');
+        expect(dropdown).toHaveLength(1);
+    })
+
+    it('Then the dropdown label is correct', () => {
+        const labelText = wrapper.find('[data-test="tra-selection-label"]')
+        expect(labelText.text()).toBe('Select TRA');
+    })
+
+    it('Then dropdown has correct number of options (includes hidden default option)', () => {
+        const options = wrapper.find('[data-test="tra-option"]');
+        expect(options).toHaveLength(3);
+    })
+
+    it('Then start etra meeting button is shown', () => {
+        const button = wrapper.find('[data-test="start-meeting"]');
+        expect(button.text()).toBe("Start ETRA Meeting");
+    })
+
+    it('Then selected TRA is empty to begin with', () => {
+        expect(wrapper.state("selectedTRA")).toBe("");
+    })
+
+    it('Then selected TRA can be changed', () => {
+        const newValue = "Test TRA";
+        const event = {currentTarget: { value : newValue}};
+        const dropdown = wrapper.find('[data-test="tra-selection"]');
+
+        dropdown.simulate("change", event);
+
+        expect(wrapper.state("selectedTRA")).toBe(newValue);
+    })
+
+    it('Then if state changes, dropdown value is updated automatically to reflect this', () => {
+        const newValue = "Other TRA";
+        wrapper.setState({selectedTRA: newValue});
+
+        const dropdown = wrapper.find('[data-test="tra-selection"]');
+
+        expect(dropdown.props().value).toBe(newValue);
+    })
+});
