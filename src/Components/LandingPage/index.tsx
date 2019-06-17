@@ -1,25 +1,36 @@
 import React, { Component, FormEvent } from "react";
 import './index.css';
+import { v4 as uuid } from 'uuid';
 
-const options : Array<string> = [
-    "Test TRA",
-    "Other TRA",
-    "Another TRA"
+interface ITraDetails {
+    id: string,
+    name: string,
+}
+
+const options : Array<ITraDetails> = [
+    { id: uuid(), name: "Test TRA"},
+    { id: uuid(), name: "Other TRA"},
+    { id: uuid(), name: "Another TRA"}
 ]
 
-export interface ILandingPageState{
-    selectedTRA: string
+export interface ILandingPageState {
+    selectedTraId: string
 }
 
 export default class LandingPage extends Component<{}, ILandingPageState> { 
     public constructor(props: {}) {
         super(props);
     
-        this.state = { selectedTRA: "" }
-      }
+        this.state = { selectedTraId: "" }
+    }
+
+    private findSelectedTra(selectedId: string) : ITraDetails | undefined {
+        return options.find((option) => option.id === selectedId);
+    }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
-        this.setState({selectedTRA: event.currentTarget.value});
+        this.setState({selectedTraId: event.currentTarget.value});
+        console.log(event.currentTarget.value);
     }
 
     public render(){
@@ -40,7 +51,7 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
                 </label>
                 <br />
                 <select 
-                    value={this.state.selectedTRA} 
+                    value={this.state.selectedTraId} 
                     data-test="tra-selection"
                     name="tra-select" 
                     onChange={this.onChangeSelection}
@@ -52,13 +63,13 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
         );
     }
 
-    private renderDropdownOption(option: string, index: number){
+    private renderDropdownOption(option: ITraDetails){
         return (
             <option 
                 data-test="tra-option" 
-                value={option}
-                key={index}>
-                    {option}
+                value={option.id}
+                key={option.id}>
+                    {option.name}
             </option>
         );
     }

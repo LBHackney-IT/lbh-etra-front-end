@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, shallow } from 'enzyme';
 import LandingPage from '.';
+import { v4 as uuid } from 'uuid';
 
 configure({ adapter: new Adapter() });
 
@@ -39,22 +40,22 @@ describe('When we go to render the landing page', () => {
     })
 
     it('Then selected TRA is empty to begin with', () => {
-        expect(wrapper.state("selectedTRA")).toBe("");
+        expect(wrapper.state("selectedTraId")).toBe("");
     })
 
     it('Then selected TRA can be changed', () => {
-        const newValue = "Test TRA";
+        const newValue = uuid();
         const event = {currentTarget: { value : newValue}};
         const dropdown = wrapper.find('[data-test="tra-selection"]');
 
         dropdown.simulate("change", event);
 
-        expect(wrapper.state("selectedTRA")).toBe(newValue);
+        expect(wrapper.state("selectedTraId")).toBe(newValue);
     })
 
     it('Then if state changes, dropdown value is updated automatically to reflect this', () => {
-        const newValue = "Other TRA";
-        wrapper.setState({selectedTRA: newValue});
+        const newValue = uuid();
+        wrapper.setState({selectedTraId: newValue});
 
         const dropdown = wrapper.find('[data-test="tra-selection"]');
 
