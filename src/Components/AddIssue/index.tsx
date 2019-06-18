@@ -120,8 +120,8 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       return (
         <div>
           <div data-test="issues-header"><h4>Record issues at the meeting</h4></div>
-          <label data-test="issues-label">Issue Type</label>
-          <select data-test="issue-type-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
+          <label data-test="issue-label">Issue Type</label>
+          <select data-test="issue-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
             {this.renderFirstOption("Select Issue Type")}
             {this.createSelectItemsForIssueTypes()}
           </select>

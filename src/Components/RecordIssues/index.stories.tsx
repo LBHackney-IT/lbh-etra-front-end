@@ -4,5 +4,5 @@ import RecordIssues from '.';
 
 storiesOf('RecordIssues', module)
   .add("opens correctly", () => (
-    <RecordIssues issues={[]}/>
+    <RecordIssues issues={[]} onChangeIssues={() => {}}/>
   ));
