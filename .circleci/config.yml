@@ -53,8 +53,6 @@ jobs:
     steps:
       - deploy-env:
         environment: 'dev'
-    requires:
-      - build
     # filters:
     #   branches:
     #     only: develop
