@@ -94,13 +94,11 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       console.log(this.state.issue);
     }
 
-
-
     createSelectItemsForIssueTypes() {
       let items = [];         
       for (let i = 0; i < this.state.issueTypes.length ; i++) {
         let issueType = this.state.issueTypes[i];
-        items.push(<option key={issueType.key} value={i}>{issueType.IssueType}</option>);
+        items.push(<option className="issues-options" key={i} value={i}>{issueType.IssueType}</option>);
       }
       return items;
     } 
@@ -108,28 +106,33 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       let locationitems = [];         
       for (let i = 0; i < this.state.issueLocations.length ; i++) {
         let issueLocation = this.state.issueLocations[i];
-        locationitems.push(<option key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
+        locationitems.push(<option className="location-options" key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
       }
       return locationitems;
     } 
+
+    renderFirstOption(text: string){
+      return (<option value="" disabled hidden>{text}</option>)
+    }
 
 
     render() {
       return (
         <div>
-          <div>{this.props.index}</div>
-          <div><h4>Record issues at the meeting</h4></div>
-          <p>Issue Type</p>
-          <select onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" >
+          <div data-test="issues-header"><h4>Record issues at the meeting</h4></div>
+          <label data-test="issues-label">Issue Type</label>
+          <select data-test="issue-type-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
+            {this.renderFirstOption("Select Issue Type")}
             {this.createSelectItemsForIssueTypes()}
           </select>
 
-          <p>Issue Location</p>
-          <select onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation" >
+          <label data-test="location-label">Issue Location</label>
+          <select data-test="location-dropdown" defaultValue={undefined} onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
+            {this.renderFirstOption("Select Location")}
             {this.createSelectItemsForIssueLocations()}
           </select>
           <div><p>Issue Notes</p></div>
-          <textarea id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote }/>
+          <textarea className="note" data-test="notes" id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote } name= "notes"/>
           <button id="delete-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.deleteIssue}>Delete Issue</button>
         </div>
       );
