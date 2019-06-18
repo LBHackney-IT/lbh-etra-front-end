@@ -13,6 +13,9 @@ executors:
 
 commands:
   deploy-env: 
+    parameters:
+      environment:
+        type: string
     steps:
       - checkout
       - aws-cli/install
