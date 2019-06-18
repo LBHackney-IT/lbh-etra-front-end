@@ -23,6 +23,12 @@ commands:
           aws-access-key-id: AWS_ID_KEY
           aws-secret-access-key: AWS_SECRET_KEY
           aws-region: AWS_REGION
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: npm install
       - run:
           name: Build Static Files
           command: make build
