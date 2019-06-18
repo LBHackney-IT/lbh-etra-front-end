@@ -13,22 +13,8 @@ it('Meeting component loads', () => {
    shallow(<ReviewMeeting onReviewComplete={() => {}} />);
 });
 
-describe('When we go to click "Review now with TRA"', ()  => {
+describe('When we display the review meeting component', ()  => {
     const wrapper = shallow(<ReviewMeeting onReviewComplete={() => {}}/>);
-    let button = wrapper.find('#review-now');
-    button.simulate('click');
-
-    it('Then the save "Review now with TRA" button is NOT displayed', () => {
-        //button should be hidden
-        var hiddenButton = wrapper.find('#review-now');
-        expect(hiddenButton.exists()).toBe(false); 
-    });
-
-    it('Then the "TRA representative to review later" button is NOT displayed', () => {
-        //button should be hidden
-        var hiddenButton = wrapper.find('#review-later');
-        expect(hiddenButton.exists()).toBe(false); 
-    })
 
     it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
@@ -67,6 +53,12 @@ describe('When we go to click "Review now with TRA"', ()  => {
         const element = wrapper.find(SaveMeeting)
         expect(element).toHaveLength(1);
     });
+
+    it('Then the "TRA representative to review later" button is displayed', () => {
+        //button should be hidden
+        var hiddenButton = wrapper.find('#review-later');
+        expect(hiddenButton.exists()).toBe(true); 
+    })
 
     describe('And we go to select a "TRA role from the options"', ()  => {
         it('Then the Save and email issue list to TRA button is displayed', () => {

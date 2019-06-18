@@ -32,12 +32,19 @@
 
 .input-box
 {
-  width: 450px;
   height: 40px;
   border: solid 2px #0b0c0c;
   background-color: #ffffff;
   font-size: 16px;
   padding-left: 5px;
+}
+
+.display-box {
+  height: 46px;
+  font-size: 16px;
+  padding-left: 5px;
+  display: flex;
+  align-items: center
 }
 
 .wide-box {
@@ -55,4 +62,8 @@
   color: #0072ce;
   padding-right: 12px;
   cursor: pointer;
+}
+
+.read-only-background {
+  background-color: rgba(34, 34, 34, 0.05);
 }

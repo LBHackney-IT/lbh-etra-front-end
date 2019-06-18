@@ -13,9 +13,14 @@ export interface IReviewMeetingProps {
 }
 
 export interface IReviewMeetingState {
-    reviewComplete: boolean,
-    isReviewingNow: boolean,
+    pageState: PageState,
     signatureBase64: string,
+}
+
+enum PageState {
+    Ready,
+    ReviewComplete,
+    ReviewLater
 }
 
 export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
@@ -23,8 +28,7 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
     public constructor(props: IReviewMeetingProps) {
         super(props);
         this.state = {
-            reviewComplete: false,
-            isReviewingNow: false,
+            pageState: PageState.Ready,
             signatureBase64: ""
         }
     }
@@ -34,25 +38,36 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
         attendees: {}
     };
 
-    handleIsReviewingNow = () => {
-        this.setState({ isReviewingNow: true });
-    }
-
-    updateSignatureString = (value: string) => {
+    private updateSignatureString = (value: string) : void => {
         this.setState({ signatureBase64: value });
     }
 
+    private onReviewLater = () : void => {
+        this.setState({pageState: PageState.ReviewLater})
+        this.props.onReviewComplete();
+    }
+
+    private onSaveComplete = () : void => {
+        this.setState({pageState: PageState.ReviewComplete});
+        this.props.onReviewComplete();
+    }
+
     render() {
-        if(this.state.reviewComplete){
+        if(this.state.pageState === PageState.ReviewComplete){
             return this.renderConfirmation();
         }
 
-        if (this.state.isReviewingNow) {
-            return this.renderReviewNow();
+        if(this.state.pageState === PageState.ReviewLater){
+            return this.renderReviewLater();
         }
-        else {
-            return this.renderButtons();
-        }
+
+        return this.renderReview();
+    }
+
+    private renderReviewLater() {
+        return (
+            <h2>You reviewed later yay</h2>
+        );
     }
 
     private renderConfirmation() {
@@ -61,17 +76,7 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
         )
       }
 
-    private renderButtons() {
-        return (
-            <div>
-                <div className="ready-for-review-by">Ready for review by TRA representative?</div>
-                <button className="button btn-primary btn-stacked" id="review-now" onClick={this.handleIsReviewingNow}>Review now with TRA</button>
-                <button className="button btn-primary btn-stacked" id="review-later">TRA representative to review later</button>
-            </div>
-        );
-    }
-
-    private renderReviewNow() {
+    private renderReview() {
         return (
             <div>
                 <div className="signature-of-TRA-rep">Signature of TRA representative</div>
@@ -86,13 +91,9 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
                 <div><input id="treasurer" className="radio-unselected" type="radio" name="tra-role" value="Treasurer"></input><span className="radio-text">Treasurer</span></div>
 
                 <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} attendees={this.props.attendees}/>
+                <button className="button btn-primary btn-stacked" id="review-later" onClick={this.onReviewLater}>TRA representative to review later</button>
             </div>
         );
-    }
-
-    private onSaveComplete = () : void => {
-        this.setState({reviewComplete: true});
-        this.props.onReviewComplete();
     }
 }
 

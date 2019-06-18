@@ -52,7 +52,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
 
         <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
-        <Attendees onChangeAttendees={this.onChangeAttendees}/>
+        <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <RecordIssues issues={this.state.issues}/>
         <ReviewMeeting
           attendees={this.state.attendees}
