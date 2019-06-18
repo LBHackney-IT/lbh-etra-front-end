@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { IIssue } from '../../Domain/Issues';
 import { ISaveMeetingInputModel, ISaveMeetingUseCase, ISaveMeetingOutputModel } from '../../Boundary/SaveMeeting';
 import { IMeetingGateway } from '../../Gateways/MeetingGateway';
