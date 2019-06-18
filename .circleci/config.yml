@@ -61,8 +61,8 @@ workflows:
     jobs:
       - build
       - deploy-to-development:
-        requires:
-          - build
+          requires:
+            - build
         # filters:
         #   branches:
         #     only: develop
