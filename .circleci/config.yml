@@ -64,6 +64,11 @@ jobs:
     steps:
       - deploy-env:
           environment: 'dev'
+  deploy-to-staging:
+    executor: node
+    steps:
+      - deploy-env:
+          environment: 'staging'
 workflows:
   version: 2
   build_and_test:
@@ -72,8 +77,14 @@ workflows:
       - deploy-to-development:
           requires:
             - build
-        # filters:
-        #   branches:
-        #     only: develop
+        filters:
+          branches:
+            only: master
+      - deploy-to-staging:
+          requires:
+            - deploy-to-development
+        filters:
+          branches:
+            only: master
 
 
