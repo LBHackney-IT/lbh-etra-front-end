@@ -55,13 +55,16 @@ jobs:
     steps:
       - deploy-env:
           environment: 'dev'
-    # filters:
-    #   branches:
-    #     only: develop
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
       - deploy-to-development
+        requires:
+          - build
+        # filters:
+        #   branches:
+        #     only: develop
+
 
