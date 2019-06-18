@@ -22,20 +22,20 @@ it('Add Issue component loads',() => {
     </ServiceProvider>)
 });
 
-// it('Issue notes can be changed', ()=>{
+it('Issue notes can be changed', ()=>{
 
-//     const wrapper = shallow( 
-//         <ServiceProvider value={serviceContainer}>
-//             <AddIssue index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
-//         </ServiceProvider>)
-//     const event = { target: { name: 'notes', value: "hello"}};
-//     const dropdown = wrapper.find('[data-test="notes"]');
+    const wrapper = mount( 
+        <ServiceProvider value={serviceContainer}>
+            <AddIssue index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
+        </ServiceProvider>)
+    const event = { target: { name: 'notes', value: "hello"}};
+    const notes = wrapper.find('[data-test="notes"]');
 
-//     dropdown.simulate('change', event);
-//     const issueState = wrapper.state("issue") as IIssue;
+    notes.simulate('change', event);
+    const issueState = wrapper.state("issue") as IIssue;
 
-//     expect(issueState.Notes).toBe("hello");
-//  });
+    expect(issueState.Notes).toBe("hello");
+ });
 
 describe('when we go to render the Add Issue Component',()=>{
 
@@ -70,13 +70,15 @@ describe('when we go to render the Add Issue Component',()=>{
         const issueDropdown = wrapper.find('[data-test="issue-type-dropdown"]')
         expect(issueDropdown.exists()).toBe(true);
 
-        const issueLabale = wrapper.find('[data-test="issue-label"]')
-        expect(issueLabale.exists()).toBe(true);
+        const issueLabel = wrapper.find('[data-test="issue-label"]')
+        expect(issueLabel.exists()).toBe(true);
     });
 
-    // it('Then the location dropdown has the correct number of options', () => {
-    //     expect(wrapper.find('option').contains('.location-options')).toBe(true);
-    // });
+    it('Then the location dropdown has the correct number of options', () => {
+        //You need to mock the gateway that gives you the service locations as part of your service container mock
+        //Then you can expect to get the correct number of options here
+        expect(wrapper.find('[data-test="location-option"]')).toHaveLength(10);
+    });
 
     it('Then we can delete the issue we added', () => {
         let deleteButton = wrapper.find('#delete-issue');

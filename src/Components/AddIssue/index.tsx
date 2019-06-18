@@ -106,7 +106,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       let locationitems = [];         
       for (let i = 0; i < this.state.issueLocations.length ; i++) {
         let issueLocation = this.state.issueLocations[i];
-        locationitems.push(<option className="location-options" key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
+        locationitems.push(<option data-text="location-option" className="location-options" key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
       }
       return locationitems;
     } 
