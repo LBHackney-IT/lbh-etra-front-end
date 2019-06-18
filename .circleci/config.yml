@@ -51,7 +51,7 @@ jobs:
           name: Run TestCafe Tests
           command: npm run test-e2e-headless
   deploy-to-development:
-    executor: python
+    executor: node
     steps:
       - deploy-env:
           environment: 'dev'
