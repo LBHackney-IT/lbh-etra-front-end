@@ -52,6 +52,9 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Build Static Files
+          command: make build
       - run: npm test
       - run: 
           name: Run TestCafe Tests
