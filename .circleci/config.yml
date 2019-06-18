@@ -14,7 +14,6 @@ executors:
 commands:
   deploy-env: 
     working_directory: ~/lbh-etra-front-end
-    executor: python
     steps:
       - checkout
       - aws-cli/install
@@ -50,6 +49,7 @@ jobs:
           name: Run TestCafe Tests
           command: npm run test-e2e-headless
   deploy-to-development:
+    executor: python
     steps:
       - deploy-env:
         environment: 'dev'
