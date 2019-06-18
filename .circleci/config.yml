@@ -60,7 +60,7 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - deploy-to-development
+      - deploy-to-development:
         requires:
           - build
         # filters:
