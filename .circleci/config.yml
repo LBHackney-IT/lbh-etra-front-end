@@ -13,7 +13,6 @@ executors:
 
 commands:
   deploy-env: 
-    working_directory: ~/lbh-etra-front-end
     steps:
       - checkout
       - aws-cli/install
