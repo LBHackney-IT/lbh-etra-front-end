@@ -54,7 +54,7 @@ jobs:
     executor: python
     steps:
       - deploy-env:
-        environment: 'dev'
+          environment: 'dev'
     # filters:
     #   branches:
     #     only: develop
