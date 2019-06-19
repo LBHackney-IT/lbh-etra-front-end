@@ -1,7 +1,7 @@
 import React, { Component, FormEvent } from "react";
 import './index.css';
 import { v4 as uuid } from 'uuid';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 interface ITraDetails {
     id: string,
