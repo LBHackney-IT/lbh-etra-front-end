@@ -1,0 +1,22 @@
+.message-box {
+  background-color: rgba(0, 102, 79, 0.1);
+  display: block;
+}
+
+.text-container {
+  padding: 12px;
+}
+
+.message-text {
+  font-size: 19px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.58;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.message-one {
+  padding-bottom: 30px;
+}

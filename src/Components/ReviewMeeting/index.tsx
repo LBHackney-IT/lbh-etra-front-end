@@ -5,6 +5,7 @@ import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
 import { IAttendees } from '../Attendees';
+import ConfirmLater from '../ConfirmLater';
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
@@ -54,27 +55,15 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
 
     render() {
         if(this.state.pageState === PageState.ReviewComplete){
-            return this.renderConfirmation();
+          return (<Confirmation SignatureImage={this.state.signatureBase64} />);
         }
 
         if(this.state.pageState === PageState.ReviewLater){
-            return this.renderReviewLater();
+            return (<ConfirmLater/>);
         }
 
         return this.renderReview();
     }
-
-    private renderReviewLater() {
-        return (
-            <h2>You reviewed later yay</h2>
-        );
-    }
-
-    private renderConfirmation() {
-        return (
-          <Confirmation SignatureImage={this.state.signatureBase64} />
-        )
-      }
 
     private renderReview() {
         return (
