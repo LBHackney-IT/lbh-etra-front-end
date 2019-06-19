@@ -1,9 +1,40 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@0.1.9
+
 executors:
   node:
     docker:
       - image: circleci/node:10.16-browsers
+  python:
+    docker:
+      - image: circleci/python:3.7
+
+commands:
+  deploy-env: 
+    parameters:
+      environment:
+        type: string
+    steps:
+      - checkout
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-access-key-id: AWS_ID_KEY
+          aws-secret-access-key: AWS_SECRET_KEY
+          aws-region: AWS_REGION
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: npm install
+      - run:
+          name: Build Static Files
+          command: CI=false make build
+      - run:
+          name: Sync S3 Bucket
+          command: aws s3 sync build/ s3://<< parameters.environment >>-etra-manageatenancy --delete
 
 jobs:
   build: 
@@ -21,13 +52,39 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Build Static Files
+          command: CI=false make build
       - run: npm test
       - run: 
           name: Run TestCafe Tests
           command: npm run test-e2e-headless
+  deploy-to-development:
+    executor: node
+    steps:
+      - deploy-env:
+          environment: 'dev'
+  deploy-to-staging:
+    executor: node
+    steps:
+      - deploy-env:
+          environment: 'staging'
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
+      - deploy-to-development:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy-to-staging:
+          requires:
+            - deploy-to-development
+          filters:
+            branches:
+              only: master
+
 
