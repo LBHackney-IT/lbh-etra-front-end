@@ -31,7 +31,7 @@ commands:
       - run: npm install
       - run:
           name: Build Static Files
-          command: CI=false make build
+          command: make build
       - run:
           name: Sync S3 Bucket
           command: aws s3 sync build/ s3://<< parameters.environment >>-etra-manageatenancy --delete
@@ -54,7 +54,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Build Static Files
-          command: CI=false make build
+          command: make build
       - run: npm test
       - run: 
           name: Run TestCafe Tests
