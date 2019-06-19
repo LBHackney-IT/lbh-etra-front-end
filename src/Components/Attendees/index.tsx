@@ -74,11 +74,11 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         return (
             <div className={`border-left ${this.props.readOnly ? "read-only-background" : ""}`}>
                 <div data-test="councillor-label" className="input-label">Councillors</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.Councillors), this.renderCouncillors())}
+                {this.conditionalRender(this.renderText(this.state.attendees.Councillors, "councillors-text"), this.renderCouncillors())}
                 <div data-test="hackney-council-staff-label" className="input-label">Hackney Council Staff</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.HackneyStaff), this.renderHackneyStaff())}
+                {this.conditionalRender(this.renderText(this.state.attendees.HackneyStaff, "staff-text"), this.renderHackneyStaff())}
                 <div data-test="number-of-attendees-label" className="input-label">Number of attendees</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.NumberOfAttendees.toString()), this.renderNumberOfAttendees())}
+                {this.conditionalRender(this.renderText(this.state.attendees.NumberOfAttendees.toString(), 'number-of-attendees-text'), this.renderNumberOfAttendees())}
             </ div>
         );
     }
@@ -88,7 +88,8 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
             <input 
                 data-test="councillor-input" 
                 className="input-box wide-box" 
-                type="text" name="Councillors" 
+                type="text" name="Councillors"
+                id="councillors"
                 onChange={this.onChangeForm} 
                 value={this.state.attendees.Councillors} />
         )
@@ -100,6 +101,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
                 data-test="hackney-council-staff-input" 
                 className="input-box wide-box" 
                 type="text" name="HackneyStaff" 
+                id="hackney-staff"
                 onChange={this.onChangeForm} 
                 value={this.state.attendees.HackneyStaff} />
         )
@@ -111,6 +113,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
                 data-test="number-of-attendees-input" 
                 className="input-box narrow-box" 
                 type="number" name="NumberOfAttendees" 
+                id="number-of-attendees"
                 onChange={this.onChangeForm} 
                 value={this.state.attendees.NumberOfAttendees} />
         )
@@ -120,8 +123,8 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         return (<>{this.props.readOnly ? readOnly : notReadOnly}</>);
     }
 
-    renderText(text: string){
-        return (<div className="display-box">{text}</div>);
+    renderText(text: string, id: string){
+        return (<div id={id} className="display-box">{text}</div>);
     }
 }
 

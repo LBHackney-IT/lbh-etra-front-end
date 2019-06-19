@@ -113,7 +113,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div>
             <label data-test="issue-label" className="label">Issue Type</label>
             <br/>
-            <select data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
+            <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
               {this.renderFirstOption("Select Issue Type")}
               {this._issueTypes.map(this.renderIssueType)}
             </select>
@@ -121,7 +121,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div>
             <label data-test="location-label" className="label">Location of issue</label>
             <br />
-            <select data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
+            <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
               {this.renderFirstOption("Select Location")}
               {this._issueLocations.map(this.renderLocation)}
             </select>
