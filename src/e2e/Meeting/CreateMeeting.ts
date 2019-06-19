@@ -3,7 +3,7 @@ import getBaseUrl from '../url-helper';
 import { ReactSelector, waitForReact } from 'testcafe-react-selectors';
 
 fixture `Getting Started`
-    .page(getBaseUrl())
+    .page(`${getBaseUrl()}/meeting`)
     .beforeEach(async () => {
         await waitForReact();
     });
