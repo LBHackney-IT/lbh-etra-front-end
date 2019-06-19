@@ -7,7 +7,6 @@
 .attendance-header
 {
   height: 31px;
-  font-family: Montserrat;
   font-size: 19px;
   font-weight: 300;
   font-style: normal;
@@ -20,7 +19,6 @@
 .input-label
 {
   height: 30px;
-  font-family: Montserrat;
   font-size: 19px;
   font-weight: 500;
   font-style: normal;

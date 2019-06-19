@@ -110,24 +110,25 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     render() {
       return (
         <div>
-          <div className="heading" data-test="issues-header">Record issues at the meeting</div>
           <div>
-            <label data-test="issue-label">Issue Type</label><span/>
-            <select data-test="issue-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
+            <label data-test="issue-label" className="label">Issue Type</label>
+            <br/>
+            <select data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
               {this.renderFirstOption("Select Issue Type")}
               {this._issueTypes.map(this.renderIssueType)}
             </select>
           </div>
           <div>
-          <label data-test="location-label">Issue Location</label>
-            <select data-test="location-dropdown" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
+            <label data-test="location-label" className="label">Location of issue</label>
+            <br />
+            <select data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
               {this.renderFirstOption("Select Location")}
               {this._issueLocations.map(this.renderLocation)}
             </select>
           </div>
           <div>
-          <div><p>Issue Notes</p></div>
-          <textarea className="note" data-test="notes" id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote } name= "notes"/>
+          <div className="label">Notes about issue</div>
+          <textarea className="note-input-box" data-test="notes" id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote } name= "notes"/>
           </div>
           <button id="delete-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.deleteIssue}>Delete Issue</button>
         </div>

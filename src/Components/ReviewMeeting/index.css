@@ -27,7 +27,6 @@
   .radio-option {
     display: flex;
     padding-bottom: 12px;
-    cursor: pointer;
   }
 
   .radio-option input {

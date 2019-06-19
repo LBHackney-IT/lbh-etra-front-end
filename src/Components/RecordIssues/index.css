@@ -1,0 +1,14 @@
+.heading {
+    font-size: 27px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #000000;
+    padding-bottom: 6px;
+  }
+
+  .button-padding {
+      margin-top: 50px;
+  }
