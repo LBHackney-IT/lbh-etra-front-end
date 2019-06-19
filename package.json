@@ -55,7 +55,6 @@
     "json-loader": "^0.5.7",
     "react-docgen-typescript-webpack-plugin": "^1.1.0",
     "testcafe": "^1.2.0",
-    "testcafe-react-selectors": "^3.1.0",
-    "ts-loader": "^6.0.2"
+    "testcafe-react-selectors": "^3.1.0"
   }
 }
