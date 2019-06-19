@@ -87,9 +87,14 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
                 {roles.map(this.renderRole)}
-
-                <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} attendees={this.props.attendees}/>
-                <button className="button btn-primary btn-stacked" id="review-later" onClick={this.onReviewLater}>TRA representative to review later</button>
+                <div className="review-button">
+                    <SaveMeeting 
+                        onSaveComplete={this.onSaveComplete} 
+                        issues={this.props.issues} 
+                        signature={this.state.signatureBase64} 
+                        attendees={this.props.attendees}/>
+                </div>
+                <button className="button btn-primary btn-stacked review-button" id="review-later" onClick={this.onReviewLater}>TRA representative to review later</button>
             </div>
         );
     }
