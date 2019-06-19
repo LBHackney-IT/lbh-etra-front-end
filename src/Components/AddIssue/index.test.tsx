@@ -45,12 +45,6 @@ describe('when we go to render the Add Issue Component',()=>{
             <AddIssue index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
         </ServiceProvider>);
 
-    it('Then the header is shown', () => {
-        const header = wrapper.find('[data-test="issues-header"]')
-        expect(header.exists()).toBe(true);
-
-    });
-
     it('Then the issue label and dropdown is shown', () => {
         const issueDropdown = wrapper.find('[data-test="issue-dropdown"]')
         expect(issueDropdown.exists()).toBe(true);
