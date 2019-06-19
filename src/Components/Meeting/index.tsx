@@ -45,6 +45,9 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   onChangeAttendees = (newAttendees: IAttendees): void => {
     this.setState({attendees:newAttendees})
   }
+  onChangeIssues = (newIssues: Array<IIssue>): void => {
+    this.setState({issues: newIssues})
+  }
 
   render() {
     return (
@@ -53,7 +56,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
         <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
-        <RecordIssues issues={this.state.issues}/>
+        <RecordIssues onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
         <ReviewMeeting
           attendees={this.state.attendees}
           issues={this.state.issues}

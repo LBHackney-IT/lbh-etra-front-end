@@ -1,15 +1,24 @@
+import { v4 as uuid } from 'uuid';
+
 export interface IIssueType 
 {
-   IssueId:string
-   IssueType:string
+   IssueId:string;
+   IssueType:string;
 } 
 
-export class IssueType implements IIssueType
+export interface IssueTypeAndKey
 {
-   public IssueId:string;
-   public IssueType:string;
-   public constructor(issueType:string, issueId:string){
+   key:any;
+   IssueType:IIssueType
+}
+
+
+export class IssueType implements IssueTypeAndKey
+{
+   public key:any;
+   public IssueType:IIssueType;
+   public constructor(issueType:IIssueType){
+      this.key = uuid();
       this.IssueType = issueType;
-      this.IssueId = issueId;
    }
 }

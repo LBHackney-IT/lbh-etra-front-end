@@ -5,6 +5,7 @@ import {IssueFactory} from '../../Factories/Issue/'
 
 interface IRecordIssueProps {
     issues: Array<IIssue>
+    onChangeIssues: (newIssues: Array<IIssue>) => void;
 }
 
 interface IRecordIssueState {
@@ -17,7 +18,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         super(props);
 
         this.state = {
-            issues: props.issues
+            issues: props.issues,
           };
         this._issueFactory = new IssueFactory();
     }
@@ -33,6 +34,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         let issues = this.state.issues;
         issues[index] = issue;
         this.setState({issues:issues});
+        this.props.onChangeIssues(this.state.issues)
     }
 
     onDeleteIssue = (index: number) : void => {
@@ -40,7 +42,9 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         //remove issue from array at index
         issues.splice(index, 1);
         this.setState({issues:issues});
+        this.props.onChangeIssues(this.state.issues)
     }
+
 
     render() {
         return (
