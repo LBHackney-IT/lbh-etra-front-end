@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import { IIssue, Issue } from '../../Domain/Issues';
 import './index.css';
 import issueTypesData from "../../JsonFiles/IssueType.json"
-import {IIssueType, IssueTypeAndKey} from "../../Domain/IssueType"
+import {IIssueType, IssueTypeAndKey, IssueType} from "../../Domain/IssueType"
 import { IIssueLocation } from "../../Domain/IssueLocation";
 import {IIssueLocationGateway as ILoadIssueLocationGateway} from '../../Boundary/IssueLocation/'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
@@ -91,22 +91,18 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       this.props.onChangeIssue(this.state.issue, this.props.index);
     }
 
-    createSelectItemsForIssueTypes() {
-      let items = [];         
-      for (let i = 0; i < this.state.issueTypes.length ; i++) {
-        let issueType = this.state.issueTypes[i];
-        items.push(<option className="issues-options" key={i} value={i}>{issueType.IssueType}</option>);
-      }
-      return items;
-    } 
-    createSelectItemsForIssueLocations() {
-      let locationitems = [];         
-      for (let i = 0; i < this.state.issueLocations.length ; i++) {
-        let issueLocation = this.state.issueLocations[i];
-        locationitems.push(<option data-text="location-option" className="location-options" key={issueLocation.key} value={i}>{issueLocation.name}</option>);    
-      }
-      return locationitems;
-    } 
+    renderIssueType(issueType: IIssueType, index: number) {
+      return (
+        <option key={index} value={index}>{issueType.IssueType}</option>
+      );
+    }
+    
+    renderLocation(location: IIssueLocation, index:number)
+    {
+      return(
+        <option key={location.key} value={index}>{location.name}</option>
+      );
+    }
 
     renderFirstOption(text: string){
       return (<option value="" disabled hidden>{text}</option>)
@@ -121,14 +117,14 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
             <label data-test="issue-label">Issue Type</label><span/>
             <select data-test="issue-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
               {this.renderFirstOption("Select Issue Type")}
-              {this.createSelectItemsForIssueTypes()}
+              {this._issueTypes.map(this.renderIssueType)}
             </select>
           </div>
           <div>
           <label data-test="location-label">Issue Location</label>
-            <select data-test="location-dropdown" defaultValue={undefined} onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
+            <select data-test="location-dropdown" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
               {this.renderFirstOption("Select Location")}
-              {this.createSelectItemsForIssueLocations()}
+              {this._issueLocations.map(this.renderLocation)}
             </select>
           </div>
           <div>
