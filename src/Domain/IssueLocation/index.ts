@@ -1,16 +1,29 @@
+export enum IssueLocationType{
+   Estate,
+   Block,
+   Other,
+}
+
 export interface IIssueLocation 
 {
-   LocationId:string
-   LocationName:string
+   key: string,
+   name: string,
+   estateId:string,
+   blockId?: string,
+   locationType: IssueLocationType
 } 
 
-export class IssueLocation implements IIssueLocation
-{
-   public LocationId:string
-   public LocationName:string
-
-   public constructor(locationId:string, locationName:string){
-      this.LocationId = locationId;
-      this.LocationName = locationName;
+export class IssueLocation implements IIssueLocation {
+   public key: string;
+   public estateId: string;
+   public blockId: string;
+   public name: string;
+   public locationType: IssueLocationType;
+   public constructor(key: string, name: string, estateId: string, blockId:string, locationType: IssueLocationType) {
+      this.key = key;
+      this.estateId = estateId;
+      this.blockId = blockId;
+      this.name = name;
+      this.locationType = locationType;
    }
-} 
+}
