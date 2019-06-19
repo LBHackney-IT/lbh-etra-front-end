@@ -67,8 +67,6 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     }
 
     handleChangeOfIssueTypeDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
-      console.log("handleChangeOfIssueTypeDropDownList");
-      
       const index = Number(event.target.value);
       let issueType = this.state.issueTypes[index];
       let issue = this.state.issue;
@@ -96,7 +94,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
         <option key={index} value={index}>{issueType.IssueType}</option>
       );
     }
-    
+
     renderLocation(location: IIssueLocation, index:number)
     {
       return(
