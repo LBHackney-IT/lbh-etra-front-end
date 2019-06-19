@@ -24,7 +24,19 @@ enum PageState {
     ReviewLater
 }
 
-export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
+interface IRole {
+    id: string,
+    name: string
+}
+
+const roles : Array<IRole> = [
+    {id: "chair", name: "Chair"},
+    {id: "vice-chair", name: "Vice Chair"},
+    {id: "secretary", name: "Secretary"},
+    {id: "treasurer", name: "Treasurer"},
+]
+
+export default class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
 
     public constructor(props: IReviewMeetingProps) {
         super(props);
@@ -68,22 +80,29 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
     private renderReview() {
         return (
             <div>
+                <div className="signature-wrapper">
                 <div className="signature-of-TRA-rep">Signature of TRA representative</div>
-                <div>
                     <Signature onUpdated={this.updateSignatureString} />
                 </div>
-                <div className="role-of-TRA-representative">Role of TRA representative</div>
 
-                <div><input id="chair" className="radio-unselected" type="radio" name="tra-role" value="Chair"></input><span className="radio-text">Chair</span></div>
-                <div><input id="vice-chair" className="radio-unselected" type="radio" name="tra-role" value="Vice Chair"></input><span className="radio-text">Vice Chair</span></div>
-                <div><input id="secretary" className="radio-unselected" type="radio" name="tra-role" value="Secretary"></input><span className="radio-text">Secretary</span></div>
-                <div><input id="treasurer" className="radio-unselected" type="radio" name="tra-role" value="Treasurer"></input><span className="radio-text">Treasurer</span></div>
+                <div className="role-of-TRA-representative">Role of TRA representative</div>
+                {roles.map(this.renderRole)}
 
                 <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} attendees={this.props.attendees}/>
                 <button className="button btn-primary btn-stacked" id="review-later" onClick={this.onReviewLater}>TRA representative to review later</button>
             </div>
         );
     }
-}
 
-export default ReviewMeeting;
+    private renderRole(role: IRole){
+        return (
+            <label key={role.id} className="radio-option">
+                <input id={role.id}  type="radio" name="tra-role" value={role.name} />
+                <div className="radio-unselected">
+                    <div className="radio-selected"></div>
+                </div>
+                <div className="radio-text">{role.name}</div>
+            </label>
+        );
+    }
+}
