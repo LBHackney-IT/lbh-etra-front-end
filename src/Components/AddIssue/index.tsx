@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react';
 import { IIssue, Issue } from '../../Domain/Issues';
 import './index.css';
 import issueTypesData from "../../JsonFiles/IssueType.json"
-import {IIssueType} from "../../Domain/IssueType"
+import {IIssueType, IssueTypeAndKey} from "../../Domain/IssueType"
 import { IIssueLocation } from "../../Domain/IssueLocation";
 import {IIssueLocationGateway as ILoadIssueLocationGateway} from '../../Boundary/IssueLocation/'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
@@ -73,7 +73,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       const index = Number(event.target.value);
       let issueType = this.state.issueTypes[index];
       let issue = this.state.issue;
-      issue.IssueType = issueType;
+      issue.IssueType.IssueType = issueType;
       this.setState({issue:issue});
 
       this.props.onChangeIssue(this.state.issue, this.props.index);
@@ -122,7 +122,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
           <div className="heading" data-test="issues-header">Record issues at the meeting</div>
           <div>
             <label data-test="issue-label">Issue Type</label><span/>
-            <select data-test="issue-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
+            <select data-test="issue-dropdown" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType.IssueType}>
               {this.renderFirstOption("Select Issue Type")}
               {this.createSelectItemsForIssueTypes()}
             </select>
