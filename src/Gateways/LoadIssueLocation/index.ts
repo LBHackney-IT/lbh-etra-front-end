@@ -1,8 +1,17 @@
-import {IIssueLocationGateway, ILoadIssuesOutputMeetingModel, LoadIssuesOutputMeetingModel} from '../../Boundary/IssueLocation';
+import {IIssueLocationGateway, ILoadIssuesOutputMeetingModel} from '../../Boundary/IssueLocation';
 import { IEstateLocation } from '../../Domain/EstateLocation';
 import {  IIssueLocation } from '../../Domain/IssueLocation';
 import locationsData from "../../JsonFiles/IssueLocation.json";
 import { IIssueLocationFactory } from '../../Factories/IssueLocation';
+
+export class LoadIssuesOutputMeetingModel implements ILoadIssuesOutputMeetingModel{
+    public successful: boolean;
+    public issueLocations: IIssueLocation[]
+    public constructor(successful:boolean, issueLocations: IIssueLocation[]){
+        this.successful = successful;
+        this.issueLocations = issueLocations;
+    }
+}
 
 export default class LoadIssueLocationGateway implements IIssueLocationGateway {
     private _estateLocations = new Array<IEstateLocation>();
