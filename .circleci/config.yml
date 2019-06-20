@@ -69,13 +69,13 @@ jobs:
     steps:
       - deploy-env:
           environment: 'dev'
-          distrbution_id: AWS_CF_DIST_ID_DEV
+          distrbution_id: $(AWS_CF_DIST_ID_DEV)
   deploy-to-staging:
     executor: node
     steps:
       - deploy-env:
           environment: 'staging'
-          distrbution_id: AWS_CF_DIST_ID_STAGING
+          distrbution_id: $(AWS_CF_DIST_ID_STAGING)
 workflows:
   version: 2
   build_and_test:
