@@ -45,7 +45,7 @@ describe('When we render the "Save Meeting component"', ()  => {
 });
 
 describe('When we render the "Save Meeting component"', () => {
-    describe('With invalid form values', () => {
+    describe('with zero attendees in form', () => {
         let attendees = mockAttendees();
         attendees.NumberOfAttendees = 0;
         const wrapper = mount(
