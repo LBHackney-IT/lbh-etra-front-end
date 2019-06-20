@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import LandingPage from '.';
+import ConfirmLater from '.';
 
-storiesOf('Landing Page', module)
+storiesOf('Confirm Later', module)
   .add("opens correctly", () => (
-    <LandingPage />
+    <ConfirmLater />
   ));

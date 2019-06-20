@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 
-export interface IIssueType 
+export interface IIssueTypeAndId 
 {
    IssueId:string;
    IssueType:string;
@@ -9,16 +9,16 @@ export interface IIssueType
 export interface IssueTypeAndKey
 {
    key:any;
-   IssueType:IIssueType
+   IssueTypeAndId:IIssueTypeAndId
 }
 
 
 export class IssueType implements IssueTypeAndKey
 {
    public key:any;
-   public IssueType:IIssueType;
-   public constructor(issueType:IIssueType){
+   public IssueTypeAndId:IIssueTypeAndId;
+   public constructor(issueType:IIssueTypeAndId){
       this.key = uuid();
-      this.IssueType = issueType;
+      this.IssueTypeAndId = issueType;
    }
 }

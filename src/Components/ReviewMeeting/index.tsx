@@ -5,26 +5,43 @@ import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
 import { IAttendees } from '../Attendees';
+import ConfirmLater from '../ConfirmLater';
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
-    onReviewComplete: () => void
+    onSaveComplete: () => void
     attendees:IAttendees
 }
 
 export interface IReviewMeetingState {
-    reviewComplete: boolean,
-    isReviewingNow: boolean,
+    pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
 }
 
-export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
+export enum ReviewMeetingDisplayState {
+    Ready,
+    ReviewComplete,
+    ReviewLater
+}
+
+interface IRole {
+    id: string,
+    name: string
+}
+
+const roles : Array<IRole> = [
+    {id: "chair", name: "Chair"},
+    {id: "vice-chair", name: "Vice Chair"},
+    {id: "secretary", name: "Secretary"},
+    {id: "treasurer", name: "Treasurer"},
+]
+
+export default class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
 
     public constructor(props: IReviewMeetingProps) {
         super(props);
         this.state = {
-            reviewComplete: false,
-            isReviewingNow: false,
+            pageState: ReviewMeetingDisplayState.Ready,
             signatureBase64: ""
         }
     }
@@ -34,66 +51,63 @@ export class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewM
         attendees: {}
     };
 
-    handleIsReviewingNow = () => {
-        this.setState({ isReviewingNow: true });
-    }
-
-    updateSignatureString = (value: string) => {
+    private updateSignatureString = (value: string) : void => {
         this.setState({ signatureBase64: value });
     }
 
+    private onReviewLater = () : void => {
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
+        this.props.onSaveComplete();
+    }
+
+    private onReviewNow = () : void => {
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
+        this.props.onSaveComplete();
+    }
+
     render() {
-        if(this.state.reviewComplete){
-            return this.renderConfirmation();
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
+          return (<Confirmation SignatureImage={this.state.signatureBase64} />);
         }
 
-        if (this.state.isReviewingNow) {
-            return this.renderReviewNow();
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
+            return (<ConfirmLater/>);
         }
-        else {
-            return this.renderButtons();
-        }
+
+        return this.renderReview();
     }
 
-    private renderConfirmation() {
-        return (
-          <Confirmation SignatureImage={this.state.signatureBase64} />
-        )
-      }
-
-    private renderButtons() {
+    private renderReview() {
         return (
             <div>
-                <div className="ready-for-review-by">Ready for review by TRA representative?</div>
-                <button className="button btn-primary btn-stacked" id="review-now" onClick={this.handleIsReviewingNow}>Review now with TRA</button>
-                <button className="button btn-primary btn-stacked" id="review-later">TRA representative to review later</button>
-            </div>
-        );
-    }
-
-    private renderReviewNow() {
-        return (
-            <div>
+                <div className="signature-wrapper">
                 <div className="signature-of-TRA-rep">Signature of TRA representative</div>
-                <div>
                     <Signature onUpdated={this.updateSignatureString} />
                 </div>
+
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
-
-                <div><input id="chair" className="radio-unselected" type="radio" name="tra-role" value="Chair"></input><span className="radio-text">Chair</span></div>
-                <div><input id="vice-chair" className="radio-unselected" type="radio" name="tra-role" value="Vice Chair"></input><span className="radio-text">Vice Chair</span></div>
-                <div><input id="secretary" className="radio-unselected" type="radio" name="tra-role" value="Secretary"></input><span className="radio-text">Secretary</span></div>
-                <div><input id="treasurer" className="radio-unselected" type="radio" name="tra-role" value="Treasurer"></input><span className="radio-text">Treasurer</span></div>
-
-                <SaveMeeting onSaveComplete={this.onSaveComplete} issues={this.props.issues} signature={this.state.signatureBase64} attendees={this.props.attendees}/>
+                {roles.map(this.renderRole)}
+                <div className="review-button">
+                    <SaveMeeting 
+                        onReviewNow={this.onReviewNow} 
+                        onReviewLater={this.onReviewLater}
+                        issues={this.props.issues} 
+                        signature={this.state.signatureBase64} 
+                        attendees={this.props.attendees}/>
+                </div>
             </div>
         );
     }
 
-    private onSaveComplete = () : void => {
-        this.setState({reviewComplete: true});
-        this.props.onReviewComplete();
+    private renderRole(role: IRole){
+        return (
+            <label key={role.id} className="radio-option" id={role.id}>
+                <input type="radio" name="tra-role" value={role.name} />
+                <div className="radio-unselected">
+                    <div className="radio-selected"></div>
+                </div>
+                <div className="radio-text">{role.name}</div>
+            </label>
+        );
     }
 }
-
-export default ReviewMeeting;

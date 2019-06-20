@@ -1,7 +1,4 @@
 .signature-of-TRA-rep {
-    width: 438px;
-    height: 30px;
-    font-family: Montserrat;
     font-size: 27px;
     font-weight: 500;
     font-style: normal;
@@ -9,12 +6,14 @@
     line-height: 1.11;
     letter-spacing: normal;
     color: #000000;
+    padding-bottom: 22px;
+  }
+
+  .signature-wrapper {
+    padding: 30px 0px
   }
 
   .role-of-TRA-representative {
-    width: 365px;
-    height: 30px;
-    font-family: Montserrat;
     font-size: 27px;
     font-weight: 500;
     font-style: normal;
@@ -22,16 +21,47 @@
     line-height: 1.11;
     letter-spacing: normal;
     color: #000000;
+    padding-bottom: 15px;
+  }
+
+  .radio-option {
+    display: flex;
+    padding-bottom: 12px;
+  }
+
+  .radio-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
   }
 
   .radio-unselected {
+    border-radius: 50%;
     width: 38px;
     height: 38px;
     border: solid 2px #0b0c0c;
     background-color: #ffffff;
   }
 
+  .radio-selected {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+  }
+
+  .radio-option input:checked ~ .radio-unselected > .radio-selected {
+    background-color: #0b0c0c;
+  }
+
   .radio-text {
-    font-family: Montserrat;
     font-size: 19px;
+    padding-left: 12px;
+    align-self: center;
   }

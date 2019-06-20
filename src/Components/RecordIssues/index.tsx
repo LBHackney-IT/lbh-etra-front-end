@@ -2,6 +2,7 @@ import React from 'react'
 import { IIssue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
 import {IssueFactory} from '../../Factories/Issue/'
+import "./index.css"
 
 interface IRecordIssueProps {
     issues: Array<IIssue>
@@ -34,7 +35,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         let issues = this.state.issues;
         issues[index] = issue;
         this.setState({issues:issues});
-        this.props.onChangeIssues(this.state.issues)
+        this.props.onChangeIssues(issues)
     }
 
     onDeleteIssue = (index: number) : void => {
@@ -42,17 +43,18 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         //remove issue from array at index
         issues.splice(index, 1);
         this.setState({issues:issues});
-        this.props.onChangeIssues(this.state.issues)
+        this.props.onChangeIssues(issues)
     }
 
 
     render() {
         return (
             <div>
+                <div className="heading" data-test="issues-header">Record issues at meeting</div>
                 {this.state.issues.map((issue:IIssue, index: number) =>
                     <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue}/>
                 )}
-                <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked"  onClick={this.addIssueComponent}>Add Issues</button>
+                <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked button-padding"  onClick={this.addIssueComponent}>Add another issue</button>
             </div>
             );
     }
