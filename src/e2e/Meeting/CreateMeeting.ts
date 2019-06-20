@@ -60,9 +60,12 @@ async function GivenHackneyStaff(t : TestController, hackneyStaff : string) {
 }
 
 async function GivenNumberOfAttendees(t: TestController, numberOfAttendees: number){
+    const textField = Selector("#number-of-attendees");
+
     await t
-        .selectText("#number-of-attendees")
-        .typeText("#number-of-attendees", numberOfAttendees.toString())
+        .selectText(textField)
+        .pressKey('delete')
+        .typeText(textField, numberOfAttendees.toString())
 }
 
 async function WhenIClickTheAddIssueButton(t: TestController){
