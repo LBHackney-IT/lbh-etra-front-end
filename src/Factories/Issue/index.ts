@@ -12,7 +12,7 @@ export class IssueFactory implements IFactory<IIssue>  {
 
     public create(): IIssue {
         let id = uuid();
-        let issueType = new IssueType({IssueId:"", IssueType:""});
+        let issueType = new IssueType("","");
         let location = this.issueLocationFactory.create();
         let newIssue = new Issue(id, issueType, location,"" );
         return newIssue;
