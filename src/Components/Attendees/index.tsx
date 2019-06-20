@@ -124,7 +124,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
     }
 
     renderText(text: string, id: string){
-        return (<div id={id} className="display-box">{text}</div>);
+        return (<div id={id} data-test={id} className="display-box">{text}</div>);
     }
 }
 
