@@ -9,7 +9,8 @@ import { IAttendees } from '../Attendees';
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
   signature: string,
-  onSaveComplete: () => void
+  onReviewNow: () => void,
+  onReviewLater: () => void,
   attendees: IAttendees
 }
 
@@ -44,11 +45,19 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     return true;
   }
 
-  handleSaveMeeting() {
+  handleReviewNow = () => {
+    this.handleSaveMeeting(this.props.onReviewNow);
+  }
+
+  handleReviewLater = () => {
+    this.handleSaveMeeting(this.props.onReviewLater);
+  }
+
+  handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
     let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
     if (outputModel.successful) {
-      this.props.onSaveComplete();
+      callback();
     }
     else {
       this.setState({ isAttemptingToSave: false });
@@ -57,22 +66,29 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   render() {
     if (!this.state.isAttemptingToSave) {
-      return this.renderSaveMeetingButton();
+      return this.renderSaveMeetingButtons();
     }
     else if (this.state.isAttemptingToSave) {
       return this.renderSpinner();
     }
   }
 
-  private renderSaveMeetingButton() {
+  private renderSaveMeetingButtons() {
     return (
       <div>
         <button 
           id="save-meeting" 
           className="button btn-primary" 
-          onClick={this.handleSaveMeeting.bind(this)}
+          onClick={this.handleReviewNow}
           disabled={!this.state.isValid}>
             Save and email issue list to TRA
+        </button>
+        <button 
+          className="button btn-primary btn-stacked review-button" 
+          id="review-later" 
+          onClick={this.handleReviewLater}
+          disabled={!this.state.isValid}>
+            TRA representative to review later
         </button>
       </div>
     );

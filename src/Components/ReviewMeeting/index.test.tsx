@@ -58,12 +58,6 @@ describe('When we display the review meeting component', ()  => {
         expect(element).toHaveLength(1);
     });
 
-    it('Then the "TRA representative to review later" button is displayed', () => {
-        //button should be hidden
-        var hiddenButton = wrapper.find('#review-later');
-        expect(hiddenButton.exists()).toBe(true); 
-    })
-
     describe('And we go to select a "TRA role from the options"', ()  => {
         it('Then the Save and email issue list to TRA button is displayed', () => {
 

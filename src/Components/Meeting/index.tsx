@@ -64,7 +64,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <ReviewMeeting
           attendees={this.state.attendees}
           issues={this.state.issues}
-          onReviewComplete={this.onSaveComplete}
+          onSaveComplete={this.onSaveComplete}
         />
       </div>);
   }
