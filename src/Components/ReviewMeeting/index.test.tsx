@@ -10,11 +10,11 @@ import SaveMeeting from '../SaveMeeting';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting onReviewComplete={() => {}} />);
+   shallow(<ReviewMeeting onSaveComplete={jest.fn()} />);
 });
 
 describe('When we display the review meeting component', ()  => {
-    const wrapper = shallow(<ReviewMeeting onReviewComplete={() => {}}/>);
+    const wrapper = shallow(<ReviewMeeting onSaveComplete={jest.fn()}/>);
 
     it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
