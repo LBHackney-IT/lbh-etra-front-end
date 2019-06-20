@@ -101,8 +101,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     private renderRole(role: IRole){
         return (
-            <label key={role.id} className="radio-option">
-                <input id={role.id}  type="radio" name="tra-role" value={role.name} />
+            <label key={role.id} className="radio-option" id={role.id}>
+                <input type="radio" name="tra-role" value={role.name} />
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>

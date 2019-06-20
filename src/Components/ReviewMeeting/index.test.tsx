@@ -31,22 +31,26 @@ describe('When we display the review meeting component', ()  => {
 
     it('Then the Chair radio button is displayed', () => {
         const element = wrapper.find('#chair')
-        expect(element.prop('name')).toBe('tra-role');
+        expect(element).toHaveLength(1);
+        expect(element.children('input').props()['name']).toEqual("tra-role");
     });
 
     it('Then the Vice Chair radio button is displayed', () => {
         const element = wrapper.find('#vice-chair')
-        expect(element.prop('name')).toBe('tra-role');
+        expect(element).toHaveLength(1);
+        expect(element.children('input').props()['name']).toEqual("tra-role");
     });
 
     it('Then the Secretary radio button is displayed', () => {
         const element = wrapper.find('#secretary')
-        expect(element.prop('name')).toBe('tra-role');
+        expect(element).toHaveLength(1);
+        expect(element.children('input').props()['name']).toEqual("tra-role");
     });
 
     it('Then the Treasurer radio button is displayed', () => {
         const element = wrapper.find('#treasurer')
-        expect(element.prop('name')).toBe('tra-role');
+        expect(element).toHaveLength(1);
+        expect(element.children('input').props()['name']).toEqual("tra-role");
     });
 
     it('Then the SaveMeeting component is displayed', () => {
