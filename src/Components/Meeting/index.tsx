@@ -15,6 +15,7 @@ export interface IMeetingState {
   issues: Array<IIssue>,
   attendees: IAttendees
 }
+
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
   public constructor(props: IMeetingProps) {
@@ -45,6 +46,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   onChangeAttendees = (newAttendees: IAttendees): void => {
     this.setState({attendees:newAttendees})
   }
+
   onChangeIssues = (newIssues: Array<IIssue>): void => {
     this.setState({issues: newIssues})
   }
@@ -55,12 +57,14 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
 
         <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
-        <Attendees onChangeAttendees={this.onChangeAttendees}/>
-        <RecordIssues onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
+        <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
+        <div className="record-issues-padding">
+          <RecordIssues onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
+        </div>
         <ReviewMeeting
           attendees={this.state.attendees}
           issues={this.state.issues}
-          onReviewComplete={this.onSaveComplete}
+          onSaveComplete={this.onSaveComplete}
         />
       </div>);
   }
