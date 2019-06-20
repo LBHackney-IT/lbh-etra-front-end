@@ -37,9 +37,9 @@ commands:
       - run:
           name: Sync S3 Bucket
           command: aws s3 sync build/ s3://<< parameters.environment >>-etra-manageatenancy --delete
-      - run:
-          name: Perform Cloud Front invalidation
-          command: aws cloudfront create-invalidation --distribution-id << parameters.distrbution_id >> --paths "/*"
+      # - run:
+      #     name: Perform Cloud Front invalidation
+      #     command: aws cloudfront create-invalidation --distribution-id << parameters.distrbution_id >> --paths "/*"
 
 jobs:
   build: 
