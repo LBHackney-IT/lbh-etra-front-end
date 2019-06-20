@@ -66,17 +66,21 @@ describe('When we render the "Save Meeting component"', () => {
 });
 
 describe('When we click the "Save and email issue list to TRA" button', ()  => {
-    const onReviewLater = jest.fn();
     const onReviewNow = jest.fn();
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onReviewLater={onReviewLater} onReviewNow={onReviewNow} attendees={mockAttendees()}/>
+            <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={onReviewNow} attendees={mockAttendees()}/>
         </ServiceProvider>);; 
     const element = wrapper.find('#save-meeting');
     element.simulate('click');
 
     it('Then the "Save and email issue list to TRA" button is NOT displayed', () => {
         const element = wrapper.find('#save-meeting')
+        expect(element.exists()).toBe(false);
+    });
+
+    it('Then the "TRA representative to review later" button is NOT displayed', () => {
+        const element = wrapper.find('#review-later')
         expect(element.exists()).toBe(false);
     });
 
@@ -87,6 +91,35 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
 
     it('Then onReviewNow method is called', () => {
         expect(onReviewNow).toHaveBeenCalled();
+    });
+});
+
+describe('When we click the "Save and email issue list to TRA" button', ()  => {
+    const onReviewLater = jest.fn();
+    const wrapper = mount(
+        <ServiceProvider value={mockServiceProvider}>
+            <SaveMeeting issues={[]} signature="" onReviewLater={onReviewLater} onReviewNow={jest.fn()} attendees={mockAttendees()}/>
+        </ServiceProvider>);; 
+    const element = wrapper.find('#review-later');
+    element.simulate('click');
+
+    it('Then the "Save and email issue list to TRA" button is NOT displayed', () => {
+        const element = wrapper.find('#save-meeting')
+        expect(element.exists()).toBe(false);
+    });
+
+    it('Then the "TRA representative to review later" button is NOT displayed', () => {
+        const element = wrapper.find('#review-later')
+        expect(element.exists()).toBe(false);
+    });
+
+    it('Then the spinner is displayed', () => {
+        const element = wrapper.find('.spinner')
+        expect(element.exists()).toBe(true);
+    });
+
+    it('Then onReviewLater method is called', () => {
+        expect(onReviewLater).toHaveBeenCalled();
     });
 });
 
