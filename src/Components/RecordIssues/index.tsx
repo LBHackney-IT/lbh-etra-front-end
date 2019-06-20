@@ -35,7 +35,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         let issues = this.state.issues;
         issues[index] = issue;
         this.setState({issues:issues});
-        this.props.onChangeIssues(this.state.issues)
+        this.props.onChangeIssues(issues)
     }
 
     onDeleteIssue = (index: number) : void => {
@@ -43,7 +43,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         //remove issue from array at index
         issues.splice(index, 1);
         this.setState({issues:issues});
-        this.props.onChangeIssues(this.state.issues)
+        this.props.onChangeIssues(issues)
     }
 
 

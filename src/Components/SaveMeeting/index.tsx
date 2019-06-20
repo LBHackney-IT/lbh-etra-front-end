@@ -28,7 +28,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
     this.state = {
       isAttemptingToSave: false,
-      isValid: false
+      isValid: this.checkIsValid(this.props)
     }
   }
 
