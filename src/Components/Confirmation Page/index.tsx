@@ -18,7 +18,6 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
     super(props);
 
     this.state = { issues: this.jsonIssueResponse }
-    //this.setState({issues :this.jsonIssueResponse})
   }
 
   public static defaultProps: Partial<IConfirmationProps> = {

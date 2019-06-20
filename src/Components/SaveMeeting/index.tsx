@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { isValidElement } from 'react';
 import './index.css';
 import { IIssue } from '../../Domain/Issues'
 import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
@@ -14,7 +14,8 @@ export interface ISaveMeetingProps {
 }
 
 export interface ISaveMeetingState {
-  isAttemptingToSave: boolean,
+  isAttemptingToSave: boolean
+  isValid: boolean
 }
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
@@ -26,8 +27,21 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     this.saveMeeting = context.get<ISaveMeetingUseCase>("ISaveMeetingUseCase");
 
     this.state = {
-      isAttemptingToSave: false
+      isAttemptingToSave: false,
+      isValid: this.checkIsValid(this.props)
     }
+  }
+
+  componentWillReceiveProps(newProps: ISaveMeetingProps){
+    this.setState({isValid: this.checkIsValid(newProps)})
+  }
+
+  private checkIsValid(props: ISaveMeetingProps){
+    if(props.attendees.NumberOfAttendees <= 0){
+      return false;
+    }
+    
+    return true;
   }
 
   handleSaveMeeting() {
@@ -53,7 +67,13 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   private renderSaveMeetingButton() {
     return (
       <div>
-        <div><button id="save-meeting" className="button btn-primary" onClick={this.handleSaveMeeting.bind(this)}>Save and email issue list to TRA</button></div>
+        <button 
+          id="save-meeting" 
+          className="button btn-primary" 
+          onClick={this.handleSaveMeeting.bind(this)}
+          disabled={!this.state.isValid}>
+            Save and email issue list to TRA
+        </button>
       </div>
     );
   }

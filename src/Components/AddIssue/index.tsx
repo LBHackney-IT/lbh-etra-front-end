@@ -63,7 +63,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       issue.Notes = value;
       this.setState({issue:issue});
 
-      this.props.onChangeIssue(this.state.issue, this.props.index);
+      this.props.onChangeIssue(issue, this.props.index);
     }
 
     handleChangeOfIssueTypeDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
@@ -73,7 +73,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       issue.IssueType = issueType;
       this.setState({issue:issue});
 
-      this.props.onChangeIssue(this.state.issue, this.props.index);
+      this.props.onChangeIssue(issue, this.props.index);
     }
 
     handleChangeOfIssueLocationDropDownList=(event:React.ChangeEvent<HTMLSelectElement>): void => {
@@ -86,7 +86,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
       issue.Location = location;
       this.setState({issue:issue });
 
-      this.props.onChangeIssue(this.state.issue, this.props.index);
+      this.props.onChangeIssue(issue, this.props.index);
     }
 
     renderIssueType(issueType: IIssueType, index: number) {

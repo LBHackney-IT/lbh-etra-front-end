@@ -43,13 +43,13 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
     onChangeForm = (event: ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name;
         const value = event.target.value;
-        this.setState({
-            attendees: {
-                ...this.state.attendees,
-                [name]: [value]
-            }
-        });
-        this.props.onChangeAttendees(this.state.attendees)
+        const attendees = {
+            ...this.state.attendees,
+            [name]: [value]
+        }
+
+        this.setState({attendees});
+        this.props.onChangeAttendees(attendees);
     }
 
     render() {
