@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReviewMeeting from '.';
+import ReviewMeeting, { ReviewMeetingDisplayState } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import Signature from '../Signature';
 import SaveMeeting from '../SaveMeeting';
+import Confirmation from '../Confirmation Page';
+import { exportAllDeclaration } from '@babel/types';
+import ConfirmLater from '../ConfirmLater';
 
 configure({ adapter: new Adapter() });
 
@@ -58,12 +61,19 @@ describe('When we display the review meeting component', ()  => {
         expect(element).toHaveLength(1);
     });
 
-    describe('And we go to select a "TRA role from the options"', ()  => {
-        it('Then the Save and email issue list to TRA button is displayed', () => {
-
-            const radio = wrapper.find('#secretary')
-            radio.simulate('click');
+    describe('And we change the page state to ReviewComplete', ()  => {
+        it('Then the Confirmation component is displayed', () => {
+            wrapper.setState({pageState: ReviewMeetingDisplayState.ReviewComplete})
+            const element = wrapper.find(Confirmation);
+            expect(element).toHaveLength(1);
         });
+    });
 
+    describe('And we change the page state to ReviewLater', ()  => {
+        it('Then the ConfirmLater component is displayed', () => {
+            wrapper.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
+            const element = wrapper.find(ConfirmLater);
+            expect(element).toHaveLength(1);
+        });
     });
 });

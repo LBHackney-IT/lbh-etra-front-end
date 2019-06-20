@@ -14,11 +14,11 @@ export interface IReviewMeetingProps {
 }
 
 export interface IReviewMeetingState {
-    pageState: PageState,
+    pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
 }
 
-enum PageState {
+export enum ReviewMeetingDisplayState {
     Ready,
     ReviewComplete,
     ReviewLater
@@ -41,7 +41,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     public constructor(props: IReviewMeetingProps) {
         super(props);
         this.state = {
-            pageState: PageState.Ready,
+            pageState: ReviewMeetingDisplayState.Ready,
             signatureBase64: ""
         }
     }
@@ -56,21 +56,21 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     }
 
     private onReviewLater = () : void => {
-        this.setState({pageState: PageState.ReviewLater})
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
         this.props.onSaveComplete();
     }
 
     private onReviewNow = () : void => {
-        this.setState({pageState: PageState.ReviewComplete});
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
         this.props.onSaveComplete();
     }
 
     render() {
-        if(this.state.pageState === PageState.ReviewComplete){
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
           return (<Confirmation SignatureImage={this.state.signatureBase64} />);
         }
 
-        if(this.state.pageState === PageState.ReviewLater){
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
             return (<ConfirmLater/>);
         }
 
