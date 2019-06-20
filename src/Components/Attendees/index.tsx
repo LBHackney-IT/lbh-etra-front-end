@@ -48,8 +48,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
                 ...this.state.attendees,
                 [name]: [value]
             }
-        });
-        this.props.onChangeAttendees(this.state.attendees)
+        }, () => this.props.onChangeAttendees(this.state.attendees));
     }
 
     render() {

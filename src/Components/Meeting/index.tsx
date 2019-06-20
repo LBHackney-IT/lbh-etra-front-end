@@ -15,6 +15,7 @@ export interface IMeetingState {
   issues: Array<IIssue>,
   attendees: IAttendees
 }
+
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
   public constructor(props: IMeetingProps) {
@@ -45,6 +46,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   onChangeAttendees = (newAttendees: IAttendees): void => {
     this.setState({attendees:newAttendees})
   }
+
   onChangeIssues = (newIssues: Array<IIssue>): void => {
     this.setState({issues: newIssues})
   }
