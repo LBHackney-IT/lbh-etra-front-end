@@ -5,6 +5,7 @@ import { IIssue } from '../../Domain/Issues';
 import { IssueFactory } from '../../Factories/Issue';
 import { ServiceContainer, IServiceProvider, ServiceProvider } from '../../ServiceContext';
 import configureServices from '../../serviceConfiguration';
+import { bool } from 'prop-types';
 
 const issueFactory = new IssueFactory();
 
@@ -15,6 +16,8 @@ storiesOf('AddIssue',module)
 .add('Opens Correctly',()=>(
     <ServiceProvider value={serviceContainer}>
         <AddIssue
+            readOnly={false}
+            onEditIssue={(index: number)=> {console.log(`Delete issue ${index}`)}}
             index={1} 
             issue={issueFactory.create()}
             onChangeIssue={(issue: IIssue, index: number) => {console.log(`${index}: ${issue.IssueType.IssueType} ${issue.Notes}`)}}

@@ -7,10 +7,13 @@ import "./index.css"
 interface IRecordIssueProps {
     issues: Array<IIssue>
     onChangeIssues: (newIssues: Array<IIssue>) => void;
+
+  
 }
 
 interface IRecordIssueState {
-    issues: Array<IIssue>
+    issues: Array<IIssue>,
+    readOnly:boolean[];
 }
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
@@ -20,6 +23,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
 
         this.state = {
             issues: props.issues,
+            readOnly:[false]
           };
         this._issueFactory = new IssueFactory();
     }
@@ -28,6 +32,9 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         let newIssue = this._issueFactory.create();
         const issues = this.state.issues;
         issues.push(newIssue);
+        let readOnly = this.state.readOnly;
+        readOnly[issues.length-2] = true;
+        readOnly.push(false);
         this.setState({issues:issues});
     }
 
@@ -46,15 +53,28 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         this.props.onChangeIssues(issues)
     }
 
+    onEditIssue = (index: number, issue:IIssue) : void => {
+        let issues = this.state.issues;
+        let readOnly=this.state.readOnly
+        //update issue from array at index
+        issues[index] = issue;
+        readOnly[index] = false;
+        this.setState({readOnly:readOnly})
+        this.setState({issues:issues});
+        this.props.onChangeIssues(issues)
+    }
 
+  
+    
     render() {
         return (
             <div>
                 <div className="heading" data-test="issues-header">Record issues at meeting</div>
                 {this.state.issues.map((issue:IIssue, index: number) =>
-                    <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue}/>
+                    <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onEditIssue={this.onEditIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.state.readOnly[index]}/>
                 )}
                 <button id="add-issue" data-test="add-issue" className="button btn-primary btn-stacked button-padding"  onClick={this.addIssueComponent}>Add another issue</button>
+
             </div>
             );
     }
