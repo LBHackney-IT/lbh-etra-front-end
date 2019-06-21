@@ -33,6 +33,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     super(props);
     this._issueLoadLocationGateway = context.get<ILoadIssueLocationGateway>("ILoadIssueLocationGateway");
     this.loadIssueLocations();
+
     this.state = {
       issue: this.props.issue,
       issueTypes: this._issueTypes,
@@ -44,9 +45,6 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     this._issueLoadLocationGateway.loadIssueLocations().then((data) => {
       this._issueLocations = data.issueLocations;
       this.setState({ issueLocations: data.issueLocations });
-      let issue = this.state.issue;
-      issue.Location = this.state.issueLocations[0];
-      this.setState({ issue: issue });
     });
   }
 
@@ -65,8 +63,11 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   handleChangeOfIssueTypeDropDownList = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    const index = Number(event.target.value);
-    let issueType = this.state.issueTypes[index];
+    const issueId = event.target.value;
+    let issueType = this.state.issueTypes.find((issueType) => issueId === issueType.IssueId);
+
+    if(issueType === undefined){ return; }
+
     let issue = this.state.issue;
     issue.IssueType = issueType;
     this.setState({ issue: issue });
@@ -75,8 +76,10 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   handleChangeOfIssueLocationDropDownList = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    const index = Number(event.target.value);
-    let location = this.state.issueLocations[index];
+    const locationKey = event.target.value;
+    let location = this.state.issueLocations.find((location) => locationKey === location.key);
+
+    if(location === undefined){ return; }
 
     let issue = this.state.issue;
     issue.Location = location;
@@ -87,13 +90,13 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderIssueType(issueType: IIssueType, index: number) {
     return (
-      <option key={index} value={index}>{issueType.IssueType}</option>
+      <option key={index} value={issueType.IssueId}>{issueType.IssueType}</option>
     );
   }
 
-  renderLocation(location: IIssueLocation, index: number) {
+  renderLocation(location: IIssueLocation) {
     return (
-      <option key={location.key} value={index}>{location.name}</option>
+      <option key={location.key} value={location.key}>{location.name}</option>
     );
   }
 
@@ -113,7 +116,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderNotReadOnlyIssueType() {
     return (
-      <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
+      <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueId}>
         {this.renderFirstOption("Select Issue Type")}
         {this._issueTypes.map(this.renderIssueType)}
       </select>
@@ -121,8 +124,9 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   renderNotReadOnlyLocation() {
+    console.log(this.state.issue.Location.key);
     return (
-      <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
+      <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation" value={this.state.issue.Location.key}>
         {this.renderFirstOption("Select Location")}
         {this._issueLocations.map(this.renderLocation)}
       </select>
