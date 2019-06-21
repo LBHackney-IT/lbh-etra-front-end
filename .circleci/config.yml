@@ -87,6 +87,10 @@ workflows:
           filters:
             branches:
               only: master
+      - permit-staging-release:
+          type: approval
+          requires:
+            - deploy-to-development
       - deploy-to-staging:
           requires:
             - deploy-to-development
