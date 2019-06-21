@@ -93,7 +93,7 @@ workflows:
             - deploy-to-development
       - deploy-to-staging:
           requires:
-            - deploy-to-development
+            - permit-staging-release
           filters:
             branches:
               only: master
