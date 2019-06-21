@@ -1,20 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReviewMeeting from '.';
+import ReviewMeeting, { ReviewMeetingDisplayState } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import Signature from '../Signature';
 import SaveMeeting from '../SaveMeeting';
+import Confirmation from '../Confirmation Page';
+import { exportAllDeclaration } from '@babel/types';
+import ConfirmLater from '../ConfirmLater';
 
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting onReviewComplete={() => {}} />);
+   shallow(<ReviewMeeting onSaveComplete={jest.fn()} />);
 });
 
 describe('When we display the review meeting component', ()  => {
-    const wrapper = shallow(<ReviewMeeting onReviewComplete={() => {}}/>);
+    const wrapper = shallow(<ReviewMeeting onSaveComplete={jest.fn()}/>);
 
     it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
@@ -58,18 +61,19 @@ describe('When we display the review meeting component', ()  => {
         expect(element).toHaveLength(1);
     });
 
-    it('Then the "TRA representative to review later" button is displayed', () => {
-        //button should be hidden
-        var hiddenButton = wrapper.find('#review-later');
-        expect(hiddenButton.exists()).toBe(true); 
-    })
-
-    describe('And we go to select a "TRA role from the options"', ()  => {
-        it('Then the Save and email issue list to TRA button is displayed', () => {
-
-            const radio = wrapper.find('#secretary')
-            radio.simulate('click');
+    describe('And we change the page state to ReviewComplete', ()  => {
+        it('Then the Confirmation component is displayed', () => {
+            wrapper.setState({pageState: ReviewMeetingDisplayState.ReviewComplete})
+            const element = wrapper.find(Confirmation);
+            expect(element).toHaveLength(1);
         });
+    });
 
+    describe('And we change the page state to ReviewLater', ()  => {
+        it('Then the ConfirmLater component is displayed', () => {
+            wrapper.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
+            const element = wrapper.find(ConfirmLater);
+            expect(element).toHaveLength(1);
+        });
     });
 });

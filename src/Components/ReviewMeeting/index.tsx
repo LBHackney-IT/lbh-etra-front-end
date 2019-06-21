@@ -9,16 +9,16 @@ import ConfirmLater from '../ConfirmLater';
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
-    onReviewComplete: () => void
+    onSaveComplete: () => void
     attendees:IAttendees
 }
 
 export interface IReviewMeetingState {
-    pageState: PageState,
+    pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
 }
 
-enum PageState {
+export enum ReviewMeetingDisplayState {
     Ready,
     ReviewComplete,
     ReviewLater
@@ -41,7 +41,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     public constructor(props: IReviewMeetingProps) {
         super(props);
         this.state = {
-            pageState: PageState.Ready,
+            pageState: ReviewMeetingDisplayState.Ready,
             signatureBase64: ""
         }
     }
@@ -56,21 +56,21 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     }
 
     private onReviewLater = () : void => {
-        this.setState({pageState: PageState.ReviewLater})
-        this.props.onReviewComplete();
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
+        this.props.onSaveComplete();
     }
 
-    private onSaveComplete = () : void => {
-        this.setState({pageState: PageState.ReviewComplete});
-        this.props.onReviewComplete();
+    private onReviewNow = () : void => {
+        this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
+        this.props.onSaveComplete();
     }
 
     render() {
-        if(this.state.pageState === PageState.ReviewComplete){
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
           return (<Confirmation SignatureImage={this.state.signatureBase64} />);
         }
 
-        if(this.state.pageState === PageState.ReviewLater){
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
             return (<ConfirmLater/>);
         }
 
@@ -89,12 +89,12 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 {roles.map(this.renderRole)}
                 <div className="review-button">
                     <SaveMeeting 
-                        onSaveComplete={this.onSaveComplete} 
+                        onReviewNow={this.onReviewNow} 
+                        onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 
                         signature={this.state.signatureBase64} 
                         attendees={this.props.attendees}/>
                 </div>
-                <button className="button btn-primary btn-stacked review-button" id="review-later" onClick={this.onReviewLater}>TRA representative to review later</button>
             </div>
         );
     }
