@@ -4,5 +4,8 @@ import RecordIssues from '.';
 
 storiesOf('RecordIssues', module)
   .add("opens correctly", () => (
-    <RecordIssues issues={[]} onChangeIssues={() => {}}/>
+    <RecordIssues issues={[]} onChangeIssues={() => {}} readOnly={false}/>
+  ))
+  .add("opens correctly in read only mode", () => (
+    <RecordIssues issues={[]} onChangeIssues={() => {}} readOnly={true}/>
   ));

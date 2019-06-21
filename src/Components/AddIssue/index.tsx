@@ -12,7 +12,6 @@ export interface IAddIssuesProps
 {
   onChangeIssue: (issues: IIssue, index: number) => void;
   onDeleteIssue: (index: number) => void;
-  onEditIssue:(index: number, issue:IIssue)=> void;
   issue:IIssue;
   index: number;
   readOnly:boolean
@@ -58,12 +57,7 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     deleteIssue = (): void => {
       this.props.onDeleteIssue(this.props.index);
     }
-
-    editIssue = (): void =>{
-      let issue = this.state.issue
-      this.props.onEditIssue(this.props.index, issue);
-    }
-
+    
     handleChangeOfIssueNote=(event: ChangeEvent<HTMLTextAreaElement>): void => {
       const value = event.target.value;
 
@@ -113,23 +107,13 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
     renderFirstOption(text: string){
       return (<option value="" disabled hidden>{text}</option>)
     }
-
-     check(){
-       if(this.props.readOnly){
-         return <div>read only</div>
-       }
-       return <div>not read only</div>
-     }
      conditionalRender(readOnly: any, notReadOnly: any){
       return (<>{this.props.readOnly ? readOnly : notReadOnly}</>);
   }
 
-  renderReadOnly(issueType: any, id: string){
+  renderReadOnly(text: string, id:string){
      return (
-      <select disabled id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueType}>
-        {this.renderFirstOption("Select Issue Type")}
-        {this._issueTypes.map(this.renderIssueType)}
-      </select>
+       <div id={id} data-test={id} className="display-box">{text}</div>
     );
   }
     renderNotReadOnly(){
@@ -161,25 +145,24 @@ export class AddIssue extends React.Component<IAddIssuesProps,IAddIssueState> {
               {this.renderFirstOption("Select Issue Type")}
               {this._issueTypes.map(this.renderIssueType)}
             </select> */}
-          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.IssueType, "councillors-text"), this.renderNotReadOnly())}</div>
+          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.IssueType.IssueType, "issue-type-text"), this.renderNotReadOnly())}</div>
           </div>
           <div>
-            <label data-test="location-label" className="label">{this.check()} Location of issue</label>
+            <label data-test="location-label" className="label">Location of issue</label>
             <br />
             {/* <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation">
               {this.renderFirstOption("Select Location")}
               {this._issueLocations.map(this.renderLocation)}
             </select> */}
           </div>
-          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.Location, "councillors-text"), this.renderNotReadOnlyLocation())}</div>
+          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.Location.name, "location-text"), this.renderNotReadOnlyLocation())}</div>
 
           <div>
           <div className="label">Notes about issue</div>
           {/* <textarea className="note-input-box" data-test="notes" id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote } name= "notes"/> */}
-          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.Notes, "councillors-text"), this.renderNotReadOnlyNotes())}</div>          
+          <div> {this.conditionalRender(this.renderReadOnly(this.state.issue.Notes, "notes-text"), this.renderNotReadOnlyNotes())}</div>          
           </div>
           <button id="delete-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.deleteIssue}>Delete Issue</button>
-          <button id="edit-issue" className="button btn-primary btn-stacked" data-test="delete-issue" onClick={this.editIssue}>Edit Issue</button>
         </div>
       );
     }
