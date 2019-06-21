@@ -1,3 +1,8 @@
+.wrapper {
+  padding-top: 10px;
+  margin-top: 9px;
+}
+
 .label {
   font-size: 19px;
   font-weight: normal;
@@ -31,10 +36,15 @@
   border: solid 2px #0b0c0c;
   background-color: #ffffff;
 }
-.display-box {
-    height: 46px;
-    font-size: 16px;
-    padding-left: 5px;
-    display: flex;
-    align-items: center
+
+.issue-display-box {
+  width: 100%;
+  padding: 6px 0 21px 0;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.read-only-background {
+  background-color: rgba(34, 34, 34, 0.05);
+  padding-left: 13px;
 }
