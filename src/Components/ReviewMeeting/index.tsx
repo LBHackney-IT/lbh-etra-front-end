@@ -16,7 +16,7 @@ export interface IReviewMeetingProps {
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
-    role: any
+    role: IRole
 }
 
 export enum ReviewMeetingDisplayState {
@@ -44,7 +44,10 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
             signatureBase64: "",
-            role:""
+            role:{
+                id:"",
+                name:""
+            }
         }
     }
 
@@ -69,7 +72,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
-          return (<Confirmation role={this.state.role} SignatureImage={this.state.signatureBase64} />);
+          return (<Confirmation role={this.state.role.name} SignatureImage={this.state.signatureBase64} />);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
@@ -88,7 +91,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 </div>
 
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
-                {roles.map(this.renderRole)}
+                {roles.map((role)=> this.renderRole( role,this.handleChangeOfRole))}
                 <div className="review-button">
                     <SaveMeeting 
                         onReviewNow={this.onReviewNow} 
@@ -100,11 +103,12 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </div>
         );
     }
-    handleChangeOfRole (event: React.ChangeEvent<HTMLInputElement>): void {
-        let selectedRole = event.target.value;
-        // if(selectedRole===undefined){
-        //     this.setState({role:""})
-        // }
+    handleChangeOfRole = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        let roleId = event.target.value;
+
+        let selectedRole = roles.find(role=> role.id === roleId);
+        if(selectedRole === undefined){return;}
+        
         this.setState(
             {
                 role:selectedRole
@@ -112,10 +116,12 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         );
     }
 
-    private renderRole(role: IRole){
+    
+
+    private renderRole(role: IRole, handleOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
-                <input type="radio" name="tra-role" onChange={this.handleChangeOfRole.bind(this)} value={role.name} />
+                <input type="radio" name="tra-role" onChange={handleOnChange} value={role.id} />
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>
@@ -123,5 +129,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </label>
         );
     }
+
+    
 }
 
