@@ -91,7 +91,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 </div>
 
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
-                {roles.map((role)=> this.renderRole( role,this.handleChangeOfRole))}
+                {roles.map((role)=> this.renderRole(role,this.handleChangeOfRole))}
                 <div className="review-button">
                     <SaveMeeting 
                         onReviewNow={this.onReviewNow} 
@@ -116,8 +116,6 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         );
     }
 
-    
-
     private renderRole(role: IRole, handleOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
@@ -129,7 +127,5 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </label>
         );
     }
-
-    
 }
 
