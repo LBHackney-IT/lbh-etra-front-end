@@ -7,6 +7,7 @@
     letter-spacing: normal;
     color: #000000;
     padding-bottom: 22px;
+
   }
 
   .signature-wrapper {
@@ -64,4 +65,7 @@
     font-size: 19px;
     padding-left: 12px;
     align-self: center;
+  }
+  #signature-image{
+    padding:30px 30px 30px 60px
   }
