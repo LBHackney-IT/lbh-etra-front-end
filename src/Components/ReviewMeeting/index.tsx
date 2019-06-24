@@ -16,6 +16,7 @@ export interface IReviewMeetingProps {
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
+    role: any
 }
 
 export enum ReviewMeetingDisplayState {
@@ -42,7 +43,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         super(props);
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
-            signatureBase64: ""
+            signatureBase64: "",
+            role:""
         }
     }
 
@@ -67,11 +69,11 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
-          return (<Confirmation SignatureImage={this.state.signatureBase64} />);
+          return (<Confirmation role={this.state.role} SignatureImage={this.state.signatureBase64} />);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
-            return (<ConfirmLater/>);
+            return (<ConfirmLater />);
         }
 
         return this.renderReview();
@@ -98,11 +100,22 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </div>
         );
     }
+    handleChangeOfRole (event: React.ChangeEvent<HTMLInputElement>): void {
+        let selectedRole = event.target.value;
+        // if(selectedRole===undefined){
+        //     this.setState({role:""})
+        // }
+        this.setState(
+            {
+                role:selectedRole
+            }
+        );
+    }
 
     private renderRole(role: IRole){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
-                <input type="radio" name="tra-role" value={role.name} />
+                <input type="radio" name="tra-role" onChange={this.handleChangeOfRole.bind(this)} value={role.name} />
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>
@@ -111,3 +124,4 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         );
     }
 }
+
