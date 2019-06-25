@@ -5,7 +5,7 @@
 
 .label {
   font-size: 19px;
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.32;
@@ -47,4 +47,7 @@
 .read-only-background {
   background-color: rgba(34, 34, 34, 0.05);
   padding-left: 13px;
+}
+.issue{
+  margin-bottom: 20px;
 }

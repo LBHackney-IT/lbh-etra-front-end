@@ -139,32 +139,34 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderDeleteIssueButton() {
     return (
-      <button
+      <div className="button-wrapper">
+        <button
         id="delete-issue"
-        className="button btn-primary btn-stacked"
+        className="button btn-secondary"
         data-test="delete-issue"
         onClick={this.deleteIssue}>
-        Delete Issue
+        Cancel
       </button>
+      </div>
     );
   }
 
   render() {
     return (
       <div className={`wrapper ${this.props.readOnly ? "read-only-background" : ""}`}>
-        <div>
-          <label data-test="issue-label" className="label">Issue Type</label>
+        <div className="issue">
+          <label data-test="issue-label" className="label">Issue type</label>
           <br />
           {this.conditionalRender(this.renderReadOnly(this.state.issue.IssueType.IssueType, "issue-type-text"), this.renderNotReadOnlyIssueType())}
         </div>
 
-        <div>
+        <div className="issue">
           <label data-test="location-label" className="label">Location of issue</label>
           <br />
           {this.conditionalRender(this.renderReadOnly(this.state.issue.Location.name, "location-text"), this.renderNotReadOnlyLocation())}
         </div>
 
-        <div>
+        <div className="issue">
           <label data-text="notes-label" className="label">Notes about issue</label>
           <br />
           {this.conditionalRender(this.renderReadOnly(this.state.issue.Notes, "notes-text"), this.renderNotReadOnlyNotes())}

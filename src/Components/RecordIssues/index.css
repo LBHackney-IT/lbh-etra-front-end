@@ -13,3 +13,8 @@
       font-size: 19px;
       margin: 15px 0px 20px 0px;
   }
+  
+  .button-wrapper {
+    margin-top: 21.5px;
+    text-align: right;
+}
