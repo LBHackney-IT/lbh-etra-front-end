@@ -20,13 +20,12 @@
 .message-one {
   padding-bottom: 30px;
 }
-.confirmation-text{
+.confirmation-input{
   width: 903px;
   height: 95px;
-  border: solid 2px #0b0c0c;
   font-size:27px;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 10px;
   font-weight: 300;
 }
 .confirmation-title{
