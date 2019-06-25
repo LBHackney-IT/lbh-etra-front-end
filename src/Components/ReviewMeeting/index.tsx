@@ -6,6 +6,7 @@ import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
 import { IAttendees } from '../Attendees';
 import ConfirmLater from '../ConfirmLater';
+import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
@@ -16,7 +17,8 @@ export interface IReviewMeetingProps {
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
-    role: IRole
+    role: IRole,
+    repName:string
 }
 
 export enum ReviewMeetingDisplayState {
@@ -47,7 +49,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             role:{
                 id:"",
                 name:""
-            }
+            },
+            repName:""
         }
     }
 
@@ -58,6 +61,9 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     private updateSignatureString = (value: string) : void => {
         this.setState({ signatureBase64: value });
+    }
+    private updateRepName = (value:string) : void => {
+        this.setState({repName:value})
     }
 
     private onReviewLater = () : void => {
@@ -89,7 +95,9 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 <div className="signature-of-TRA-rep">Signature of TRA representative</div>
                     <Signature onUpdated={this.updateSignatureString} />
                 </div>
-
+                <div className="rep-name">
+                    <RepName onUpdated={this.updateRepName}></RepName>
+                </div>
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
                 {roles.map((role)=> this.renderRole(role,this.handleChangeOfRole))}
                 <div className="review-button">
@@ -98,7 +106,9 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                         onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 
                         signature={this.state.signatureBase64} 
-                        attendees={this.props.attendees}/>
+                        attendees={this.props.attendees}
+                        repName={this.state.repName}/>
+                        
                 </div>
             </div>
         );

@@ -13,4 +13,5 @@ export interface ISaveMeetingInputModel {
     issues:Array<IIssue>,
     signatureBase64: string
     attendees:IAttendees
+    repName:string
 }

@@ -4,6 +4,7 @@ import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
 import Attendees, { IAttendees } from '../Attendees';
+import RepName from '../RepName'
 
 export interface IMeetingProps {
   traName: string,

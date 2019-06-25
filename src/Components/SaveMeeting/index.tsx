@@ -11,7 +11,8 @@ export interface ISaveMeetingProps {
   signature: string,
   onReviewNow: () => void,
   onReviewLater: () => void,
-  attendees: IAttendees
+  attendees: IAttendees,
+  repName:string
 }
 
 export interface ISaveMeetingState {
@@ -55,7 +56,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
-    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
+    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees, this.props.repName));
     if (outputModel.successful) {
       callback();
     }
