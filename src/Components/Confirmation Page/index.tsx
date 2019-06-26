@@ -45,7 +45,7 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
           <div>
             <img id="signature-image" src={this.props.SignatureImage} alt="signature" />
           </div>
-          <div className="tra-chair-header">{this.props.role}</div>
+          <div className="tra-role">{this.props.role}</div>
         </div>
         <div className="message-box">
           <div className="text-container">
