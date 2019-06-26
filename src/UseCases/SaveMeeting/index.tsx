@@ -30,7 +30,7 @@ export class SaveMeetingUseCase implements ISaveMeetingUseCase{
     }
 
     Execute(inputModel: ISaveMeetingInputModel): ISaveMeetingOutputModel {
-        this.gateway.saveMeeting(inputModel);
+        this.gateway.saveMeetingDraft(inputModel);
 
         return new SaveMeetingOutputModel(true);
     }

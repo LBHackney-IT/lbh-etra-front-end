@@ -6,16 +6,16 @@ import { IIssue } from "../../Domain/Issues";
 describe("SaveMeetingUseCase", () => {
   it("successfully saves meeting", async () => {
     const mockGateway: IMeetingGateway = {
-      saveMeeting: jest.fn()
+      saveMeetingDraft: jest.fn()
     };
 
     const input = new SaveMeetingInputModel(issues, "testdata", mockAttendees());
 
     await new SaveMeetingUseCase(mockGateway).Execute(input);
 
-    expect(mockGateway.saveMeeting).toBeCalledTimes(1);
-    expect(mockGateway.saveMeeting).toHaveBeenCalledWith(input);
-    expect(mockGateway.saveMeeting).toHaveReturned();
+    expect(mockGateway.saveMeetingDraft).toBeCalledTimes(1);
+    expect(mockGateway.saveMeetingDraft).toHaveBeenCalledWith(input);
+    expect(mockGateway.saveMeetingDraft).toHaveReturned();
   });
 });
 

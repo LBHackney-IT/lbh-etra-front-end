@@ -10,6 +10,7 @@ export interface ISaveMeetingUseCase{
 }
 
 export interface ISaveMeetingInputModel {
+    meetingName: string,
     issues:Array<IIssue>,
     signatureBase64: string
     attendees:IAttendees
