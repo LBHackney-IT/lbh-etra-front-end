@@ -60,8 +60,7 @@ export default class Signature extends Component<ISignatureProps> {
   }
 
   private onCanvasUpdated = () : void => {
-    const base64stringData = this.getBase64String();
-    const base64string = base64stringData.substr(22)
+    const base64string = this.getBase64String();
     
     if(this.props.onUpdated != null){
       this.props.onUpdated(base64string);
