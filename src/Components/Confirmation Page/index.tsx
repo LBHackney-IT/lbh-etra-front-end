@@ -50,7 +50,7 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
         <div className="message-box">
           <div className="text-container">
             <div data-test="message-one" id="review-later-one" className="message-text message-one">Any issues have been saved and emailed to the TRA representative.</div>
-          <div data-test="message-two" id="review-later-two" className="message-text">You can access the issues from <a href="#">your work tray.</a></div>
+            <div data-test="message-two" id="review-later-two" className="message-text">You can access the issues from <a href="#">your work tray.</a></div>
           </div>
         </div>
       </div>
