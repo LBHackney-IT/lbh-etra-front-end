@@ -39,7 +39,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   }
 
   private checkIsValid(props: ISaveMeetingProps){
-    if(props.attendees.NumberOfAttendees <= 0 || props.repName==""){
+    if(props.attendees.NumberOfAttendees <= 0){
       return false;
     }
     
