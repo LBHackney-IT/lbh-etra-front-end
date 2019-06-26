@@ -3,7 +3,8 @@ import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
-import Attendees, { IAttendees } from '../Attendees';
+import Attendees from '../Attendees';
+import { IAttendees } from '../../Domain/Attendees';
 
 export interface IMeetingProps {
   traName: string,

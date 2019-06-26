@@ -1,5 +1,5 @@
 import { IIssue } from "../Issues";
-import { IAttendees } from "../../Components/Attendees";
+import { IAttendees } from "../Attendees";
 
 export interface IMeetingModel {
     meetingName: string,

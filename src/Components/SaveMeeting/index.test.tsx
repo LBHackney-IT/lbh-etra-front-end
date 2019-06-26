@@ -5,8 +5,8 @@ import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
 import { IServiceProvider, ServiceProvider } from '../../ServiceContext';
-import { IAttendees } from '../Attendees';
 import { IMeetingModel } from '../../Domain/Meeting';
+import { IAttendees } from '../../Domain/Attendees';
 
 configure({ adapter: new Adapter() });
 

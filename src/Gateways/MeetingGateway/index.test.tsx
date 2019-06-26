@@ -1,9 +1,9 @@
 import MeetingGateway, { IMeetingGateway } from ".";
-import { IAttendees } from "../../Components/Attendees";
 import { IIssue } from '../../Domain/Issues';
 import fetchMock from 'fetch-mock'
 import uuid from "uuid";
 import { IMeetingModel } from "../../Domain/Meeting";
+import { IAttendees } from "../../Domain/Attendees";
 
 beforeEach(() => {
     localStorage.clear();

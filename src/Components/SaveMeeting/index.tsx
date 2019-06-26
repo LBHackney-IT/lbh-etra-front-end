@@ -1,11 +1,10 @@
 import React, { isValidElement } from 'react';
 import './index.css';
 import { IIssue } from '../../Domain/Issues'
-import { SaveMeetingDraftUseCase } from '../../UseCases/SaveMeetingDraft'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
-import { IAttendees } from '../Attendees';
 import { MeetingModel } from '../../Domain/Meeting';
+import { IAttendees } from '../../Domain/Attendees';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,

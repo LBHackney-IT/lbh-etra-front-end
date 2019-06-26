@@ -1,11 +1,6 @@
 import React, { ChangeEvent, Component } from 'react';
 import './index.css';
-
-export interface IAttendees {
-    Councillors: string,
-    HackneyStaff: string,
-    NumberOfAttendees: number
-}
+import { IAttendees } from '../../Domain/Attendees';
 
 export interface IAttendeesState {
     isCollapsed: boolean,

@@ -4,8 +4,8 @@ import SaveMeeting from '../SaveMeeting';
 import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
-import { IAttendees } from '../Attendees';
 import ConfirmLater from '../ConfirmLater';
+import { IAttendees } from '../../Domain/Attendees';
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,

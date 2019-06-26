@@ -1,13 +1,15 @@
-import { IMeetingGateway } from "../../Gateways/MeetingGateway";
+import MeetingGateway, { IMeetingGateway } from "../../Gateways/MeetingGateway";
 import { SaveMeetingDraftUseCase } from ".";
-import { IAttendees } from "../../Components/Attendees";
 import { IIssue } from "../../Domain/Issues";
 import { MeetingModel } from "../../Domain/Meeting";
+import { IAttendees } from "../../Domain/Attendees";
 
 describe("SaveMeetingDraftUseCase", () => {
   it("successfully saves meeting", async () => {
     const mockGateway: IMeetingGateway = {
-      saveMeetingDraft: jest.fn()
+      baseUrl: "",
+      saveMeetingDraft: jest.fn(),
+      saveMeetingData: jest.fn()
     };
 
     const input = new MeetingModel("Test Meeting", issues, "testdata", mockAttendees());
