@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import SaveMeeting from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import { ISaveMeetingUseCase, ISaveMeetingInputModel } from '../../Boundary/SaveMeeting';
-import { SaveMeetingOutputModel } from '../../UseCases/SaveMeeting';
+import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
 import { IServiceProvider, ServiceProvider } from '../../ServiceContext';
 import { IAttendees } from '../Attendees';
+import { IMeetingModel } from '../../Domain/Meeting';
 
 configure({ adapter: new Adapter() });
 
@@ -71,8 +71,8 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
         <ServiceProvider value={mockServiceProvider}>
             <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={onReviewNow} attendees={mockAttendees()}/>
         </ServiceProvider>);; 
-    const element = wrapper.find('#save-meeting');
-    element.simulate('click');
+        const element = wrapper.find('#save-meeting');
+        element.simulate('click');
 
     it('Then the "Save and email issue list to TRA" button is NOT displayed', () => {
         const element = wrapper.find('#save-meeting')
@@ -124,10 +124,9 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
 });
 
 function createMockServiceProvider() : IServiceProvider {
-  
-    const mockSaveMeeting: ISaveMeetingUseCase = {
-        Execute: jest.fn((model: ISaveMeetingInputModel) => {
-            return new SaveMeetingOutputModel(true);
+    const mockSaveMeeting: ISaveMeetingDraftUseCase = {
+        Execute: jest.fn((model: IMeetingModel) => {
+            return true;
         })
     };
   

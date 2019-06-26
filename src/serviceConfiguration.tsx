@@ -1,6 +1,6 @@
 import MeetingGateway, { IMeetingGateway } from "./Gateways/MeetingGateway";
-import { ISaveMeetingUseCase } from "./Boundary/SaveMeeting";
-import { SaveMeetingUseCase } from "./UseCases/SaveMeeting";
+import { ISaveMeetingDraftUseCase } from "./Boundary/SaveMeetingDraft";
+import { SaveMeetingDraftUseCase } from "./UseCases/SaveMeetingDraft";
 import { IServiceContainer } from "./ServiceContext";
 import { IIssueLocationGateway as ILoadIssueLocationGateway } from "./Boundary/IssueLocation";
 import LoadIssueLocationGateway from "./Gateways/LoadIssueLocation";
@@ -11,11 +11,11 @@ export default function configureServices(container: IServiceContainer) {
     container.bind<IIssueLocationFactory>("IIssueLocationFactory", new IssueLocationFactory());
 
     //Gateways
-    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway());
+    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway(""));
     container.bind<ILoadIssueLocationGateway>("ILoadIssueLocationGateway", 
         new LoadIssueLocationGateway(container.get<IIssueLocationFactory>("IIssueLocationFactory")));
 
     //Use Cases
-    container.bind<ISaveMeetingUseCase>("ISaveMeetingUseCase", new SaveMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
+    container.bind<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase", new SaveMeetingDraftUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
     return container;
 }

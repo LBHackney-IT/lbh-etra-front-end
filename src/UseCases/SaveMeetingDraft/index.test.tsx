@@ -1,17 +1,18 @@
 import { IMeetingGateway } from "../../Gateways/MeetingGateway";
-import { SaveMeetingUseCase, SaveMeetingInputModel } from ".";
+import { SaveMeetingDraftUseCase } from ".";
 import { IAttendees } from "../../Components/Attendees";
 import { IIssue } from "../../Domain/Issues";
+import { MeetingModel } from "../../Domain/Meeting";
 
-describe("SaveMeetingUseCase", () => {
+describe("SaveMeetingDraftUseCase", () => {
   it("successfully saves meeting", async () => {
     const mockGateway: IMeetingGateway = {
       saveMeetingDraft: jest.fn()
     };
 
-    const input = new SaveMeetingInputModel(issues, "testdata", mockAttendees());
+    const input = new MeetingModel("Test Meeting", issues, "testdata", mockAttendees());
 
-    await new SaveMeetingUseCase(mockGateway).Execute(input);
+    await new SaveMeetingDraftUseCase(mockGateway).Execute(input);
 
     expect(mockGateway.saveMeetingDraft).toBeCalledTimes(1);
     expect(mockGateway.saveMeetingDraft).toHaveBeenCalledWith(input);

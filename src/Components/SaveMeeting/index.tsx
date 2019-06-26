@@ -1,10 +1,11 @@
 import React, { isValidElement } from 'react';
 import './index.css';
 import { IIssue } from '../../Domain/Issues'
-import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
+import { SaveMeetingDraftUseCase } from '../../UseCases/SaveMeetingDraft'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
-import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
+import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
 import { IAttendees } from '../Attendees';
+import { MeetingModel } from '../../Domain/Meeting';
 
 export interface ISaveMeetingProps {
   issues: Array<IIssue>,
@@ -21,11 +22,11 @@ export interface ISaveMeetingState {
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
-  private readonly saveMeeting: ISaveMeetingUseCase;
+  private readonly saveMeeting: ISaveMeetingDraftUseCase;
 
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
-    this.saveMeeting = context.get<ISaveMeetingUseCase>("ISaveMeetingUseCase");
+    this.saveMeeting = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
 
     this.state = {
       isAttemptingToSave: false,
@@ -55,8 +56,8 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
-    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
-    if (outputModel.successful) {
+    const successful = this.saveMeeting.Execute(new MeetingModel("Test Meeting", this.props.issues, this.props.signature, this.props.attendees));
+    if (successful) {
       callback();
     }
     else {
