@@ -6,9 +6,9 @@ import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import Signature from '../Signature';
 import SaveMeeting from '../SaveMeeting';
-import Confirmation from '../Confirmation Page';
-import { exportAllDeclaration } from '@babel/types';
+import Confirmation from '../Confirmation Page';;
 import ConfirmLater from '../ConfirmLater';
+import { ISignOff } from '../../Domain/SignOff';
 
 configure({ adapter: new Adapter() });
 
@@ -55,6 +55,14 @@ describe('When we display the review meeting component', ()  => {
         expect(element).toHaveLength(1);
         expect(element.children('input').props()['name']).toEqual("tra-role");
     });
+
+    it('Then selecting the radio buttons updates role', () => {
+        const element = wrapper.find('#treasurer').children('input');
+        element.simulate('change', { currentTarget: { value: "Treasurer" }});
+
+        const signOff = wrapper.state("signOff") as ISignOff;
+        expect(signOff.role).toBe("Treasurer");
+    })
 
     it('Then the SaveMeeting component is displayed', () => {
         const element = wrapper.find(SaveMeeting)

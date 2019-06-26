@@ -5,13 +5,14 @@ import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
 import { MeetingModel } from '../../Domain/Meeting';
 import { IAttendees } from '../../Domain/Attendees';
+import { ISignOff } from '../../Domain/SignOff';
 
 export interface ISaveMeetingProps {
+  attendees: IAttendees,
   issues: Array<IIssue>,
-  signature: string,
+  signOff: ISignOff,
   onReviewNow: () => void,
   onReviewLater: () => void,
-  attendees: IAttendees
 }
 
 export interface ISaveMeetingState {
@@ -55,7 +56,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
-    const successful = this.saveMeeting.Execute(new MeetingModel("Test Meeting", this.props.issues, this.props.signature, this.props.attendees));
+    const successful = this.saveMeeting.Execute(new MeetingModel("Test Meeting", this.props.issues, this.props.attendees, this.props.signOff));
     if (successful) {
       callback();
     }
