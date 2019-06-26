@@ -20,3 +20,22 @@
 .message-one {
   padding-bottom: 30px;
 }
+.confirmation-text{
+  width: 903px;
+  height: 95px;
+  border: solid 2px #0b0c0c;
+  font-size:27px;
+  text-align: center;
+  padding-top: 50px;
+  font-weight: 300;
+}
+.confirmation-title{
+  font-size: 27px;
+  font-weight: 500;
+  margin-bottom: 33px;
+}
+.representative-name{
+  padding: 10px;
+  font-size: 27px;
+  font-weight: 500;
+}

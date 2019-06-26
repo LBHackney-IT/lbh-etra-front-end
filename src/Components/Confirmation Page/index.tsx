@@ -6,6 +6,7 @@ import { string } from 'prop-types';
 export interface IConfirmationProps {
   SignatureImage: string,
   role:string
+  repName:string
 }
 
 export interface IConfirmationState {
@@ -36,6 +37,9 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
   render() {
     return (
       <div>
+        <div className="confirmation-input">
+          I {this.props.repName} do hereby confirm that I have reviewed these issues.
+        </div>
         <div >
           <div className="signature-header">Signature of TRA representative</div>
           <div>

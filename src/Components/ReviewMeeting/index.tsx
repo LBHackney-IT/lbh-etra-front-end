@@ -19,12 +19,13 @@ export interface IReviewMeetingState {
     signatureBase64: string,
     role: IRole,
     repName:string
+    readOnly:boolean
 }
 
 export enum ReviewMeetingDisplayState {
     Ready,
     ReviewComplete,
-    ReviewLater
+    ReviewLater,
 }
 
 interface IRole {
@@ -50,7 +51,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 id:"",
                 name:""
             },
-            repName:""
+            repName:"",
+            readOnly:false
         }
     }
 
@@ -69,16 +71,20 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private onReviewLater = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
         this.props.onSaveComplete();
+        this.setState({readOnly:true})
+
     }
 
     private onReviewNow = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
         this.props.onSaveComplete();
+        const readOnly = this.state.readOnly
+        this.setState({readOnly:readOnly})
     }
 
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
-          return (<Confirmation role={this.state.role.name} SignatureImage={this.state.signatureBase64} />);
+          return (<Confirmation repName={this.state.repName}role={this.state.role.name} SignatureImage={this.state.signatureBase64} />);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
