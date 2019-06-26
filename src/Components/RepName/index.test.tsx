@@ -16,4 +16,8 @@ describe('When we go to render the meeting component', () => {
       const element = wrapper.find(".confirmation-title")
       expect(element.exists()).toBe(true)
    });
+   it('Then it can display the textbox', () => {
+      const element = wrapper.find(".representative-name")
+      expect(element.exists()).toBe(true)
+   });
 });

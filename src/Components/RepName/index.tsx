@@ -29,7 +29,7 @@ handleRepConfirmation = (event: React.ChangeEvent<HTMLInputElement>):void =>{
         <div className="confirmation-input">I 
           <input onChange={this.handleRepConfirmation} 
                 className="representative-name" 
-                placeholder="[Name]" 
+                placeholder="please enter your name" 
                 value={this.state.representativeName}/>
           do hereby confirm that I have reviewed these issues.
         </div>
