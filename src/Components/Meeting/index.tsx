@@ -37,6 +37,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
   
   public static defaultProps = {
+    traName: "",
     dateOfMeeting: new Date()
   };
 
