@@ -1,12 +1,11 @@
 import React, { ChangeEvent } from 'react';
-import { IIssue, Issue } from '../../Domain/Issues';
+import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import issueTypesData from "../../JsonFiles/IssueType.json"
 import { IssueType, IIssueType } from "../../Domain/IssueType"
 import { IIssueLocation } from "../../Domain/IssueLocation";
 import { IIssueLocationGateway as ILoadIssueLocationGateway } from '../../Boundary/IssueLocation/'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
-import { v4 as uuid } from 'uuid';
 
 export interface IAddIssuesProps {
   onChangeIssue: (issues: IIssue, index: number) => void;

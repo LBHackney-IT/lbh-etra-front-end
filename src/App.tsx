@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { Meeting } from './Components/Meeting'
 import AppRouter from './AppRouter';
 
 const App: React.FC = () => {

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import './index.css';
 import SaveMeeting from '../SaveMeeting';
 import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
-import Confirmation from '../Confirmation Page';
-import { IAttendees } from '../Attendees';
+import Confirmation from '../ConfirmationPage';
 import ConfirmLater from '../ConfirmLater';
+import { IAttendees } from '../../Domain/Attendees';
+import { ISignOff, SignOff } from '../../Domain/SignOff';
 import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
+    meetingName: string,
     issues: Array<IIssue>,
     onSaveComplete: () => void
     attendees:IAttendees
@@ -16,9 +18,7 @@ export interface IReviewMeetingProps {
 
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
-    signatureBase64: string,
-    role: IRole,
-    repName:string
+    signOff: ISignOff,
     readOnly:boolean
 }
 
@@ -46,12 +46,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         super(props);
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
-            signatureBase64: "",
-            role:{
-                id:"",
-                name:""
-            },
-            repName:"",
+            signOff: new SignOff("", "", roles[0].name),
             readOnly:false
         }
     }
@@ -62,16 +57,27 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     };
 
     private updateSignatureString = (value: string) : void => {
-        this.setState({ signatureBase64: value });
+        let signOff = this.state.signOff;
+        signOff.signature = value;
+        this.setState({ signOff: signOff });
     }
+
+    private updateRole = (event: FormEvent<HTMLInputElement>) : void => {
+        let signOff = this.state.signOff;
+        signOff.role = event.currentTarget.value;
+        this.setState({ signOff: signOff });
+    }
+
     private updateRepName = (value:string) : void => {
-        this.setState({repName:value})
+        let signOff = this.state.signOff;
+        signOff.name = value;
+        this.setState({ signOff:signOff });
     }
 
     private onReviewLater = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
         this.props.onSaveComplete();
-        this.setState({readOnly:true})
+        this.setState({ readOnly:true })
 
     }
 
@@ -84,7 +90,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
-          return (<Confirmation repName={this.state.repName}role={this.state.role.name} SignatureImage={this.state.signatureBase64} />);
+          return (<Confirmation signOff={this.state.signOff} />);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
@@ -105,16 +111,15 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                     <RepName onUpdated={this.updateRepName}></RepName>
                 </div>
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
-                {roles.map(this.renderRole)}
+                {roles.map(this.renderRole, this)}
                 <div className="review-button">
                     <SaveMeeting 
+                        meetingName={this.props.meetingName}
                         onReviewNow={this.onReviewNow} 
                         onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 
-                        signature={this.state.signatureBase64} 
-                        attendees={this.props.attendees}
-                        repName={this.state.repName}/>
-                        
+                        signOff={this.state.signOff} 
+                        attendees={this.props.attendees}/>
                 </div>
             </div>
         );
@@ -123,7 +128,11 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private renderRole(role: IRole){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
-                <input type="radio" name="tra-role" value={role.id} />
+                <input type="radio" 
+                    name="tra-role" 
+                    value={role.name} 
+                    onChange={this.updateRole} 
+                    checked={this.state.signOff.role === role.name}/>
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>

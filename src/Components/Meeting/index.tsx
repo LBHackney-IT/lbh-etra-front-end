@@ -3,7 +3,8 @@ import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
-import Attendees, { IAttendees } from '../Attendees';
+import Attendees from '../Attendees';
+import { IAttendees } from '../../Domain/Attendees';
 
 export interface IMeetingProps {
   traName: string,
@@ -18,6 +19,8 @@ export interface IMeetingState {
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
+  readonly meetingName: string;
+
   public constructor(props: IMeetingProps) {
     super(props);
     this.state = {
@@ -29,9 +32,12 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         NumberOfAttendees: 0
       }
     }
+
+    this.meetingName = `${this.props.traName} ETRA meeting ${this.getMeetingDateString()}`;
   }
   
   public static defaultProps = {
+    traName: "",
     dateOfMeeting: new Date()
   };
 
@@ -55,12 +61,13 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     return (
       <div>
         <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
-        <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
+        <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
           <RecordIssues readOnly={this.state.meetingCreated} onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
+          meetingName={this.meetingName}
           attendees={this.state.attendees}
           issues={this.state.issues}
           onSaveComplete={this.onSaveComplete}
