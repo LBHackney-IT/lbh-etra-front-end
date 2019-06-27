@@ -75,7 +75,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         return (
             <div>
                 <div className="heading" data-test="issues-header">Record issues at meeting</div>
-                {this.state.issues.length == 0 && this.renderNoIssuesText()}
+                {this.state.issues.length === 0 && this.renderNoIssuesText()}
                 {this.state.issues.map((issue:IIssue, index: number) =>
                     <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>
                 )}

@@ -10,6 +10,7 @@ import { ISignOff, SignOff } from '../../Domain/SignOff';
 import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
+    meetingName: string,
     issues: Array<IIssue>,
     onSaveComplete: () => void
     attendees:IAttendees
@@ -113,6 +114,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 {roles.map(this.renderRole, this)}
                 <div className="review-button">
                     <SaveMeeting 
+                        meetingName={this.props.meetingName}
                         onReviewNow={this.onReviewNow} 
                         onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 

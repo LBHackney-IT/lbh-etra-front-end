@@ -1,7 +1,7 @@
 import { IFactory } from "../index";
 import { v4 as uuid } from 'uuid';
 import { IssueLocation, IIssueLocation, IssueLocationType } from "../../Domain/IssueLocation";
-import { IBlockLocation, BlockLocation } from "../../Domain/BlockLocation";
+import { IBlockLocation } from "../../Domain/BlockLocation";
 import { IEstateLocation } from "../../Domain/EstateLocation";
 
 export interface IIssueLocationFactory extends IFactory<IIssueLocation>{

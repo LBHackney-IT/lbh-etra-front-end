@@ -7,6 +7,7 @@ import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
 import { IServiceProvider, ServiceProvider } from '../../ServiceContext';
 import { IMeetingModel } from '../../Domain/Meeting';
 import { IAttendees } from '../../Domain/Attendees';
+import { SignOff } from '../../Domain/SignOff';
 
 configure({ adapter: new Adapter() });
 
@@ -23,14 +24,26 @@ function mockAttendees() : IAttendees {
 it('Save Meeting component loads', () => {
    mount(
     <ServiceProvider value={mockServiceProvider}>
-        <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={jest.fn()} attendees={mockAttendees()}/>
+        <SaveMeeting 
+            meetingName="" 
+            issues={[]} 
+            signOff={new SignOff("", "", "")} 
+            onReviewLater={jest.fn()} 
+            onReviewNow={jest.fn()} 
+            attendees={mockAttendees()}/>
     </ServiceProvider>);
 });
 
 describe('When we render the "Save Meeting component"', ()  => {
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={jest.fn()} attendees={mockAttendees()}/>
+            <SaveMeeting 
+                meetingName=""
+                issues={[]}
+                signOff={new SignOff("", "", "")}
+                onReviewLater={jest.fn()}
+                onReviewNow={jest.fn()}
+                attendees={mockAttendees()}/>
         </ServiceProvider>);
 
     it('Then the "Save and email issue list to TRA" button is displayed', () => {
@@ -50,7 +63,13 @@ describe('When we render the "Save Meeting component"', () => {
         attendees.NumberOfAttendees = 0;
         const wrapper = mount(
             <ServiceProvider value={mockServiceProvider}>
-                <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={jest.fn()} attendees={attendees}/>
+                <SaveMeeting
+                    meetingName=""
+                    issues={[]}
+                    signOff={new SignOff("", "", "")}
+                    onReviewLater={jest.fn()}
+                    onReviewNow={jest.fn()}
+                    attendees={attendees}/>
             </ServiceProvider>);
 
         it('Then the "Save and email issue list to TRA" button is disabled', () => {
@@ -69,7 +88,13 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     const onReviewNow = jest.fn();
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onReviewLater={jest.fn()} onReviewNow={onReviewNow} attendees={mockAttendees()}/>
+            <SaveMeeting
+                meetingName=""
+                issues={[]} 
+                signOff={new SignOff("", "", "")}
+                onReviewLater={jest.fn()}
+                onReviewNow={onReviewNow}
+                attendees={mockAttendees()}/>
         </ServiceProvider>);; 
         const element = wrapper.find('#save-meeting');
         element.simulate('click');
@@ -98,7 +123,13 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     const onReviewLater = jest.fn();
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
-            <SaveMeeting issues={[]} signature="" onReviewLater={onReviewLater} onReviewNow={jest.fn()} attendees={mockAttendees()}/>
+            <SaveMeeting
+                meetingName=""
+                issues={[]}
+                signOff={new SignOff("", "", "")}
+                onReviewLater={onReviewLater}
+                onReviewNow={jest.fn()}
+                attendees={mockAttendees()}/>
         </ServiceProvider>);; 
     const element = wrapper.find('#review-later');
     element.simulate('click');

@@ -1,11 +1,8 @@
-import { v4 as uuid } from 'uuid';
-
 export interface IIssueType 
 {
    IssueId:string;
    IssueType:string;
 } 
-
 
 export class IssueType implements IIssueType
 {
