@@ -1,6 +1,11 @@
+.wrapper {
+  padding-top: 10px;
+  margin-top: 9px;
+}
+
 .label {
   font-size: 19px;
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.32;
@@ -30,4 +35,19 @@
   height: 139px;
   border: solid 2px #0b0c0c;
   background-color: #ffffff;
+}
+
+.issue-display-box {
+  width: 100%;
+  padding: 6px 0 21px 0;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.read-only-background {
+  background-color: rgba(34, 34, 34, 0.05);
+  padding-left: 13px;
+}
+.issue{
+  margin-bottom: 20px;
 }

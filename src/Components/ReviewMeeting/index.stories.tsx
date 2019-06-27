@@ -4,5 +4,5 @@ import ReviewMeeting from '.';
 
 storiesOf('Review Meeting', module)
   .add("opens correctly", () => (
-    <ReviewMeeting onSaveComplete={() => {}}/>
+    <ReviewMeeting meetingName="Test Meeting" onSaveComplete={() => {}}/>
   ));

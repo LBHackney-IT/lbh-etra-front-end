@@ -1,7 +1,7 @@
 import { IFactory } from "../index";
 import { v4 as uuid } from 'uuid';
 import { IssueLocation, IIssueLocation, IssueLocationType } from "../../Domain/IssueLocation";
-import { IBlockLocation, BlockLocation } from "../../Domain/BlockLocation";
+import { IBlockLocation } from "../../Domain/BlockLocation";
 import { IEstateLocation } from "../../Domain/EstateLocation";
 
 export interface IIssueLocationFactory extends IFactory<IIssueLocation>{
@@ -13,8 +13,7 @@ export interface IIssueLocationFactory extends IFactory<IIssueLocation>{
 export class IssueLocationFactory implements IFactory<IIssueLocation>  {
 
     public create(): IIssueLocation {
-        let id = uuid();
-        let location = new IssueLocation(id,"","", "", IssueLocationType.Estate);
+        let location = new IssueLocation("","","", "", IssueLocationType.Estate);
         return location;
     }
 

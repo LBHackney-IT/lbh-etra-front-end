@@ -1,10 +1,10 @@
-import  { IIssueTypeAndId, IssueTypeAndKey } from '../IssueType'
+import  { IIssueType } from '../IssueType'
 import { IIssueLocation } from '../IssueLocation'
 
 export interface IIssue  
 {
   Id: string
-  IssueTypeAndKey:IssueTypeAndKey
+  IssueType:IIssueType
   Location:IIssueLocation
   Notes:string
 }
@@ -12,13 +12,13 @@ export interface IIssue
 export class Issue implements IIssue
 {
   public Id:string;
-  public IssueTypeAndKey:IssueTypeAndKey;
+  public IssueType:IIssueType;
   public Location:IIssueLocation;
   public Notes:string;
 
-  constructor(id: string, issueType:IssueTypeAndKey, location:IIssueLocation, notes:string){
+  constructor(id: string, issueType:IIssueType, location:IIssueLocation, notes:string){
     this.Id = id;
-    this.IssueTypeAndKey = issueType;
+    this.IssueType = issueType;
     this.Location = location;
     this.Notes = notes;
   }

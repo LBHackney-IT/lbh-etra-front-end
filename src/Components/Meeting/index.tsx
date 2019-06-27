@@ -26,7 +26,8 @@ export interface IMeetingState {
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
-  private selectedTra: ITra | undefined;
+  private readonly selectedTra: ITra | undefined;
+  private readonly meetingName: string;
 
   public constructor(props: IMeetingProps) {
     super(props);
@@ -44,6 +45,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       dateOfMeeting: new Date(),
       backToLandingPage: false
     }
+
+    this.meetingName = `${this.selectedTra.name} ETRA meeting ${this.getMeetingDateString()}`;
   }
 
   getMeetingDateString = (): string => {
@@ -84,9 +87,10 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <h1 className="tra-name-etra-meet">{this.selectedTra.name} meeting {this.getMeetingDateString()}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
-          <RecordIssues onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
+          <RecordIssues readOnly={this.state.meetingCreated} onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
+          meetingName={this.meetingName}
           attendees={this.state.attendees}
           issues={this.state.issues}
           onSaveComplete={this.onSaveComplete}

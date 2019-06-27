@@ -1,0 +1,50 @@
+.Signature-of-TRA-rep {
+  width: 438px;
+  height: 30px;
+  font-size: 27px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.signature-header
+{
+  
+  width: 438px;
+  height: 30px;
+  font-size: 27px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.11;
+  letter-spacing: normal;
+  color: #000000;
+    
+}
+
+#signature-image
+{
+  width: 299.7px;
+  height: 131.6px;
+}
+
+.label-title
+{
+  width: 200px;
+  height: 30px;
+  font-size: 19px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #000000;
+}
+.tra-role{
+  margin-bottom: 52px;
+  font-size: 19px;
+  font-weight: 500;
+}

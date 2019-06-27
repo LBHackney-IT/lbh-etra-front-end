@@ -1,17 +1,19 @@
-import React, { isValidElement } from 'react';
+import React from 'react';
 import './index.css';
 import { IIssue } from '../../Domain/Issues'
-import { SaveMeetingUseCase, SaveMeetingInputModel } from '../../UseCases/SaveMeeting'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
-import { ISaveMeetingUseCase } from '../../Boundary/SaveMeeting';
-import { IAttendees } from '../Attendees';
+import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
+import { MeetingModel } from '../../Domain/Meeting';
+import { IAttendees } from '../../Domain/Attendees';
+import { ISignOff } from '../../Domain/SignOff';
 
 export interface ISaveMeetingProps {
+  meetingName: string,
+  attendees: IAttendees,
   issues: Array<IIssue>,
-  signature: string,
+  signOff: ISignOff,
   onReviewNow: () => void,
   onReviewLater: () => void,
-  attendees: IAttendees
 }
 
 export interface ISaveMeetingState {
@@ -21,11 +23,11 @@ export interface ISaveMeetingState {
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
-  private readonly saveMeeting: ISaveMeetingUseCase;
+  private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
 
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
-    this.saveMeeting = context.get<ISaveMeetingUseCase>("ISaveMeetingUseCase");
+    this.saveMeetingDraft = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
 
     this.state = {
       isAttemptingToSave: false,
@@ -55,8 +57,8 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
-    let outputModel = this.saveMeeting.Execute(new SaveMeetingInputModel(this.props.issues, this.props.signature, this.props.attendees));
-    if (outputModel.successful) {
+    const successful = this.saveMeetingDraft.Execute(new MeetingModel(this.props.meetingName, this.props.issues, this.props.attendees, this.props.signOff));
+    if (successful) {
       callback();
     }
     else {

@@ -6,18 +6,18 @@ import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import Signature from '../Signature';
 import SaveMeeting from '../SaveMeeting';
-import Confirmation from '../Confirmation Page';
-import { exportAllDeclaration } from '@babel/types';
+import Confirmation from '../ConfirmationPage';;
 import ConfirmLater from '../ConfirmLater';
+import { ISignOff } from '../../Domain/SignOff';
 
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting onSaveComplete={jest.fn()} />);
+   shallow(<ReviewMeeting meetingName="" onSaveComplete={jest.fn()} />);
 });
 
 describe('When we display the review meeting component', ()  => {
-    const wrapper = shallow(<ReviewMeeting onSaveComplete={jest.fn()}/>);
+    const wrapper = shallow(<ReviewMeeting meetingName="Test" onSaveComplete={jest.fn()}/>);
 
     it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
@@ -55,6 +55,14 @@ describe('When we display the review meeting component', ()  => {
         expect(element).toHaveLength(1);
         expect(element.children('input').props()['name']).toEqual("tra-role");
     });
+
+    it('Then selecting the radio buttons updates role', () => {
+        const element = wrapper.find('#treasurer').children('input');
+        element.simulate('change', { currentTarget: { value: "Treasurer" }});
+
+        const signOff = wrapper.state("signOff") as ISignOff;
+        expect(signOff.role).toBe("Treasurer");
+    })
 
     it('Then the SaveMeeting component is displayed', () => {
         const element = wrapper.find(SaveMeeting)
