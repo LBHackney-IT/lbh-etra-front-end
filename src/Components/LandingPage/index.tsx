@@ -38,8 +38,8 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
         return tras;
     }
 
-    private findSelectedTra(selectedId: number) : ITra | undefined {
-        return this.tras.find((option) => option.id === selectedId);
+    private findSelectedTra() : ITra | undefined {
+        return this.tras.find((option) => option.id.toString() === this.state.selectedTraId);
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
@@ -57,7 +57,14 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
 
     public render(){
         if (this.state.redirect) {
-            return <Redirect push to={`/meeting/${this.state.selectedTraId}`} />;
+            return <Redirect 
+                    push to={
+                        {
+                            pathname:`/meeting/`,
+                            state: {
+                                selectedTra: this.findSelectedTra()
+                            }
+                        }} />;
         }
 
         return (

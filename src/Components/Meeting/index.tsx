@@ -4,39 +4,52 @@ import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
 import Attendees, { IAttendees } from '../Attendees';
+import { ITra } from '../../Domain/Area';
+import { Location } from 'history';
+
+interface IMeetingRedirectProps {
+  selectedTra: ITra;
+}
 
 export interface IMeetingProps {
-  traName: string,
-  dateOfMeeting: Date
+  location: Location<IMeetingRedirectProps>
 }
 
 export interface IMeetingState {
+  shouldLoad: boolean,
   meetingCreated: boolean,
   issues: Array<IIssue>,
-  attendees: IAttendees
+  attendees: IAttendees,
+  dateOfMeeting: Date;
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
+  private selectedTra: ITra;
+
   public constructor(props: IMeetingProps) {
     super(props);
+
+    this.selectedTra = this.props.location.state.selectedTra;
+    const shouldLoad : boolean = this.selectedTra !== undefined;
+
     this.state = {
+      shouldLoad: shouldLoad,
       meetingCreated: false,
       issues: [],
       attendees: {
         Councillors: "",
         HackneyStaff: "",
         NumberOfAttendees: 0
-      }
+      },
+      dateOfMeeting: new Date()
     }
+
+    console.log(this.state.shouldLoad);
   }
-  
-  public static defaultProps = {
-    dateOfMeeting: new Date()
-  };
 
   getMeetingDateString = (): string => {
-    return this.props.dateOfMeeting.toLocaleDateString('en-GB');
+    return this.state.dateOfMeeting.toLocaleDateString('en-GB');
   }
 
   onSaveComplete = (): void => {
@@ -56,7 +69,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       <div>
         <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
 
-        <h1 className="tra-name-etra-meet">{this.props.traName} ETRA meeting {this.getMeetingDateString()}</h1>
+        <h1 className="tra-name-etra-meet">{this.selectedTra.name} meeting {this.getMeetingDateString()}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
           <RecordIssues onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>

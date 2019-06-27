@@ -9,13 +9,13 @@ import ReviewMeeting from '../ReviewMeeting';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<Meeting traName="Test Name"/>);
+   shallow(<Meeting location={{}} traName="Test Name"/>);
 });
 
 describe('When we go to render the meeting', () => {
     const traName = "Gotham City"
     const date = new Date("June 05, 2019")
-    const wrapper = shallow(<Meeting traName={traName} dateOfMeeting={date}/>); 
+    const wrapper = shallow(<Meeting location={{}} traName={traName} dateOfMeeting={date}/>); 
 
     it('Then the back link is shown', () => {
         const lnkBack = wrapper.find('#lnkBack')
