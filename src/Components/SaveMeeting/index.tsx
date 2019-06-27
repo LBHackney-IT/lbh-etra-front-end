@@ -22,11 +22,11 @@ export interface ISaveMeetingState {
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
-  private readonly saveMeeting: ISaveMeetingDraftUseCase;
+  private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
 
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
-    this.saveMeeting = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
+    this.saveMeetingDraft = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
 
     this.state = {
       isAttemptingToSave: false,
@@ -56,7 +56,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting(callback: () => void){
     this.setState({ isAttemptingToSave: true });
-    const successful = this.saveMeeting.Execute(new MeetingModel("Test Meeting", this.props.issues, this.props.attendees, this.props.signOff));
+    const successful = this.saveMeetingDraft.Execute(new MeetingModel("Test Meeting", this.props.issues, this.props.attendees, this.props.signOff));
     if (successful) {
       callback();
     }

@@ -13,8 +13,7 @@ export interface IIssueLocationFactory extends IFactory<IIssueLocation>{
 export class IssueLocationFactory implements IFactory<IIssueLocation>  {
 
     public create(): IIssueLocation {
-        let id = uuid();
-        let location = new IssueLocation(id,"","", "", IssueLocationType.Estate);
+        let location = new IssueLocation("","","", "", IssueLocationType.Estate);
         return location;
     }
 

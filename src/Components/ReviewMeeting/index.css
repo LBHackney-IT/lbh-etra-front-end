@@ -1,12 +1,13 @@
 .signature-of-TRA-rep {
     font-size: 27px;
     font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 1.11;
-    letter-spacing: normal;
     color: #000000;
     padding-bottom: 22px;
+
+  }
+  .rep-name{
+    padding-top:30px;
+    margin: 20px 0px 30px;
   }
 
   .signature-wrapper {
@@ -64,4 +65,7 @@
     font-size: 19px;
     padding-left: 12px;
     align-self: center;
+  }
+  #signature-image{
+    padding:30px 30px 30px 60px
   }
