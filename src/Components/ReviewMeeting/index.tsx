@@ -3,7 +3,7 @@ import './index.css';
 import SaveMeeting from '../SaveMeeting';
 import { IIssue } from '../../Domain/Issues'
 import Signature from '../Signature';
-import Confirmation from '../Confirmation Page';
+import Confirmation from '../ConfirmationPage';
 import ConfirmLater from '../ConfirmLater';
 import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff, SignOff } from '../../Domain/SignOff';

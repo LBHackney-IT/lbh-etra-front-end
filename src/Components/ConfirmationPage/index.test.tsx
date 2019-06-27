@@ -4,11 +4,12 @@ import Confirmation from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
+import { SignOff } from '../../Domain/SignOff';
 
 configure({ adapter: new Adapter() });
 
 it('Confirmation component loads', () => {
-   shallow(<Confirmation />);
+   shallow(<Confirmation signOff={new SignOff("", "", "")} />);
 });
 
 describe('Given that start a new meeting', () => {
@@ -16,7 +17,8 @@ describe('Given that start a new meeting', () => {
    const repName="Representative Name"
     describe('When we go to save the meeting', () => {
 
-        const wrapper = shallow(<Confirmation repName={repName}role={repRole}/>);
+
+        const wrapper = shallow(<Confirmation signOff={new SignOff("", repName, repRole)}/>);
 
          it('Then the "Signature of TRA representative" header is shown', () => {
             const divSignatureHeader=wrapper.find('.signature-header')

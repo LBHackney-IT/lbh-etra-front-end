@@ -6,7 +6,7 @@ import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import Signature from '../Signature';
 import SaveMeeting from '../SaveMeeting';
-import Confirmation from '../Confirmation Page';;
+import Confirmation from '../ConfirmationPage';;
 import ConfirmLater from '../ConfirmLater';
 import { ISignOff } from '../../Domain/SignOff';
 

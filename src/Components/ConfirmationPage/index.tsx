@@ -1,12 +1,10 @@
 import React from 'react';
 import { IIssue } from '../../Domain/Issues';
 import './index.css';
-import { string } from 'prop-types';
+import { ISignOff } from '../../Domain/SignOff';
 
 export interface IConfirmationProps {
-  SignatureImage: string,
-  role:string
-  repName:string
+  signOff: ISignOff,
 }
 
 export interface IConfirmationState {
@@ -25,11 +23,6 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
      }
   }
 
-  public static defaultProps: Partial<IConfirmationProps> = {
-    SignatureImage: ""
-  };
-
-
   public state: IConfirmationState = {
     issues: Array<IIssue>(),
   };
@@ -38,14 +31,14 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
     return (
       <div>
         <div className="name-confirmation">
-          I { this.props.repName } do hereby confirm that I have reviewed these issues.
+          I { this.props.signOff.name } do hereby confirm that I have reviewed these issues.
         </div>
         <div >
           <div className="signature-header">Signature of TRA representative</div>
           <div>
-            <img id="signature-image" src={this.props.SignatureImage} alt="signature" />
+            <img id="signature-image" src={this.props.signOff.signature} alt="signature" />
           </div>
-          <div className="tra-role">{this.props.role}</div>
+          <div className="tra-role">{this.props.signOff.role}</div>
         </div>
         <div className="message-box">
           <div className="text-container">
