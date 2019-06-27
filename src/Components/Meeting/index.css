@@ -31,3 +31,8 @@
 .record-issues-padding {
   padding-top: 50px;
 }
+
+.no-meeting-selected {
+  text-align: center;
+  font-size: 36px;
+}

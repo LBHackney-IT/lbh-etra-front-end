@@ -6,6 +6,7 @@ import RecordIssues from '../RecordIssues'
 import Attendees, { IAttendees } from '../Attendees';
 import { ITra } from '../../Domain/Area';
 import { Location } from 'history';
+import { Link } from 'react-router-dom';
 
 interface IMeetingRedirectProps {
   selectedTra: ITra;
@@ -16,25 +17,23 @@ export interface IMeetingProps {
 }
 
 export interface IMeetingState {
-  shouldLoad: boolean,
   meetingCreated: boolean,
   issues: Array<IIssue>,
   attendees: IAttendees,
   dateOfMeeting: Date;
+  backToLandingPage: boolean;
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
-  private selectedTra: ITra;
+  private selectedTra: ITra | undefined;
 
   public constructor(props: IMeetingProps) {
     super(props);
 
-    this.selectedTra = this.props.location.state.selectedTra;
-    const shouldLoad : boolean = this.selectedTra !== undefined;
+    this.selectedTra = this.props.location.state && this.props.location.state.selectedTra;
 
     this.state = {
-      shouldLoad: shouldLoad,
       meetingCreated: false,
       issues: [],
       attendees: {
@@ -42,10 +41,9 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         HackneyStaff: "",
         NumberOfAttendees: 0
       },
-      dateOfMeeting: new Date()
+      dateOfMeeting: new Date(),
+      backToLandingPage: false
     }
-
-    console.log(this.state.shouldLoad);
   }
 
   getMeetingDateString = (): string => {
@@ -65,10 +63,24 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   render() {
+    if(!this.selectedTra){
+      return (
+        <div>
+          {this.renderBackArrow()}
+          <div className="no-meeting-selected">
+            <p>You do not have a meeting in progress.</p>
+            <p>
+              Please return to the &nbsp;
+              <Link to="">landing page.</Link>
+            </p>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div>
-        <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
-
+        {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{this.selectedTra.name} meeting {this.getMeetingDateString()}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
@@ -80,6 +92,17 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           onSaveComplete={this.onSaveComplete}
         />
       </div>);
+  }
+
+  renderBackArrow(){
+    return (
+      <>
+        <div className="back-arrow"> &#60;</div>
+        <div className="back-link">
+          <Link to="" id="lnkBack" href="#">Back</Link>
+        </div>
+      </>
+    );
   }
 }
 
