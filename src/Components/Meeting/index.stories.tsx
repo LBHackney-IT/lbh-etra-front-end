@@ -8,9 +8,17 @@ const location = {
   hash: "",
   state: {
     selectedTra: {
-      id: 1,
-      name: "Gotham City TRA",
-      blocks: []
+      patch: {
+        id: "",
+        officerName: "Commissioner Gordon",
+        patchId: "BM1",
+        tras: []
+      },
+      tra: {
+        id: 1,
+        name: "Gotham City TRA",
+        blocks: []
+      }
     }
   }
 }

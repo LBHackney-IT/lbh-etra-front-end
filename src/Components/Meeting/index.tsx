@@ -4,13 +4,13 @@ import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
 import Attendees from '../Attendees';
-import { ITra } from '../../Domain/Area';
 import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
+import { ITraInfo } from '../../Boundary/TRAInfo';
 
 interface IMeetingRedirectProps {
-  selectedTra: ITra;
+  selectedTra: ITraInfo;
 }
 
 export interface IMeetingProps {
@@ -27,7 +27,7 @@ export interface IMeetingState {
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
-  private readonly selectedTra: ITra | undefined;
+  private readonly selectedTra: ITraInfo | undefined;
   private readonly meetingName: string;
 
   public constructor(props: IMeetingProps) {
@@ -47,7 +47,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       backToLandingPage: false
     }
 
-    this.meetingName = `${this.selectedTra.name} ETRA meeting ${this.getMeetingDateString()}`;
+    this.meetingName = `${this.selectedTra.tra.name} meeting ${this.getMeetingDateString()}`;
   }
 
   getMeetingDateString = (): string => {
@@ -85,7 +85,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     return (
       <div>
         {this.renderBackArrow()}
-        <h1 className="tra-name-etra-meet">{this.selectedTra.name} meeting {this.getMeetingDateString()}</h1>
+        <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
           <RecordIssues readOnly={this.state.meetingCreated} onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>

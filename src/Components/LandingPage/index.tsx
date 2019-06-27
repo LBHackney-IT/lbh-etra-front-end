@@ -3,6 +3,7 @@ import './index.css';
 import { Redirect } from "react-router-dom";
 import areaData from "../../JsonFiles/AreaData.json"
 import { IArea, ITra } from "../../Domain/Area";
+import { ITraInfo } from "../../Boundary/TRAInfo";
 
 export interface ILandingPageState {
     valid: boolean,
@@ -13,7 +14,7 @@ export interface ILandingPageState {
 export default class LandingPage extends Component<{}, ILandingPageState> { 
 
     private areas = Array.from<IArea>(areaData);
-    private tras : Array<ITra>;
+    private tras : Array<ITraInfo>;
 
     public constructor(props: {}) {
         super(props);
@@ -27,19 +28,24 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
         this.tras = this.populateTras();
     }
 
-    private populateTras() : Array<ITra> {
-        let tras = new Array<ITra>();
+    private populateTras() : Array<ITraInfo> {
+        let tras = new Array<ITraInfo>();
         this.areas.forEach((area) => {
             area.patches.forEach((patch) => {
-                tras = tras.concat(patch.tras);
+                patch.tras.forEach((tra) => {
+                    tras.push({
+                        patch: patch,
+                        tra: tra
+                    })
+                })
             })
         })
 
         return tras;
     }
 
-    private findSelectedTra() : ITra | undefined {
-        return this.tras.find((option) => option.id.toString() === this.state.selectedTraId);
+    private findSelectedTra() : ITraInfo | undefined {
+        return this.tras.find((traInfo) => traInfo.tra.id.toString() === this.state.selectedTraId);
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
@@ -102,13 +108,13 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
         );
     }
 
-    private renderDropdownOption(option: ITra){
+    private renderDropdownOption(traInfo: ITraInfo){
         return (
             <option 
                 data-test="tra-option" 
-                value={option.id}
-                key={option.id}>
-                    {option.name}
+                value={traInfo.tra.id}
+                key={traInfo.tra.id}>
+                    {`${traInfo.patch.patchId} - ${traInfo.tra.name}`}
             </option>
         );
     }
