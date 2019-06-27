@@ -77,7 +77,8 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
             <div className="landing-page-form">
                 <div className="landing-page-header" data-test="header-text">ETRA Meetings</div>
                 {this.renderDropdown()}
-                <button 
+                <button
+                    id="start-meeting-button"
                     data-test="start-meeting" 
                     className="button btn-primary" 
                     onClick={this.onClickStart}
@@ -96,7 +97,8 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
                 </label>
                 <br />
                 <select 
-                    value={this.state.selectedTraId} 
+                    value={this.state.selectedTraId}
+                    id="tra-select"
                     data-test="tra-selection"
                     name="tra-select" 
                     onChange={this.onChangeSelection}

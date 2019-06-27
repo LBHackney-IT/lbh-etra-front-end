@@ -68,18 +68,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
   render() {
     if(!this.selectedTra){
-      return (
-        <div>
-          {this.renderBackArrow()}
-          <div className="no-meeting-selected">
-            <p>You do not have a meeting in progress.</p>
-            <p>
-              Please return to the &nbsp;
-              <Link to="">landing page.</Link>
-            </p>
-          </div>
-        </div>
-      )
+      return this.renderErrorScreen();
     }
 
     return (
@@ -108,7 +97,22 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         </div>
       </>
     );
-  }
+  };
+
+  renderErrorScreen(){
+    return (
+      <div>
+        {this.renderBackArrow()}
+        <div className="no-meeting-selected">
+          <p>You do not have a meeting in progress.</p>
+          <p>
+            Please return to the &nbsp;
+            <Link to="">landing page.</Link>
+          </p>
+        </div>
+      </div>
+    );
+  };
 }
 
 export default Meeting;
