@@ -3,10 +3,11 @@ import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
-import Attendees, { IAttendees } from '../Attendees';
+import Attendees from '../Attendees';
 import { ITra } from '../../Domain/Area';
 import { Location } from 'history';
 import { Link } from 'react-router-dom';
+import { IAttendees } from '../../Domain/Attendees';
 
 interface IMeetingRedirectProps {
   selectedTra: ITra;
