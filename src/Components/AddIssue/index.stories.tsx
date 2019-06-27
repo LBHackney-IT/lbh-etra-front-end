@@ -5,7 +5,6 @@ import { IIssue } from '../../Domain/Issues';
 import { IssueFactory } from '../../Factories/Issue';
 import { ServiceContainer, IServiceProvider, ServiceProvider } from '../../ServiceContext';
 import configureServices from '../../serviceConfiguration';
-import { bool } from 'prop-types';
 
 const issueFactory = new IssueFactory();
 
