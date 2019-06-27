@@ -105,7 +105,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                     <RepName onUpdated={this.updateRepName}></RepName>
                 </div>
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
-                {roles.map((role)=> this.renderRole(role,this.handleChangeOfRole))}
+                {roles.map(this.renderRole)}
                 <div className="review-button">
                     <SaveMeeting 
                         onReviewNow={this.onReviewNow} 
@@ -119,23 +119,11 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </div>
         );
     }
-    handleChangeOfRole = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        let roleId = event.target.value;
 
-        let selectedRole = roles.find(role=> role.id === roleId);
-        if(selectedRole === undefined){return;}
-        
-        this.setState(
-            {
-                role:selectedRole
-            }
-        );
-    }
-
-    private renderRole(role: IRole, handleOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void){
+    private renderRole(role: IRole){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
-                <input type="radio" name="tra-role" onChange={handleOnChange} value={role.id} />
+                <input type="radio" name="tra-role" value={role.id} />
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>
