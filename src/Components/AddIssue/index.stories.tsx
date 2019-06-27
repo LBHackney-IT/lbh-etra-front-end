@@ -15,6 +15,7 @@ storiesOf('AddIssue',module)
 .add('Opens Correctly',()=>(
     <ServiceProvider value={serviceContainer}>
         <AddIssue
+            blocks={[]}
             readOnly={false}
             index={1} 
             issue={issueFactory.create()}

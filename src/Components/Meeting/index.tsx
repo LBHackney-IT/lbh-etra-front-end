@@ -88,7 +88,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
-          <RecordIssues readOnly={this.state.meetingCreated} onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
+          <RecordIssues blocks={this.selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
           meetingName={this.meetingName}
