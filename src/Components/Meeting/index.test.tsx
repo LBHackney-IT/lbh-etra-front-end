@@ -1,30 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Meeting from '.';
+import Meeting, { IMeetingRedirectProps } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
 import ReviewMeeting from '../ReviewMeeting';
+import { Location } from 'history';
 
 configure({ adapter: new Adapter() });
 
+const traName = "Gotham City TRA"
+
+const mockLocation : Location<IMeetingRedirectProps> = 
+    { 
+        pathname: "test", 
+        search: "", 
+        hash: "", 
+        state: { 
+            selectedTra: {
+                patch: {
+                    patchId: "",
+                    officerName: "",
+                    id: "",
+                    tras: []
+                },
+                tra: {
+                    id: 10,
+                    name: traName,
+                    blocks: []
+                }
+            }
+        }
+    };
+
 it('Meeting component loads', () => {
-   shallow(<Meeting location={{}} traName="Test Name"/>);
+   shallow(<Meeting location={mockLocation} />);
 });
 
 describe('When we go to render the meeting', () => {
-    const traName = "Gotham City"
-    const date = new Date("June 05, 2019")
-    const wrapper = shallow(<Meeting location={{}} traName={traName} dateOfMeeting={date}/>); 
+    const wrapper = shallow(<Meeting location={mockLocation} />); 
 
     it('Then the back link is shown', () => {
         const lnkBack = wrapper.find('#lnkBack')
-        expect(lnkBack.text()).toBe('Back'); 
+        expect(lnkBack).toHaveLength(1);
      });
 
     it('title is displayed with correct TRA Name', () => {
         const header = wrapper.find("h1");
-        expect(header.text()).toContain(`${traName} ETRA meeting`); 
+        expect(header.text()).toContain(`${traName} meeting`); 
     });
 
     it("review meeting component is rendered", () => {

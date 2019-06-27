@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
 import { ITraInfo } from '../../Boundary/TRAInfo';
 
-interface IMeetingRedirectProps {
+export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
 }
 

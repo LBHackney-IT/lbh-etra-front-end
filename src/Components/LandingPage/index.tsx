@@ -36,10 +36,10 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
                     tras.push({
                         patch: patch,
                         tra: tra
-                    })
-                })
-            })
-        })
+                    });
+                });
+            });
+        });
 
         return tras;
     }

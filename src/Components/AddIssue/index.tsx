@@ -84,7 +84,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderLocation(location: IBlockInfo) {
     return (
-      <option key={location.id} value={location.id}>{location.block.name}</option>
+      <option data-test="location-option" key={location.id} value={location.id}>{location.block.name}</option>
     );
   }
 
