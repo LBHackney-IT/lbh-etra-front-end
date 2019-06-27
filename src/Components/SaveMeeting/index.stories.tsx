@@ -5,6 +5,7 @@ import SaveMeeting from '.';
 storiesOf('Save Meeting', module)
   .add("opens correctly", () => (
     <SaveMeeting 
+      repName=""
       signature="" 
       issues={[]} 
       attendees={{Councillors: "", HackneyStaff: "", NumberOfAttendees: 0}} 

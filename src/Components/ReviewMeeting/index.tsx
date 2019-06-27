@@ -6,6 +6,7 @@ import Signature from '../Signature';
 import Confirmation from '../Confirmation Page';
 import { IAttendees } from '../Attendees';
 import ConfirmLater from '../ConfirmLater';
+import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
     issues: Array<IIssue>,
@@ -16,12 +17,15 @@ export interface IReviewMeetingProps {
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signatureBase64: string,
+    role: IRole,
+    repName:string
+    readOnly:boolean
 }
 
 export enum ReviewMeetingDisplayState {
     Ready,
     ReviewComplete,
-    ReviewLater
+    ReviewLater,
 }
 
 interface IRole {
@@ -42,7 +46,13 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         super(props);
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
-            signatureBase64: ""
+            signatureBase64: "",
+            role:{
+                id:"",
+                name:""
+            },
+            repName:"",
+            readOnly:false
         }
     }
 
@@ -54,24 +64,31 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private updateSignatureString = (value: string) : void => {
         this.setState({ signatureBase64: value });
     }
+    private updateRepName = (value:string) : void => {
+        this.setState({repName:value})
+    }
 
     private onReviewLater = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
         this.props.onSaveComplete();
+        this.setState({readOnly:true})
+
     }
 
     private onReviewNow = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
         this.props.onSaveComplete();
+        const readOnly = this.state.readOnly
+        this.setState({readOnly:readOnly})
     }
 
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
-          return (<Confirmation SignatureImage={this.state.signatureBase64} />);
+          return (<Confirmation repName={this.state.repName}role={this.state.role.name} SignatureImage={this.state.signatureBase64} />);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
-            return (<ConfirmLater/>);
+            return (<ConfirmLater />);
         }
 
         return this.renderReview();
@@ -84,7 +101,9 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 <div className="signature-of-TRA-rep">Signature of TRA representative</div>
                     <Signature onUpdated={this.updateSignatureString} />
                 </div>
-
+                <div className="rep-name">
+                    <RepName onUpdated={this.updateRepName}></RepName>
+                </div>
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
                 {roles.map(this.renderRole)}
                 <div className="review-button">
@@ -93,7 +112,9 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                         onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 
                         signature={this.state.signatureBase64} 
-                        attendees={this.props.attendees}/>
+                        attendees={this.props.attendees}
+                        repName={this.state.repName}/>
+                        
                 </div>
             </div>
         );
@@ -102,7 +123,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private renderRole(role: IRole){
         return (
             <label key={role.id} className="radio-option" id={role.id}>
-                <input type="radio" name="tra-role" value={role.name} />
+                <input type="radio" name="tra-role" value={role.id} />
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>
@@ -111,3 +132,4 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         );
     }
 }
+

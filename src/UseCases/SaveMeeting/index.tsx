@@ -15,10 +15,12 @@ export class SaveMeetingInputModel implements ISaveMeetingInputModel {
     public issues:Array<IIssue>;
     public signatureBase64: string;
     public attendees: IAttendees;
-    constructor(issues: Array<IIssue>, signatureBase64: string, attendees: IAttendees){
+    public repName:string;
+    constructor(issues: Array<IIssue>, signatureBase64: string, attendees: IAttendees, repName:string){
         this.issues = issues;
         this.signatureBase64 = signatureBase64;
         this.attendees = attendees;
+        this.repName=repName;
     }
 }
 

@@ -15,9 +15,10 @@ storiesOf('AddIssue',module)
 .add('Opens Correctly',()=>(
     <ServiceProvider value={serviceContainer}>
         <AddIssue
+            readOnly={false}
             index={1} 
             issue={issueFactory.create()}
-            onChangeIssue={(issue: IIssue, index: number) => {console.log(`${index}: ${issue.IssueTypeAndKey.IssueTypeAndId} ${issue.Notes}`)}}
+            onChangeIssue={(issue: IIssue, index: number) => {console.log(`${index}: ${issue.IssueType.IssueType} ${issue.Notes}`)}}
             onDeleteIssue={(index: number) => {console.log(`Delete issue ${index}`)}}/>
     </ServiceProvider>
 ));
