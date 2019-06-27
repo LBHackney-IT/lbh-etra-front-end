@@ -1,18 +1,8 @@
 import React, { Component, FormEvent } from "react";
 import './index.css';
-import { v4 as uuid } from 'uuid';
 import { Redirect } from "react-router-dom";
-
-interface ITraDetails {
-    id: string,
-    name: string,
-}
-
-const options : Array<ITraDetails> = [
-    { id: uuid(), name: "Test TRA"},
-    { id: uuid(), name: "Other TRA"},
-    { id: uuid(), name: "Another TRA"}
-]
+import areaData from "../../JsonFiles/AreaData.json"
+import { IArea, ITra } from "../../Domain/Area";
 
 export interface ILandingPageState {
     valid: boolean,
@@ -21,6 +11,10 @@ export interface ILandingPageState {
 }
 
 export default class LandingPage extends Component<{}, ILandingPageState> { 
+
+    private areas = Array.from<IArea>(areaData);
+    private tras : Array<ITra>;
+
     public constructor(props: {}) {
         super(props);
     
@@ -29,10 +23,23 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
             redirect: false,
             selectedTraId: "",
         }
+
+        this.tras = this.populateTras();
     }
 
-    private findSelectedTra(selectedId: string) : ITraDetails | undefined {
-        return options.find((option) => option.id === selectedId);
+    private populateTras() : Array<ITra> {
+        let tras = new Array<ITra>();
+        this.areas.forEach((area) => {
+            area.patches.forEach((patch) => {
+                tras = tras.concat(patch.tras);
+            })
+        })
+
+        return tras;
+    }
+
+    private findSelectedTra(selectedId: number) : ITra | undefined {
+        return this.tras.find((option) => option.id === selectedId);
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
@@ -82,13 +89,13 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
                     onChange={this.onChangeSelection}
                     className="tra-select">
                     <option value="" disabled>Select TRA</option>
-                    {options.map(this.renderDropdownOption)}
+                    {this.tras.map(this.renderDropdownOption)}
                 </select>
             </div>
         );
     }
 
-    private renderDropdownOption(option: ITraDetails){
+    private renderDropdownOption(option: ITra){
         return (
             <option 
                 data-test="tra-option" 
