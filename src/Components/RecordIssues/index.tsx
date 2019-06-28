@@ -3,8 +3,12 @@ import { IIssue } from '../../Domain/Issues';
 import {AddIssue} from '../AddIssue/'
 import {IssueFactory} from '../../Factories/Issue/'
 import "./index.css"
+import { IBlock } from '../../Domain/Area';
+import { IBlockInfo } from '../../Boundary/BlockInfo';
+import {v4 as uuid} from 'uuid';
 
 interface IRecordIssueProps {
+    blocks: IBlock[];
     issues: Array<IIssue>;
     onChangeIssues: (newIssues: Array<IIssue>) => void;
     readOnly: boolean;
@@ -16,6 +20,8 @@ interface IRecordIssueState {
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
     private _issueFactory:IssueFactory;
+    private readonly blockInfo: IBlockInfo[];
+
     constructor(props: IRecordIssueProps) {
         super(props);
 
@@ -24,6 +30,10 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         };
 
         this._issueFactory = new IssueFactory();
+
+        this.blockInfo = this.props.blocks.map((block) => {
+            return {id: uuid(), block: block};
+        });
     }
 
     addIssueComponent = () : void => {
@@ -77,7 +87,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
                 <div className="heading" data-test="issues-header">Record issues at meeting</div>
                 {this.state.issues.length === 0 && this.renderNoIssuesText()}
                 {this.state.issues.map((issue:IIssue, index: number) =>
-                    <AddIssue key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>
+                    <AddIssue blocks={this.blockInfo} key={issue.Id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>
                 )}
                 {!this.props.readOnly && this.renderAddIssuesButton()}
             </div>

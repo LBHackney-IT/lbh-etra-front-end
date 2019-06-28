@@ -7,13 +7,15 @@ const staffText = "Staff Member 1";
 const numberOfAttendeesInput = 3;
 
 fixture `Getting Started`
-    .page(`${getBaseUrl()}/meeting`)
+    .page(`${getBaseUrl()}`)
     .beforeEach(async () => {
         await waitForReact();
     });
 
 test("Can create a new meeting, review now and save"
 , async t => {
+    await GivenSelectedTRA(t);
+
     await GivenInputInAttendees(t);
 
     await WhenIClickTheAddIssueButton(t);
@@ -30,6 +32,8 @@ test("Can create a new meeting, review now and save"
 
 test("Can create a new meeting and review later"
 , async t => {
+    await GivenSelectedTRA(t);
+
     await GivenInputInAttendees(t);
 
     await WhenIClickTheAddIssueButton(t);
@@ -44,6 +48,10 @@ test("Can create a new meeting and review later"
     await ReviewLaterScreenIsDisplayed(t);
 });
 
+async function GivenSelectedTRA(t: TestController){
+    await GivenSelectedTheFirstOptionOfDropdown(t, '#tra-select');
+    await t.click("#start-meeting-button");
+}
 
 async function GivenInputInAttendees(t: TestController){
     await GivenCouncillorsNames(t, councillorText);

@@ -4,25 +4,37 @@ import './index.css';
 import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
 import Attendees from '../Attendees';
+import { Location } from 'history';
+import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
+import { ITraInfo } from '../../Boundary/TRAInfo';
+
+export interface IMeetingRedirectProps {
+  selectedTra: ITraInfo;
+}
 
 export interface IMeetingProps {
-  traName: string,
-  dateOfMeeting: Date
+  location: Location<IMeetingRedirectProps>
 }
 
 export interface IMeetingState {
   meetingCreated: boolean,
   issues: Array<IIssue>,
-  attendees: IAttendees
+  attendees: IAttendees,
+  dateOfMeeting: Date;
+  backToLandingPage: boolean;
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
-  readonly meetingName: string;
+  private readonly selectedTra: ITraInfo | undefined;
+  private readonly meetingName: string;
 
   public constructor(props: IMeetingProps) {
     super(props);
+
+    this.selectedTra = this.props.location.state && this.props.location.state.selectedTra;
+
     this.state = {
       meetingCreated: false,
       issues: [],
@@ -30,19 +42,16 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         Councillors: "",
         HackneyStaff: "",
         NumberOfAttendees: 0
-      }
+      },
+      dateOfMeeting: new Date(),
+      backToLandingPage: false
     }
 
-    this.meetingName = `${this.props.traName} ETRA meeting ${this.getMeetingDateString()}`;
+    this.meetingName = `${this.selectedTra.tra.name} meeting ${this.getMeetingDateString()}`;
   }
-  
-  public static defaultProps = {
-    traName: "",
-    dateOfMeeting: new Date()
-  };
 
   getMeetingDateString = (): string => {
-    return this.props.dateOfMeeting.toLocaleDateString('en-GB');
+    return this.state.dateOfMeeting.toLocaleDateString('en-GB');
   }
 
   onSaveComplete = (): void => {
@@ -58,13 +67,17 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   render() {
+    if(!this.selectedTra){
+      return this.renderErrorScreen();
+    }
+
     return (
       <div>
-        <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
+        {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
-          <RecordIssues readOnly={this.state.meetingCreated} onChangeIssues ={this.onChangeIssues} issues={this.state.issues}/>
+          <RecordIssues blocks={this.selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
           meetingName={this.meetingName}
@@ -74,6 +87,32 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         />
       </div>);
   }
+
+  renderBackArrow(){
+    return (
+      <>
+        <div className="back-arrow"> &#60;</div>
+        <div className="back-link">
+          <Link to="" id="lnkBack" href="#">Back</Link>
+        </div>
+      </>
+    );
+  };
+
+  renderErrorScreen(){
+    return (
+      <div>
+        {this.renderBackArrow()}
+        <div className="no-meeting-selected">
+          <p>You do not have a meeting in progress.</p>
+          <p>
+            Please return to the &nbsp;
+            <Link to="">landing page.</Link>
+          </p>
+        </div>
+      </div>
+    );
+  };
 }
 
 export default Meeting;
