@@ -1,11 +1,8 @@
 import MeetingGateway, { IMeetingGateway } from ".";
-import { IIssue } from '../../Domain/Issues';
 import fetchMock from 'fetch-mock'
 import uuid from "uuid";
 import { IMeetingModel } from "../../Domain/Meeting";
-import { IAttendees } from "../../Domain/Attendees";
-import { ISignOff } from "../../Domain/SignOff";
-import faker from 'faker';
+import { mockMeeting, mockAttendees, mockIssues, mockSignOff } from "../../Mocks/MockMeetingFactory";
 
 beforeEach(() => {
     localStorage.clear();
@@ -21,7 +18,7 @@ it("can set base url", async() => {
 it("can save meeting draft", async () => {
   const gateway : IMeetingGateway = new MeetingGateway("");
 
-  const testData : IMeetingModel = meetingInput("Meeting 1");
+  const testData : IMeetingModel = mockMeeting("Meeting 1");
   const dataArray = [
     testData
   ];
@@ -37,8 +34,8 @@ it("can save meeting draft", async () => {
 it("can save multiple meeting drafts", async () => {
   const gateway : IMeetingGateway = new MeetingGateway("");
 
-  const testData : IMeetingModel = meetingInput("Meeting 1");
-  const testData2 : IMeetingModel = meetingInput("Meeting 2");
+  const testData : IMeetingModel = mockMeeting("Meeting 1");
+  const testData2 : IMeetingModel = mockMeeting("Meeting 2");
   const dataArray = [
     testData,
     testData2
@@ -55,8 +52,8 @@ it("can save multiple meeting drafts", async () => {
 it("saving pre-existing draft updates instead of adding new one", async () => {
   const gateway : IMeetingGateway = new MeetingGateway("");
 
-  const testData : IMeetingModel = meetingInput("Meeting 1");
-  let editableData : IMeetingModel = meetingInput("Meeting 2");
+  const testData : IMeetingModel = mockMeeting("Meeting 1");
+  let editableData : IMeetingModel = mockMeeting("Meeting 2");
 
   await gateway.saveMeetingDraft(testData);
   await gateway.saveMeetingDraft(editableData);
@@ -78,8 +75,8 @@ it("saving pre-existing draft updates instead of adding new one", async () => {
 });
 
 it("can get list of meeting drafts", async () => {
-  const testData = meetingInput("TEST MEETING");
-  const testData2 = meetingInput("TEST MEETING 2");
+  const testData = mockMeeting("TEST MEETING");
+  const testData2 = mockMeeting("TEST MEETING 2");
 
   const dataArray = [
     testData,
@@ -110,7 +107,7 @@ describe("when saving a meeting", () => {
   let testData : IMeetingModel;
 
   beforeEach(() => {
-      testData = meetingInput(uuid());
+      testData = mockMeeting(uuid());
       fetchMock.restore();
   });
 
@@ -159,66 +156,3 @@ describe("when saving a meeting", () => {
     expect(result.result).toBe(errorMessage);
   });
 });
-
-function mockIssues(): Array<IIssue> {
-  const totalIssues = faker.random.number(10);
-  const arrayOfIssues : Array<IIssue> = [];
-
-  for(let i = 0; i < totalIssues; i++){
-    arrayOfIssues.push(mockIssue());
-  }
-
-  return arrayOfIssues;
-}
-
-function mockIssue() : IIssue {
-  return { 
-    "Id": faker.random.uuid(), 
-    "IssueType": {
-      "IssueId": faker.random.alphaNumeric(),
-      "IssueType": faker.random.words()
-    },
-    "Location":{
-      "name": faker.address.streetAddress(),
-    },
-    "Notes": faker.random.words(30) 
-  }
-}
-
-function mockAttendees() : IAttendees {
-  return {
-      Councillors: listOfNames(),
-      HackneyStaff: listOfNames(),
-      NumberOfAttendees: faker.random.number()
-  }
-}
-
-function listOfNames() : string {
-  const number = faker.random.number(10);
-  let names = "";
-
-  for(let i = 0; i < number; i++){
-    names += `${faker.name.findName()}, `
-  }
-
-  return names;
-}
-
-function mockSignOff() : ISignOff {
-  return {
-    signature: faker.image.dataUri(),
-    role: faker.random.word(),
-    name: faker.name.findName()
-  }
-}
-
-function meetingInput(meetingName: string): IMeetingModel {
-  return {
-    id: faker.random.uuid(),
-    traId: faker.random.number(10),
-    meetingName: meetingName, 
-    issues: mockIssues(),
-    attendees: mockAttendees(),
-    signOff: mockSignOff()
-  }
-}
