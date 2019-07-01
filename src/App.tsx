@@ -5,10 +5,12 @@ import Header from '../src/Components/Header'
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <Header/>
-      <div className="page-wrapper">
+    <div>
+      <Header />
+      <div className="App">
+        <div className="page-wrapper">
           <AppRouter />
+        </div>
       </div>
     </div>
   );
