@@ -85,6 +85,12 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
                     disabled={!this.state.valid}>
                     Start ETRA Meeting
                 </button>
+                <div className="draft-wrapper">
+                    <div className="draft-list-header" data-test="draft-list-header">
+                        ETRA meetings for review by TRA representative
+                    </div>
+                    <div className="no-draft-text" data-test="no-draft-meetings">No meetings found</div>
+                </div>
             </div>
         )
     }

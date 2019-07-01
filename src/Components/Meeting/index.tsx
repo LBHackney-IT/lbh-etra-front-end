@@ -12,7 +12,7 @@ import { IMeetingModel } from '../../Domain/Meeting';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
-  meeting: IMeetingModel;
+  meeting?: IMeetingModel;
 }
 
 export interface IMeetingProps {

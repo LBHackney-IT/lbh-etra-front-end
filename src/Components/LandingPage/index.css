@@ -36,3 +36,28 @@
     padding-top: 50px;
     padding-bottom: 60px;
 }
+
+.draft-wrapper {
+    padding-top: 71px;
+}
+  
+.draft-list-header {
+    font-size: 27px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.11;
+    letter-spacing: normal;
+    color: #000000;
+}
+
+.no-draft-text {
+    padding-top: 24px;
+    font-size: 19px;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.58;
+    letter-spacing: normal;
+    color: #000000;
+}

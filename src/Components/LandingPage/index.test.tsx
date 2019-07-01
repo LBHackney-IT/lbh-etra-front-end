@@ -79,3 +79,17 @@ describe('When we go to render the landing page', () => {
         expect(wrapper.state("redirect")).toBe(true);
     })
 });
+
+describe('When we go to render the landing page with no drafts', () => {
+    const wrapper = shallow(<LandingPage />);
+
+    it("draft list header is visible", () => {
+        const element = wrapper.find('[data-test="draft-list-header"]');
+        expect(element.text()).toBe("ETRA meetings for review by TRA representative");
+    });
+
+    it("then the no drafts text is visible", () => {
+        const element = wrapper.find('[data-test="no-draft-meetings"]');
+        expect(element.text()).toBe("No meetings found");
+    });
+});
