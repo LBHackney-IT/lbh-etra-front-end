@@ -1,8 +1,8 @@
 import { IMeetingGateway } from '../../Gateways/MeetingGateway';
 import { IMeetingModel } from '../../Domain/Meeting';
-import { IGetMeetingDrafts } from '../../Boundary/GetMeetingDrafts';
+import { IGetMeetingDraftsUseCase } from '../../Boundary/GetMeetingDrafts';
 
-export class GetMeetingDraftsUseCase implements IGetMeetingDrafts {
+export class GetMeetingDraftsUseCase implements IGetMeetingDraftsUseCase {
     private readonly gateway: IMeetingGateway;
 
     constructor(gateway: IMeetingGateway) {

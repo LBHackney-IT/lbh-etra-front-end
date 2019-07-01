@@ -1,5 +1,5 @@
 import { IMeetingModel } from "../../Domain/Meeting";
 
-export interface IGetMeetingDrafts {
+export interface IGetMeetingDraftsUseCase {
     Execute(): Promise<Array<IMeetingModel>>
 }
