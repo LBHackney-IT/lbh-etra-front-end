@@ -22,13 +22,16 @@ it("can save meeting draft", async () => {
   const gateway : IMeetingGateway = new MeetingGateway("");
 
   const testData : IMeetingModel = meetingInput("Meeting 1");
-  const testDataString = JSON.stringify(testData);
+  const dataArray = [
+    testData
+  ];
+  const testDataString = JSON.stringify(dataArray);
 
   await gateway.saveMeetingDraft(testData);
 
   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
-  expect(localStorage.setItem).toHaveBeenLastCalledWith("currentMeeting", testDataString);
-  expect(JSON.parse(localStorage.__STORE__["currentMeeting"])).toEqual(testData);
+  expect(localStorage.setItem).toHaveBeenLastCalledWith("draftMeetings", testDataString);
+  expect(JSON.parse(localStorage.__STORE__["draftMeetings"])).toEqual(dataArray);
 });
 
 it("can save multiple meeting drafts", async () => {
@@ -36,14 +39,18 @@ it("can save multiple meeting drafts", async () => {
 
   const testData : IMeetingModel = meetingInput("Meeting 1");
   const testData2 : IMeetingModel = meetingInput("Meeting 2");
-  const testDataString = JSON.stringify([testData, testData2]);
+  const dataArray = [
+    testData,
+    testData2
+  ]
+  const testDataString = JSON.stringify(dataArray);
 
   await gateway.saveMeetingDraft(testData);
   await gateway.saveMeetingDraft(testData2);
 
   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
   expect(localStorage.setItem).toHaveBeenLastCalledWith("draftMeetings", testDataString);
-  expect(JSON.parse(localStorage.__STORE__["draftMeetings"])).toEqual(testData);
+  expect(JSON.parse(localStorage.__STORE__["draftMeetings"])).toEqual(dataArray);
 });
 
 describe("when saving a meeting", () => {

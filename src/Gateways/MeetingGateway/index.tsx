@@ -15,7 +15,13 @@ export default class MeetingGateway implements IMeetingGateway {
   readonly baseUrl: string;
 
   public async saveMeetingDraft(data: IMeetingModel): Promise<void> {
-    return await localStorage.setItem("currentMeeting", JSON.stringify(data));
+    const draftMeetingsJson = localStorage.getItem("draftMeetings");
+    let draftMeetings : Array<IMeetingModel> 
+      = draftMeetingsJson ? JSON.parse(draftMeetingsJson) : [];
+
+    draftMeetings.push(data);
+
+    return await localStorage.setItem("draftMeetings", JSON.stringify(draftMeetings));
   }
 
   public async saveMeetingData(traId: string, data: IMeetingModel): Promise<IGatewayResponse> {
