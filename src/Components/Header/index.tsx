@@ -8,7 +8,7 @@ export default class Header extends Component {
       <div className="header">
         <div className="background-black">
           <div className="logo-container">
-            <img src={require('../../hackneyLogo.png')} alt="logo" width="206px" height="37px"></img>
+            <img src={require('../../Images/hackneyLogo.png')} alt="logo" width="206px" height="37px"></img>
           </div>
         </div>
         <div className="background-white"></div>
