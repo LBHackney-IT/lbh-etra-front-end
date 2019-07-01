@@ -4,6 +4,7 @@ import { GatewayResponse, IGatewayResponse } from "../../Boundary/GatewayRespons
 export interface IMeetingGateway {
   readonly baseUrl: string;
   saveMeetingDraft: (data: IMeetingModel) => Promise<void>;
+  getMeetingDrafts: () => Promise<Array<IMeetingModel>>;
   saveMeetingData: (traId: string, data: IMeetingModel) => Promise<GatewayResponse>;
 }
 
@@ -16,7 +17,7 @@ export default class MeetingGateway implements IMeetingGateway {
 
   public async saveMeetingDraft(data: IMeetingModel): Promise<void> {
     const draftMeetingsJson = localStorage.getItem("draftMeetings");
-    let draftMeetings : Array<IMeetingModel> 
+    const draftMeetings : Array<IMeetingModel> 
       = draftMeetingsJson ? JSON.parse(draftMeetingsJson) : [];
 
     let found = false;
@@ -33,6 +34,13 @@ export default class MeetingGateway implements IMeetingGateway {
     }
 
     return await localStorage.setItem("draftMeetings", JSON.stringify(draftMeetings));
+  }
+
+  public async getMeetingDrafts(): Promise<Array<IMeetingModel>> {
+    const draftMeetingsJson = localStorage.getItem("draftMeetings");
+    const draftMeetings : Array<IMeetingModel> = 
+      draftMeetingsJson ? JSON.parse(draftMeetingsJson) : [];
+      return draftMeetings;
   }
 
   public async saveMeetingData(traId: string, data: IMeetingModel): Promise<IGatewayResponse> {

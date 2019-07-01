@@ -77,6 +77,30 @@ it("saving pre-existing draft updates instead of adding new one", async () => {
   expect(saved).toEqual(dataArray);
 });
 
+it("can get list of meeting drafts", async () => {
+  const testData = meetingInput("TEST MEETING");
+  const testData2 = meetingInput("TEST MEETING 2");
+
+  const dataArray = [
+    testData,
+    testData2
+  ]
+
+  localStorage.__STORE__["draftMeetings"] = JSON.stringify(dataArray);
+
+  const gateway : IMeetingGateway = new MeetingGateway("");
+  const result = await gateway.getMeetingDrafts();
+
+  expect(result).toEqual(dataArray);
+});
+
+it("gets empty list when no meeting drafts are saved", async () => {
+  const gateway : IMeetingGateway = new MeetingGateway("");
+  const result = await gateway.getMeetingDrafts();
+
+  expect(result).toEqual([]);
+})
+
 describe("when saving a meeting", () => {
   const baseUrl = "http://localhost:3000";
   const gateway : IMeetingGateway = new MeetingGateway(baseUrl);
