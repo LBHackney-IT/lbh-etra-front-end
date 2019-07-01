@@ -48,9 +48,33 @@ it("can save multiple meeting drafts", async () => {
   await gateway.saveMeetingDraft(testData);
   await gateway.saveMeetingDraft(testData2);
 
-  expect(Object.keys(localStorage.__STORE__).length).toBe(1);
   expect(localStorage.setItem).toHaveBeenLastCalledWith("draftMeetings", testDataString);
   expect(JSON.parse(localStorage.__STORE__["draftMeetings"])).toEqual(dataArray);
+});
+
+it("saving pre-existing draft updates instead of adding new one", async () => {
+  const gateway : IMeetingGateway = new MeetingGateway("");
+
+  const testData : IMeetingModel = meetingInput("Meeting 1");
+  let editableData : IMeetingModel = meetingInput("Meeting 2");
+
+  await gateway.saveMeetingDraft(testData);
+  await gateway.saveMeetingDraft(editableData);
+
+  editableData.attendees = mockAttendees();
+  editableData.issues = mockIssues();
+  editableData.signOff = mockSignOff();
+
+  await gateway.saveMeetingDraft(editableData);
+
+  const dataArray = [
+    testData,
+    editableData
+  ]
+
+  const saved = JSON.parse(localStorage.__STORE__["draftMeetings"]);
+  expect(saved).toHaveLength(2);
+  expect(saved).toEqual(dataArray);
 });
 
 describe("when saving a meeting", () => {

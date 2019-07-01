@@ -19,7 +19,19 @@ export default class MeetingGateway implements IMeetingGateway {
     let draftMeetings : Array<IMeetingModel> 
       = draftMeetingsJson ? JSON.parse(draftMeetingsJson) : [];
 
-    draftMeetings.push(data);
+    let found = false;
+    for(let i = 0; i < draftMeetings.length; i++){
+      if(draftMeetings[i].meetingName === data.meetingName){
+        draftMeetings[i] = data;
+        found = true;
+        break;
+      }
+    }
+
+    if(!found){
+      draftMeetings.push(data);
+
+    }
 
     return await localStorage.setItem("draftMeetings", JSON.stringify(draftMeetings));
   }
