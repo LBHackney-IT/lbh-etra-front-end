@@ -5,6 +5,7 @@ import ReviewMeeting from '../ReviewMeeting';
 import RecordIssues from '../RecordIssues'
 import Attendees from '../Attendees';
 import { IAttendees } from '../../Domain/Attendees';
+import Header from '../Header'
 
 export interface IMeetingProps {
   traName: string,
@@ -60,6 +61,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   render() {
     return (
       <div>
+        <Header></Header>
         <div className="back-arrow"> &#60;</div><div className="back-link"><a id="lnkBack" href="#">Back</a></div>
         <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
         <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
