@@ -8,6 +8,7 @@ import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff } from '../../Domain/SignOff';
 
 export interface ISaveMeetingProps {
+  traId: number,
   meetingId?: string,
   meetingName: string,
   attendees: IAttendees,
@@ -60,7 +61,8 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(
       new MeetingModel(
-        this.props.meetingName, 
+        this.props.traId,
+        this.props.meetingName,
         this.props.issues, 
         this.props.attendees, 
         this.props.signOff,

@@ -2,7 +2,7 @@ import React, { Component, FormEvent } from "react";
 import './index.css';
 import { Redirect } from "react-router-dom";
 import areaData from "../../JsonFiles/AreaData.json"
-import { IArea, ITra } from "../../Domain/Area";
+import { IArea } from "../../Domain/Area";
 import { ITraInfo } from "../../Boundary/TRAInfo";
 
 export interface ILandingPageState {

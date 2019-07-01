@@ -10,6 +10,7 @@ import { ISignOff, SignOff } from '../../Domain/SignOff';
 import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
+    traId: number,
     meetingId?: string,
     meetingName: string,
     issues: Array<IIssue>,
@@ -114,7 +115,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 <div className="role-of-TRA-representative">Role of TRA representative</div>
                 {roles.map(this.renderRole, this)}
                 <div className="review-button">
-                    <SaveMeeting 
+                    <SaveMeeting
+                        traId={this.props.traId}
                         meetingId={this.props.meetingId}
                         meetingName={this.props.meetingName}
                         onReviewNow={this.onReviewNow} 
