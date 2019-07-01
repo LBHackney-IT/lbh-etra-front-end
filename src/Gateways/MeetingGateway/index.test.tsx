@@ -4,6 +4,8 @@ import fetchMock from 'fetch-mock'
 import uuid from "uuid";
 import { IMeetingModel } from "../../Domain/Meeting";
 import { IAttendees } from "../../Domain/Attendees";
+import { ISignOff } from "../../Domain/SignOff";
+import faker from 'faker';
 
 beforeEach(() => {
     localStorage.clear();
@@ -36,12 +38,21 @@ beforeEach(() => {
     }
   }
 
+  function mockSignOff() : ISignOff {
+    return {
+      signature: faker.image.dataUri(),
+      role: faker.random.word(),
+      name: faker.name.findName()
+    }
+  }
+
   function meetingInput(meetingName: string): IMeetingModel {
     return {
       meetingName: meetingName, 
-      issues: issues, 
-      signatureBase64: "saiinosda", 
-      attendees: mockAttendees()};
+      issues: issues,
+      attendees: mockAttendees(),
+      signOff: mockSignOff()
+    }
   }
 
 it("can set base url", async() => {
@@ -63,6 +74,19 @@ it("can save meeting draft", async () => {
   expect(localStorage.setItem).toHaveBeenLastCalledWith("currentMeeting", testDataString);
   expect(JSON.parse(localStorage.__STORE__["currentMeeting"])).toEqual(testData);
 });
+
+// it("can save multiple meeting drafts", async () => {
+//   const gateway : IMeetingGateway = new MeetingGateway("");
+
+//   const testData : IMeetingModel = meetingInput("Meeting 1");
+//   const testDataString = JSON.stringify(testData);
+
+//   await gateway.saveMeetingDraft(testData);
+
+//   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
+//   expect(localStorage.setItem).toHaveBeenLastCalledWith("currentMeeting", testDataString);
+//   expect(JSON.parse(localStorage.__STORE__["currentMeeting"])).toEqual(testData);
+// });
 
 describe("when saving a meeting", () => {
   const baseUrl = "http://localhost:3000";
