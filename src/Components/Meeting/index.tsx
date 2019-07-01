@@ -11,6 +11,7 @@ import { ITraInfo } from '../../Boundary/TRAInfo';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
+  meetingId?: string;
 }
 
 export interface IMeetingProps {
@@ -26,14 +27,12 @@ export interface IMeetingState {
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
-
   private readonly selectedTra: ITraInfo | undefined;
+  private readonly meetingId: string;
   private readonly meetingName: string;
 
   public constructor(props: IMeetingProps) {
     super(props);
-
-    this.selectedTra = this.props.location.state && this.props.location.state.selectedTra;
 
     this.state = {
       meetingCreated: false,
@@ -47,7 +46,15 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       backToLandingPage: false
     }
 
-    this.meetingName = `${this.selectedTra.tra.name} meeting ${this.getMeetingDateString()}`;
+    if(this.props.location && this.props.location.state){
+      this.selectedTra = this.props.location.state.selectedTra;
+      this.meetingName = `${this.selectedTra.tra.name} meeting ${this.getMeetingDateString()}`;
+      this.meetingId = this.props.location.state.meetingId || "";
+    }
+    else {
+      this.meetingName = "";
+      this.meetingId = "";
+    }
   }
 
   getMeetingDateString = (): string => {
@@ -80,6 +87,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           <RecordIssues blocks={this.selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
+          meetingId={this.meetingId}
           meetingName={this.meetingName}
           attendees={this.state.attendees}
           issues={this.state.issues}

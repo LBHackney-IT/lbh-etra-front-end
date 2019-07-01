@@ -18,8 +18,8 @@ export class MeetingModel implements IMeetingModel {
     public attendees: IAttendees;
     public signOff: ISignOff
 
-    constructor(meetingName: string, issues: IIssue[], attendees: IAttendees, signOff: ISignOff) {
-        this.id = uuid();
+    constructor(meetingName: string, issues: IIssue[], attendees: IAttendees, signOff: ISignOff, id?: string){
+        this.id = id || uuid();
         this.meetingName = meetingName;
         this.issues = issues;
         this.attendees = attendees;
