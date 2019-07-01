@@ -11,50 +11,6 @@ beforeEach(() => {
     localStorage.clear();
   });
 
-  const issues: Array<IIssue> = Array(
-    { 
-      "Id": "", 
-      "IssueType": {
-        "IssueId": "100000222",
-        "IssueType": "Bushes and trees"
-      },
-      "Location":{
-        "blockId": "00075265",
-        "estateId":"",
-        "key":"59a3f619-d2a5-442d-af79-6e07f6b03e7d",
-        "locationType": 1,
-        "name":"De Beauvoir Estate  1-56 Corbiere House",
-      },
-      "Notes":"f" 
-    },
-   
-  );
-  
-  function mockAttendees() : IAttendees {
-    return {
-        Councillors: "Jim, Bob, Steve",
-        HackneyStaff: "Fleb",
-        NumberOfAttendees: 10
-    }
-  }
-
-  function mockSignOff() : ISignOff {
-    return {
-      signature: faker.image.dataUri(),
-      role: faker.random.word(),
-      name: faker.name.findName()
-    }
-  }
-
-  function meetingInput(meetingName: string): IMeetingModel {
-    return {
-      meetingName: meetingName, 
-      issues: issues,
-      attendees: mockAttendees(),
-      signOff: mockSignOff()
-    }
-  }
-
 it("can set base url", async() => {
   const baseUrl = "http://localhost:3000";
   const gateway : IMeetingGateway = new MeetingGateway(baseUrl)
@@ -75,18 +31,20 @@ it("can save meeting draft", async () => {
   expect(JSON.parse(localStorage.__STORE__["currentMeeting"])).toEqual(testData);
 });
 
-// it("can save multiple meeting drafts", async () => {
-//   const gateway : IMeetingGateway = new MeetingGateway("");
+it("can save multiple meeting drafts", async () => {
+  const gateway : IMeetingGateway = new MeetingGateway("");
 
-//   const testData : IMeetingModel = meetingInput("Meeting 1");
-//   const testDataString = JSON.stringify(testData);
+  const testData : IMeetingModel = meetingInput("Meeting 1");
+  const testData2 : IMeetingModel = meetingInput("Meeting 2");
+  const testDataString = JSON.stringify([testData, testData2]);
 
-//   await gateway.saveMeetingDraft(testData);
+  await gateway.saveMeetingDraft(testData);
+  await gateway.saveMeetingDraft(testData2);
 
-//   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
-//   expect(localStorage.setItem).toHaveBeenLastCalledWith("currentMeeting", testDataString);
-//   expect(JSON.parse(localStorage.__STORE__["currentMeeting"])).toEqual(testData);
-// });
+  expect(Object.keys(localStorage.__STORE__).length).toBe(1);
+  expect(localStorage.setItem).toHaveBeenLastCalledWith("draftMeetings", testDataString);
+  expect(JSON.parse(localStorage.__STORE__["draftMeetings"])).toEqual(testData);
+});
 
 describe("when saving a meeting", () => {
   const baseUrl = "http://localhost:3000";
@@ -146,3 +104,64 @@ describe("when saving a meeting", () => {
     expect(result.result).toBe(errorMessage);
   });
 });
+
+function mockIssues(): Array<IIssue> {
+  const totalIssues = faker.random.number(10);
+  const arrayOfIssues : Array<IIssue> = [];
+
+  for(let i = 0; i < totalIssues; i++){
+    arrayOfIssues.push(mockIssue());
+  }
+
+  return arrayOfIssues;
+}
+
+function mockIssue() : IIssue {
+  return { 
+    "Id": faker.random.uuid(), 
+    "IssueType": {
+      "IssueId": faker.random.alphaNumeric(),
+      "IssueType": faker.random.words()
+    },
+    "Location":{
+      "name": faker.address.streetAddress(),
+    },
+    "Notes": faker.random.words(30) 
+  }
+}
+
+function mockAttendees() : IAttendees {
+  return {
+      Councillors: listOfNames(),
+      HackneyStaff: listOfNames(),
+      NumberOfAttendees: faker.random.number()
+  }
+}
+
+function listOfNames() : string {
+  const number = faker.random.number(10);
+  let names = "";
+
+  for(let i = 0; i < number; i++){
+    names += `${faker.name.findName()}, `
+  }
+
+  return names;
+}
+
+function mockSignOff() : ISignOff {
+  return {
+    signature: faker.image.dataUri(),
+    role: faker.random.word(),
+    name: faker.name.findName()
+  }
+}
+
+function meetingInput(meetingName: string): IMeetingModel {
+  return {
+    meetingName: meetingName, 
+    issues: mockIssues(),
+    attendees: mockAttendees(),
+    signOff: mockSignOff()
+  }
+}
