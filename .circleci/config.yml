@@ -76,6 +76,12 @@ jobs:
       - deploy-env:
           environment: 'staging'
           distrbution_id: $AWS_CF_DIST_ID_STAGING
+  deploy-to-production:
+    executor: node
+    steps:
+      - deploy-env:
+          environment: 'production'
+          distrbution_id: $AWS_CF_DIST_ID_PRODUCTION
 workflows:
   version: 2
   build_and_test:
@@ -94,6 +100,16 @@ workflows:
       - deploy-to-staging:
           requires:
             - permit-staging-release
+          filters:
+            branches:
+              only: master
+      - permit-production-release:
+          type: approval
+          requires:
+            - deploy-to-staging
+      - deploy-to-production:
+          requires:
+            - permit-production-release
           filters:
             branches:
               only: master
