@@ -190,6 +190,7 @@ function mockSignOff() : ISignOff {
 
 function meetingInput(meetingName: string): IMeetingModel {
   return {
+    id: faker.random.uuid(), 
     meetingName: meetingName, 
     issues: mockIssues(),
     attendees: mockAttendees(),
