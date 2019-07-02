@@ -4,15 +4,22 @@ import Attendees from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
+import { IAttendees } from '../../Domain/Attendees';
 
 configure({ adapter: new Adapter() });
 
+const defaultAttendees : IAttendees = {
+   Councillors: "",
+   HackneyStaff: "",
+   NumberOfAttendees: 0
+}
+
 it('Attendees component loads', () => {
-   shallow(<Attendees onChangeAttendees={() => {}} readOnly={false}/>);
+   shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false}/>);
 });
 
 describe('When we go to render the Attendees form with readonly false', () => {
-   const wrapper = shallow(<Attendees onChangeAttendees={() => {}} readOnly={false}/>); 
+   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false}/>); 
 
    it('Then the attendees header is shown', () => {
       const attendeeHeader = wrapper.find('[data-test="meeting-attendance-header"]')
@@ -45,7 +52,7 @@ describe('When we go to render the Attendees form with readonly false', () => {
 });
 
 describe('When we go to render the Attendees component with readonly true', () => {
-   const wrapper = shallow(<Attendees onChangeAttendees={() => {}} readOnly={true}/>); 
+   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={true}/>); 
 
    it('Then the attendees header is shown', () => {
       const attendeeHeader = wrapper.find('[data-test="meeting-attendance-header"]')
