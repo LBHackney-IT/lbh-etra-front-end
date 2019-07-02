@@ -26,7 +26,7 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
 
         this.tras = this.populateTras();
     }
-    
+
     private populateTras() : Array<ITraInfo> {
         let tras = new Array<ITraInfo>();
         this.areas.forEach((area) => {
