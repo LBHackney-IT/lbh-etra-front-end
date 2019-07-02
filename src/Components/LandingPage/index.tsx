@@ -17,10 +17,6 @@ export interface ILandingPageState {
     selectedTraId: string,
 }
 
-interface IQueryString {
-    traId: number;
-}
-
 export default class LandingPage extends Component<ILandingPageProps, ILandingPageState> { 
 
     private areas = Array.from<IArea>(areaData);
