@@ -23,14 +23,6 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         }
     }
 
-   static defaultProps = {
-        attendees: {
-            Councillors: "",
-            HackneyStaff: "",
-            NumberOfAttendees: 0
-        }
-    }
-
     toggleCollapsed = () => {
         this.setState({ isCollapsed: !this.state.isCollapsed });
     }
