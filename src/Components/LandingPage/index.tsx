@@ -4,6 +4,12 @@ import { Redirect } from "react-router-dom";
 import areaData from "../../JsonFiles/AreaData.json"
 import { IArea } from "../../Domain/Area";
 import { ITraInfo } from "../../Boundary/TRAInfo";
+import { Location } from 'history';
+import queryString from 'query-string';
+
+export interface ILandingPageProps {
+    location: Location;
+}
 
 export interface ILandingPageState {
     valid: boolean,
@@ -11,18 +17,31 @@ export interface ILandingPageState {
     selectedTraId: string,
 }
 
-export default class LandingPage extends Component<{}, ILandingPageState> { 
+interface IQueryString {
+    traId: number;
+}
+
+export default class LandingPage extends Component<ILandingPageProps, ILandingPageState> { 
 
     private areas = Array.from<IArea>(areaData);
     private tras : Array<ITraInfo>;
 
-    public constructor(props: {}) {
+    public constructor(props: ILandingPageProps) {
         super(props);
     
+        const query = queryString.parse(this.props.location.search);
+
+        let traId = ""
+        let traIdExists = false;
+        if(query.traId){
+            traId = query.traId as string;
+            traIdExists = true;
+        }
+
         this.state = { 
-            valid: false,
-            redirect: false,
-            selectedTraId: "",
+            valid: traIdExists,
+            redirect: traIdExists,
+            selectedTraId: traId,
         }
 
         this.tras = this.populateTras();

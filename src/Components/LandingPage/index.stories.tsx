@@ -4,5 +4,5 @@ import LandingPage from '.';
 
 storiesOf('Landing Page', module)
   .add("opens correctly", () => (
-    <LandingPage />
+    <LandingPage location={{pathname: "", search: "", hash: "", state: {}}} />
   ));
