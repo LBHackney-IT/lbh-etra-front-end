@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import './index.css';
 import { IMeetingModel } from "../../Domain/Meeting";
 import { Link } from "react-router-dom";
+import { ITraInfo } from "../../Boundary/TRAInfo";
 
 export interface IDraftSelectorProps {
-    meeting: IMeetingModel
+    meeting: IMeetingModel,
+    tra: ITraInfo
 }
 
 export default class DraftSelector extends Component<IDraftSelectorProps, {}> { 
@@ -21,7 +23,7 @@ export default class DraftSelector extends Component<IDraftSelectorProps, {}> {
                     pathname: "/meeting/",
                     state: {
                         meeting: this.props.meeting,
-                        selectedTra: {}
+                        selectedTra: this.props.tra
                     }
                 }}
             >

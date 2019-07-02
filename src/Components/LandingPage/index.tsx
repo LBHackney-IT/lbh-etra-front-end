@@ -75,8 +75,8 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
         return tras;
     }
 
-    private findSelectedTra() : ITraInfo | undefined {
-        return this.tras.find((traInfo) => traInfo.tra.id.toString() === this.state.selectedTraId);
+    private findSelectedTra(traId: string) : ITraInfo | undefined {
+        return this.tras.find((traInfo) => traInfo.tra.id.toString() === traId);
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
@@ -103,7 +103,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
                         {
                             pathname:`/meeting/`,
                             state: {
-                                selectedTra: this.findSelectedTra()
+                                selectedTra: this.findSelectedTra(this.state.selectedTraId)
                             }
                         }} />;
         }
@@ -126,7 +126,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
                     </div>
                     {
                         this.state.draftMeetings.length > 0 ? 
-                        this.state.draftMeetings.map(this.renderDraft) : 
+                        this.state.draftMeetings.map(this.renderDraft, this) : 
                         <div className="no-draft-text" data-test="no-draft-meetings">No meetings found</div>
                     }
                 </div>
@@ -167,9 +167,12 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     private renderDraft(meeting: IMeetingModel){
+        const tra = this.findSelectedTra(meeting.traId.toString());
+        if(tra === undefined){return;}
+
         return (
             <div data-test="meeting-draft" key={meeting.id} className="draft-text">
-                <DraftSelector meeting={meeting} />
+                <DraftSelector meeting={meeting} tra={tra}/>
             </div>
         )
     }
