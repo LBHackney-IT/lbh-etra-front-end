@@ -4,15 +4,23 @@ import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, shallow } from 'enzyme';
 import LandingPage from '.';
 import { v4 as uuid } from 'uuid';
+import { IServiceProvider } from '../../ServiceContext';
+import { IGetMeetingDraftsUseCase } from '../../Boundary/GetMeetingDrafts';
+import { mockMeeting } from '../../Mocks/MockMeetingFactory';
+import { Location } from 'history';
 
 configure({ adapter: new Adapter() });
 
+const mockServiceProvider = createMockServiceProvider();
+
+const mockLocation : Location = {state: {}, pathname: "", search: "", hash: ""}
+
 it('Landing page component loads', () => {
-    shallow(<LandingPage />);
+    shallow(<LandingPage location={mockLocation}  />);
 });
 
 describe('When we go to render the landing page', () => {
-    const wrapper = shallow(<LandingPage />);
+    const wrapper = shallow(<LandingPage location={mockLocation} />);
 
     it('Then form is not valid and button is disabled', () => {
         expect(wrapper.state("valid")).toBe(false);
@@ -81,7 +89,7 @@ describe('When we go to render the landing page', () => {
 });
 
 describe('When we go to render the landing page with no drafts', () => {
-    const wrapper = shallow(<LandingPage />);
+    const wrapper = shallow(<LandingPage location={mockLocation} />);
 
     it("draft list header is visible", () => {
         const element = wrapper.find('[data-test="draft-list-header"]');
@@ -93,3 +101,22 @@ describe('When we go to render the landing page with no drafts', () => {
         expect(element.text()).toBe("No meetings found");
     });
 });
+
+const meetings = [
+    mockMeeting("Meeting 1"),
+    mockMeeting("Meeting 2")
+]
+
+function createMockServiceProvider() : IServiceProvider {
+    const mockGetDrafts: IGetMeetingDraftsUseCase = {
+        Execute: jest.fn(() => {
+            return new Promise((resolve, reject) => { resolve(meetings); })
+        })
+    };
+  
+    return {
+        get: jest.fn((service: string) => {
+            return mockGetDrafts;
+        })
+    };
+  };
