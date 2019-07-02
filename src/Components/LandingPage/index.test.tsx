@@ -8,6 +8,7 @@ import { IServiceProvider } from '../../ServiceContext';
 import { IGetMeetingDraftsUseCase } from '../../Boundary/GetMeetingDrafts';
 import { mockMeeting } from '../../Mocks/MockMeetingFactory';
 import { Location } from 'history';
+import faker from 'faker';
 
 configure({ adapter: new Adapter() });
 
@@ -100,6 +101,18 @@ describe('When we go to render the landing page with no drafts', () => {
         const element = wrapper.find('[data-test="no-draft-meetings"]');
         expect(element.text()).toBe("No meetings found");
     });
+});
+
+describe('When we go to render the landing page with a traId in the querystring', () => {
+    const traId = faker.random.number().toString();
+    const thisLocation : Location = {search: `?traId=${traId}`, pathname: "", state: {}, hash: ""}
+    const wrapper = shallow(<LandingPage location={thisLocation} />);
+
+    it('Then state is set to redirect to meeting page', () => {
+        expect(wrapper.state("selectedTraId")).toBe(traId);
+        expect(wrapper.state("redirect")).toBe(true);
+        expect(wrapper.state("valid")).toBe(true);
+    })
 });
 
 const meetings = [
