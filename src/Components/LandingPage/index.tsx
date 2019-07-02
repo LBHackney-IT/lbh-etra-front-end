@@ -6,6 +6,10 @@ import { IArea } from "../../Domain/Area";
 import { ITraInfo } from "../../Boundary/TRAInfo";
 import { Location } from 'history';
 import queryString from 'query-string';
+import { ServiceContext, IServiceProvider } from "../../ServiceContext";
+import { IMeetingModel } from "../../Domain/Meeting";
+import { IGetMeetingDraftsUseCase } from "../../Boundary/GetMeetingDrafts";
+import DraftSelector from "../DraftSelector";
 
 export interface ILandingPageProps {
     location: Location;
@@ -15,16 +19,21 @@ export interface ILandingPageState {
     valid: boolean,
     redirect: boolean,
     selectedTraId: string,
+    draftMeetings: IMeetingModel[]
 }
 
 export default class LandingPage extends Component<ILandingPageProps, ILandingPageState> { 
+    public static contextType = ServiceContext;
+    private readonly getDrafts : IGetMeetingDraftsUseCase;
 
     private areas = Array.from<IArea>(areaData);
     private tras : Array<ITraInfo>;
 
-    public constructor(props: ILandingPageProps) {
+    public constructor(props: ILandingPageProps, context: IServiceProvider) {
         super(props);
-    
+        
+        this.getDrafts = context.get<IGetMeetingDraftsUseCase>("IGetMeetingDraftsUseCase");
+
         const query = queryString.parse(this.props.location.search);
 
         let traId = ""
@@ -38,9 +47,16 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
             valid: traIdExists,
             redirect: traIdExists,
             selectedTraId: traId,
+            draftMeetings: []
         }
 
         this.tras = this.populateTras();
+    }
+
+    public componentDidMount(){
+        this.getDrafts.Execute().then((result : IMeetingModel[]) => {
+            this.setState({draftMeetings: result});
+        })
     }
 
     private populateTras() : Array<ITraInfo> {
@@ -64,11 +80,15 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
-        this.setState({selectedTraId: event.currentTarget.value}, this.checkIsValid);
+        console.log(event.currentTarget.value);
+        this.setState({selectedTraId: event.currentTarget.value});
+        this.checkIsValid(event.currentTarget.value);
     }
 
-    checkIsValid = () : void => {
-        const valid = !!this.state.selectedTraId;
+    checkIsValid = (selectedTraId: string) : void => {
+        const valid = !!selectedTraId;
+        console.log(`selectedTraId: ${selectedTraId}`)
+        console.log(`isValid: ${valid}`)
         this.setState({valid: valid});
     }
 
@@ -104,7 +124,11 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
                     <div className="draft-list-header" data-test="draft-list-header">
                         ETRA meetings for review by TRA representative
                     </div>
-                    <div className="no-draft-text" data-test="no-draft-meetings">No meetings found</div>
+                    {
+                        this.state.draftMeetings.length > 0 ? 
+                        this.state.draftMeetings.map(this.renderDraft) : 
+                        <div className="no-draft-text" data-test="no-draft-meetings">No meetings found</div>
+                    }
                 </div>
             </div>
         )
@@ -140,5 +164,13 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
                     {`${traInfo.patch.patchId} - ${traInfo.tra.name}`}
             </option>
         );
+    }
+
+    private renderDraft(meeting: IMeetingModel){
+        return (
+            <div data-test="meeting-draft" key={meeting.id} className="draft-text">
+                <DraftSelector meeting={meeting} />
+            </div>
+        )
     }
 }
