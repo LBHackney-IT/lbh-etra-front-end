@@ -8,9 +8,11 @@ import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
 import { ITraInfo } from '../../Boundary/TRAInfo';
+import { IMeetingModel } from '../../Domain/Meeting';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
+  meeting?: IMeetingModel;
 }
 
 export interface IMeetingProps {
@@ -20,38 +22,55 @@ export interface IMeetingProps {
 export interface IMeetingState {
   meetingCreated: boolean,
   issues: Array<IIssue>,
-  attendees: IAttendees,
-  dateOfMeeting: Date;
-  backToLandingPage: boolean;
+  attendees: IAttendees
+}
+
+const emptyState : IMeetingState = {
+  meetingCreated: false,
+  issues: [],
+  attendees:
+  {
+    Councillors: "",
+    HackneyStaff: "",
+    NumberOfAttendees: 0
+  }
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
-
   private readonly selectedTra: ITraInfo | undefined;
+  private readonly meetingId: string | undefined;
   private readonly meetingName: string;
 
   public constructor(props: IMeetingProps) {
     super(props);
 
-    this.selectedTra = this.props.location.state && this.props.location.state.selectedTra;
+    this.meetingName = "";
 
-    this.state = {
-      meetingCreated: false,
-      issues: [],
-      attendees: {
-        Councillors: "",
-        HackneyStaff: "",
-        NumberOfAttendees: 0
-      },
-      dateOfMeeting: new Date(),
-      backToLandingPage: false
+    if(!this.props.location || !this.props.location.state || !this.props.location.state.selectedTra){
+      return;
     }
 
-    this.meetingName = `${this.selectedTra.tra.name} meeting ${this.getMeetingDateString()}`;
+    this.selectedTra = this.props.location.state.selectedTra;
+
+    const existingMeeting = this.props.location.state.meeting;
+
+    if(existingMeeting){
+      this.meetingId = existingMeeting.id;
+      this.meetingName = existingMeeting.meetingName;
+      this.state = {
+        meetingCreated: false,
+        issues: existingMeeting.issues,
+        attendees: existingMeeting.attendees
+      }
+    }
+    else {
+      this.meetingName = this.buildMeetingName(this.selectedTra.tra.name, new Date());
+      this.state = emptyState;
+    }
   }
 
-  getMeetingDateString = (): string => {
-    return this.state.dateOfMeeting.toLocaleDateString('en-GB');
+  buildMeetingName = (traName: string, date: Date): string => {
+    return `${traName} meeting ${date.toLocaleDateString('en-GB')}`;
   }
 
   onSaveComplete = (): void => {
@@ -75,11 +94,13 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       <div>
         {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
-        <Attendees onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
+        <Attendees attendees={this.state.attendees} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
         <div className="record-issues-padding">
           <RecordIssues blocks={this.selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={this.state.issues}/>
         </div>
         <ReviewMeeting
+          traId={this.selectedTra.tra.id}
+          meetingId={this.meetingId}
           meetingName={this.meetingName}
           attendees={this.state.attendees}
           issues={this.state.issues}
