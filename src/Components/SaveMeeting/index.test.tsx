@@ -25,6 +25,7 @@ it('Save Meeting component loads', () => {
    mount(
     <ServiceProvider value={mockServiceProvider}>
         <SaveMeeting 
+            traId={1}
             meetingName="" 
             issues={[]} 
             signOff={new SignOff("", "", "")} 
@@ -38,6 +39,7 @@ describe('When we render the "Save Meeting component"', ()  => {
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
             <SaveMeeting 
+                traId={1}
                 meetingName=""
                 issues={[]}
                 signOff={new SignOff("", "", "")}
@@ -46,14 +48,19 @@ describe('When we render the "Save Meeting component"', ()  => {
                 attendees={mockAttendees()}/>
         </ServiceProvider>);
 
-    it('Then the "Save and email issue list to TRA" button is displayed', () => {
+    it('Then the "Save the signed off issue list and email to TRA" button is displayed', () => {
         const element = wrapper.find('#save-meeting')
-        expect(element.text()).toBe('Save and email issue list to TRA');
+        expect(element.text()).toBe('Save the signed off issue list and email to TRA');
     });
 
-    it('Then the "TRA representative to review later" button is displayed', () => {
-        var element = wrapper.find('#review-later');
-        expect(element.text()).toBe("TRA representative to review later"); 
+    it('Then the "Save issues for review with TRA later" button is displayed', () => {
+        const element = wrapper.find('#save-draft')
+        expect(element.text()).toBe('Save issues for review with TRA later');
+    });
+
+    it('Then the "Email issues to TRA for sign off" button is displayed', () => {
+        const element = wrapper.find('#review-later');
+        expect(element.text()).toBe("Email issues to TRA for sign off"); 
     })
 });
 
@@ -64,6 +71,7 @@ describe('When we render the "Save Meeting component"', () => {
         const wrapper = mount(
             <ServiceProvider value={mockServiceProvider}>
                 <SaveMeeting
+                    traId={1}
                     meetingName=""
                     issues={[]}
                     signOff={new SignOff("", "", "")}
@@ -89,6 +97,7 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
             <SaveMeeting
+                traId={1}
                 meetingName=""
                 issues={[]} 
                 signOff={new SignOff("", "", "")}
@@ -124,6 +133,7 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     const wrapper = mount(
         <ServiceProvider value={mockServiceProvider}>
             <SaveMeeting
+                traId={1}
                 meetingName=""
                 issues={[]}
                 signOff={new SignOff("", "", "")}

@@ -3,7 +3,7 @@ import './index.css';
 import { IIssue } from '../../Domain/Issues'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
-import { MeetingModel } from '../../Domain/Meeting';
+import { MeetingModel, IMeetingModel } from '../../Domain/Meeting';
 import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff } from '../../Domain/SignOff';
 import { Redirect } from 'react-router-dom';
@@ -52,18 +52,20 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     return true;
   }
 
+  getMeetingModel = () : IMeetingModel => {
+    return new MeetingModel(
+      this.props.traId,
+      this.props.meetingName,
+      this.props.issues, 
+      this.props.attendees, 
+      this.props.signOff,
+      this.props.meetingId, 
+    );
+  }
+
   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
-    const successful = this.saveMeetingDraft.Execute(
-      new MeetingModel(
-        this.props.traId,
-        this.props.meetingName,
-        this.props.issues, 
-        this.props.attendees, 
-        this.props.signOff,
-        this.props.meetingId, 
-      )
-    );
+    const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
 
     if (successful) {
       this.setState({ redirectToLandingPage: true });
@@ -73,30 +75,31 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     }
   }
 
-  // handleReviewLater = () => {
-  //   this.handleSaveMeeting(this.props.onReviewLater);
-  // }
+  handleSaveMeeting = () => { 
+    this.setState({ isAttemptingToSave: true });
+    const successful = true;
+    //const successful = this.saveMeeting.Execute(this.getMeetingModel);
 
-  // handleSaveMeeting(callback: () => void){ 
-  //   this.setState({ isAttemptingToSave: true });
-  //   const successful = this.saveMeetingDraft.Execute(
-  //     new MeetingModel(
-  //       this.props.traId,
-  //       this.props.meetingName,
-  //       this.props.issues, 
-  //       this.props.attendees, 
-  //       this.props.signOff,
-  //       this.props.meetingId, 
-  //     )
-  //   );
+    if (successful) {
+      this.props.onReviewNow();
+    }
+    else {
+      this.setState({ isAttemptingToSave: false });
+    }
+  }
 
-  //   if (successful) {
-  //     callback();
-  //   }
-  //   else {
-  //     this.setState({ isAttemptingToSave: false });
-  //   }
-  // }
+  handleReviewLater = () => { 
+    this.setState({ isAttemptingToSave: true });
+    const successful = true;
+    //const successful = this.reviewLater.Execute(this.getMeetingModel);
+
+    if (successful) {
+      this.props.onReviewLater();
+    }
+    else {
+      this.setState({ isAttemptingToSave: false });
+    }
+  }
 
   render() {
     if(this.state.redirectToLandingPage){
@@ -117,7 +120,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
         <button 
           id="save-meeting" 
           className="button btn-primary button-margin" 
-          //onClick={this.handleReviewNow}
+          onClick={this.handleSaveMeeting}
           disabled={!this.state.isValid}>
             Save the signed off issue list and email to TRA
         </button>
@@ -131,7 +134,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
         <button 
           className="button btn-primary btn-stacked button-margin" 
           id="review-later" 
-          //onClick={this.handleReviewLater}
+          onClick={this.handleReviewLater}
           disabled={!this.state.isValid}>
             Email issues to TRA for sign off
         </button>
