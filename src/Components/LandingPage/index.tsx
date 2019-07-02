@@ -11,7 +11,7 @@ export interface ILandingPageState {
     selectedTraId: string,
 }
 
-export default class LandingPage extends Component<any, ILandingPageState> { 
+export default class LandingPage extends Component<{}, ILandingPageState> { 
     private areas = Array.from<IArea>(areaData);
     private tras : Array<ITraInfo>;
 
@@ -26,6 +26,7 @@ export default class LandingPage extends Component<any, ILandingPageState> {
 
         this.tras = this.populateTras();
     }
+    
     private populateTras() : Array<ITraInfo> {
         let tras = new Array<ITraInfo>();
         this.areas.forEach((area) => {
