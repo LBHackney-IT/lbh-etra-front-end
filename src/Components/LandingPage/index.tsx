@@ -4,6 +4,10 @@ import { Redirect } from "react-router-dom";
 import areaData from "../../JsonFiles/AreaData.json"
 import { IArea, ITra } from "../../Domain/Area";
 import { ITraInfo } from "../../Boundary/TRAInfo";
+import queryString from "query-string"
+import { SaveMeetingJWTUseCase } from "../../UseCases/SaveMeetingJWTLocally";
+import JWTGateway from "../../Gateways/JWTGateway";
+import { SaveSignOffJWTUsecase } from "../../UseCases/SaveSignoffTokenLocally";
 
 export interface ILandingPageState {
     valid: boolean,
@@ -11,7 +15,24 @@ export interface ILandingPageState {
     selectedTraId: string,
 }
 
-export default class LandingPage extends Component<{}, ILandingPageState> { 
+export default class LandingPage extends Component<any, ILandingPageState> { 
+
+    componentDidMount(){
+        if (this.props.location){
+            const parameters = queryString.parse(this.props.location.search)
+            const meetingToken:string = JSON.stringify(parameters.meetingtoken)
+            const signOfftoken:string = JSON.stringify(parameters.token)
+        if (meetingToken){
+            new SaveMeetingJWTUseCase(new JWTGateway).Execute(meetingToken)
+        }
+        else if (signOfftoken){
+            new SaveSignOffJWTUsecase(new JWTGateway).Execute(signOfftoken)
+        }
+        else {
+            return false
+        }
+        }
+    }
 
     private areas = Array.from<IArea>(areaData);
     private tras : Array<ITraInfo>;
@@ -27,7 +48,6 @@ export default class LandingPage extends Component<{}, ILandingPageState> {
 
         this.tras = this.populateTras();
     }
-
     private populateTras() : Array<ITraInfo> {
         let tras = new Array<ITraInfo>();
         this.areas.forEach((area) => {
