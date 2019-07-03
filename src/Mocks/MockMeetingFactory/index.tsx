@@ -62,7 +62,8 @@ export function mockMeeting(meetingName: string): IMeetingModel {
         traId: faker.random.number(10),
         meetingName: meetingName,
         issues: mockIssues(),
-        attendees: mockAttendees(),
-        signOff: mockSignOff()
+        meetingAttendance: mockAttendees(),
+        signOff: mockSignOff(),
+        isSignedOff: false
     }
 }

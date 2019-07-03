@@ -65,15 +65,13 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async saveMeetingData(data: IMeetingModel | IUnreviewedMeetingModel): Promise<IGatewayResponse> {
-    const saveToken = this.jwtGateway.getMeetingToken();
+    const saveToken = await this.jwtGateway.getMeetingToken();
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "post",
-        headers: {
-          'Authorization': `Bearer ${saveToken}`,
-        },
+        headers: this.buildHeaders(saveToken),
         body: JSON.stringify(data)
       }
     ).then((response) => {
@@ -84,15 +82,13 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async signOffMeeting(data: IMeetingSignOffModel): Promise<IGatewayResponse> {
-    const signOffToken = this.jwtGateway.getSignoffToken();
+    const signOffToken = await this.jwtGateway.getSignoffToken();
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "patch",
-        headers: {
-          'Authorization': `Bearer ${signOffToken}`,
-        },
+        headers: this.buildHeaders(signOffToken),
         body: JSON.stringify(data)
       }
     )
@@ -104,16 +100,14 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async getMeetingData() : Promise<IGetMeetingResponse> {
-    const getMeetingToken = this.jwtGateway.getSignoffToken();
+    const getMeetingToken = await this.jwtGateway.getSignoffToken();
     let thisResponse: Response;
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "get",
-        headers: {
-          'Authorization': `Bearer ${getMeetingToken}`,
-        }
+        headers: this.buildHeaders(getMeetingToken)
       }
     )
     .then((response) => {
@@ -125,5 +119,14 @@ export default class MeetingGateway implements IMeetingGateway {
     }).catch((error : Error) => {
       return new GetMeetingResponse(false, error.message);
     });
+  }
+
+  private buildHeaders(token: string) {
+    const xApiKey = process.env.REACT_APP_X_API_KEY || "";
+
+    return {
+      "Authorization": `Bearer ${token}`,
+      "x-api-key": `${xApiKey}`
+    };
   }
 }

@@ -3,10 +3,11 @@ import './index.css';
 import { IIssue } from '../../Domain/Issues'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
-import { MeetingModel, IMeetingModel } from '../../Domain/Meeting';
+import { MeetingModel, IMeetingModel, IUnreviewedMeetingModel, UnreviewedMeetingModel } from '../../Domain/Meeting';
 import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff } from '../../Domain/SignOff';
 import { Redirect } from 'react-router-dom';
+import { ICreateMeetingUseCase } from '../../Boundary/CreateMeeting';
 
 export interface ISaveMeetingProps {
   traId: number,
@@ -28,10 +29,12 @@ export interface ISaveMeetingState {
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
   private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
+  private readonly createMeeting: ICreateMeetingUseCase;
 
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
     this.saveMeetingDraft = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
+    this.createMeeting = context.get<ICreateMeetingUseCase>("ICreateMeetingUseCase");
 
     this.state = {
       isAttemptingToSave: false,
@@ -63,6 +66,15 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     );
   }
 
+  getUnreviewedMeetingModel = () : IUnreviewedMeetingModel => {
+    return new UnreviewedMeetingModel(
+      this.props.traId,
+      this.props.meetingName,
+      this.props.issues,
+      this.props.attendees
+    );
+  }
+
   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
@@ -75,11 +87,10 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     }
   }
 
-  handleSaveMeeting = () => { 
+  handleSaveMeeting = async () => { 
     this.setState({ isAttemptingToSave: true });
-    const successful = true;
-    //const successful = this.saveMeeting.Execute(this.getMeetingModel);
-
+    const successful = await this.createMeeting.Execute(this.getMeetingModel());
+    console.log(successful);
     if (successful) {
       this.props.onReviewNow();
     }
@@ -88,11 +99,10 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     }
   }
 
-  handleReviewLater = () => { 
+  handleReviewLater = async () => { 
     this.setState({ isAttemptingToSave: true });
-    const successful = true;
-    //const successful = this.reviewLater.Execute(this.getMeetingModel);
-
+    const successful = await this.createMeeting.Execute(this.getUnreviewedMeetingModel());
+    console.log(successful);
     if (successful) {
       this.props.onReviewLater();
     }

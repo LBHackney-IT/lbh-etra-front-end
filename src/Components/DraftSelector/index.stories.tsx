@@ -10,7 +10,7 @@ const mockMeeting : IMeetingModel = {
   traId: 1,
   meetingName: "Test Meeting Name",
   issues: [],
-  attendees: {
+  meetingAttendance: {
     Councillors: "",
     HackneyStaff: "",
     NumberOfAttendees: 0
@@ -19,7 +19,8 @@ const mockMeeting : IMeetingModel = {
     signature: "",
     name: "",
     role: ""
-  }
+  },
+  isSignedOff: false
 }
 
 const mockTra: ITraInfo = {
