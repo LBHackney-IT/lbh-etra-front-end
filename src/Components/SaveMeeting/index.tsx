@@ -90,7 +90,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   handleSaveMeeting = async () => { 
     this.setState({ isAttemptingToSave: true });
     const successful = await this.createMeeting.Execute(this.getMeetingModel());
-    console.log(successful);
+
     if (successful) {
       this.props.onReviewNow();
     }
@@ -153,7 +153,9 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   private renderSpinner() {
     return (
+      <div className="spinner-wrapper">
        <div className="loading-spinner"><div></div><div></div><div></div></div>
+      </div>
     );
   }
 }
