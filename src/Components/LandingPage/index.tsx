@@ -34,19 +34,10 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
         
         this.getDrafts = context.get<IGetMeetingDraftsUseCase>("IGetMeetingDraftsUseCase");
 
-        const query = queryString.parse(this.props.location.search);
-
-        let traId = ""
-        let traIdExists = false;
-        if(query.traId){
-            traId = query.traId as string;
-            traIdExists = true;
-        }
-
         this.state = { 
-            valid: traIdExists,
-            redirect: traIdExists,
-            selectedTraId: traId,
+            valid: false,
+            redirect: false,
+            selectedTraId: "",
             draftMeetings: []
         }
 
@@ -54,6 +45,12 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     public componentDidMount(){
+        const query = queryString.parse(this.props.location.search);
+        if(query.traId){
+            this.setState({selectedTraId: query.traId as string, redirect: true})
+            return;
+        }
+
         this.getDrafts.Execute().then((result : IMeetingModel[]) => {
             this.setState({draftMeetings: result});
         })
