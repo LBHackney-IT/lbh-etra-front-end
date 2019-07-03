@@ -22,7 +22,8 @@ export interface IMeetingProps {
 export interface IMeetingState {
   meetingCreated: boolean,
   issues: Array<IIssue>,
-  attendees: IAttendees
+  attendees: IAttendees,
+  signOffMode: boolean
 }
 
 const emptyState : IMeetingState = {
@@ -32,8 +33,9 @@ const emptyState : IMeetingState = {
   {
     Councillors: "",
     HackneyStaff: "",
-    NumberOfAttendees: 0
-  }
+    NumberOfAttendees: 0,
+  },
+  signOffMode: false
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
@@ -60,7 +62,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       this.state = {
         meetingCreated: false,
         issues: existingMeeting.issues,
-        attendees: existingMeeting.attendees
+        attendees: existingMeeting.attendees,
+        signOffMode:false
       }
     }
     else {
@@ -105,6 +108,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           attendees={this.state.attendees}
           issues={this.state.issues}
           onSaveComplete={this.onSaveComplete}
+          signOffMode ={this.state.signOffMode}
+
         />
       </div>);
   }

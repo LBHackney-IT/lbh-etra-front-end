@@ -15,13 +15,14 @@ export interface IReviewMeetingProps {
     meetingName: string,
     issues: Array<IIssue>,
     onSaveComplete: () => void
-    attendees:IAttendees
+    attendees:IAttendees,
+    signOffMode: boolean;
 }
 
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signOff: ISignOff,
-    readOnly:boolean
+    readOnly:boolean,
 }
 
 export enum ReviewMeetingDisplayState {
@@ -49,13 +50,14 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
             signOff: new SignOff("", "", roles[0].name),
-            readOnly:false
+            readOnly:false,
         }
     }
 
     public static defaultProps = {
         issues: Array<IIssue>(),
-        attendees: {}
+        attendees: {},
+        signOffMode: false
     };
 
     private updateSignatureString = (value: string) : void => {
@@ -90,6 +92,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         this.setState({readOnly:readOnly})
     }
 
+    
+
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
           return (<Confirmation signOff={this.state.signOff} />);
@@ -101,14 +105,23 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
         return this.renderReview();
     }
+    renderSigniture(){
+        console.log("TEST");
+        return(
+            <div className="signature-wrapper">
+            <div className="signature-of-TRA-rep">Signature of TRA representative</div>
+                <Signature onUpdated={this.updateSignatureString} />
+            </div>
+        )
+    }
+    conditionalRender(signOffMode: any, notSignOffMode: any){
+        return (<>{this.props.signOffMode ? signOffMode : notSignOffMode}</>);
+    }
 
     private renderReview() {
         return (
             <div>
-                <div className="signature-wrapper">
-                <div className="signature-of-TRA-rep">Signature of TRA representative</div>
-                    <Signature onUpdated={this.updateSignatureString} />
-                </div>
+                {this.conditionalRender(<></>, this.renderSigniture())}
                 <div className="rep-name">
                     <RepName onUpdated={this.updateRepName}></RepName>
                 </div>
