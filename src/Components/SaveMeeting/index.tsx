@@ -116,12 +116,11 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       return <Redirect to="" />
     }
 
-    if (!this.state.isAttemptingToSave) {
-      return this.renderSaveMeetingButtons();
-    }
-    else if (this.state.isAttemptingToSave) {
+    if(this.state.isAttemptingToSave){
       return this.renderSpinner();
     }
+
+    return this.renderSaveMeetingButtons();
   }
 
   private renderSaveMeetingButtons() {
@@ -154,9 +153,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   private renderSpinner() {
     return (
-      <div className="spinner">
-        SPINNER
-        </div>
+       <div className="loading-spinner"><div></div><div></div><div></div></div>
     );
   }
 }

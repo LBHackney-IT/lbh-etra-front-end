@@ -1,7 +1,4 @@
-.button {
-  width: 500px;
-}
-
 .button-margin {
     margin-top: 25px;
-  }
+    width: 500px;
+}
