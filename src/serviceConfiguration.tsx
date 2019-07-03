@@ -11,6 +11,8 @@ import { IGetMeetingDraftsUseCase } from "./Boundary/GetMeetingDrafts";
 import { GetMeetingDraftsUseCase } from "./UseCases/GetMeetingDrafts";
 import { ICreateMeetingUseCase } from "./Boundary/CreateMeeting";
 import { CreateMeetingUseCase } from "./UseCases/CreateMeeting";
+import { ISignOffMeetingUseCase } from "./Boundary/SignOffMeeting";
+import { SignOffMeetingUseCase } from "./UseCases/SignOffMeeting";
 
 const apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || "";
 
@@ -25,6 +27,7 @@ export default function configureServices(container: IServiceContainer) {
     container.bind<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase", new SaveMeetingDraftUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
     container.bind<IGetMeetingDraftsUseCase>("IGetMeetingDraftsUseCase", new GetMeetingDraftsUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
     container.bind<ICreateMeetingUseCase>("ICreateMeetingUseCase", new CreateMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
+    container.bind<ISignOffMeetingUseCase>("ISignOffMeetingUseCase", new SignOffMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
 
     return container;
 }
