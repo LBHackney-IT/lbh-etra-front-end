@@ -4,30 +4,42 @@ import { ISignOff } from "../SignOff";
 import { v4 as uuid } from "uuid";
 
 export interface IUnreviewedMeetingModel {
-    id: string;
     traId: number;
     meetingName: string;
     issues: Array<IIssue>;
-    attendees: IAttendees;
+    meetingAttendance: IAttendees;
 }
 
-export interface IMeetingModel extends IUnreviewedMeetingModel {
+export interface IMeetingSignOffModel {
+    id: string;
     signOff: ISignOff;
 }
 
-export class UnreviewedMeetingModel implements IUnreviewedMeetingModel {
-    public readonly id: string;    
+export interface IMeetingModel extends IUnreviewedMeetingModel, IMeetingSignOffModel{
+    isSignedOff: boolean,
+}
+
+export class UnreviewedMeetingModel implements IUnreviewedMeetingModel {  
     public readonly traId: number;
     meetingName: string;
     issues: IIssue[];
-    attendees: IAttendees;
+    meetingAttendance: IAttendees;
 
-    constructor(traId: number, meetingName: string, issues: IIssue[], attendees: IAttendees, id?: string){
-        this.id = id || uuid();
+    constructor(traId: number, meetingName: string, issues: IIssue[], attendees: IAttendees){
         this.traId = traId;
         this.meetingName = meetingName;
         this.issues = issues;
-        this.attendees = attendees;
+        this.meetingAttendance = attendees;
+    }
+}
+
+export class MeetingSignOffModel implements IMeetingSignOffModel {
+    id: string;
+    signOff: ISignOff;    
+
+    constructor(id: string, signOff: ISignOff){
+        this.id = id;
+        this.signOff = signOff;
     }
 }
 
@@ -36,15 +48,17 @@ export class MeetingModel implements IMeetingModel {
     public readonly traId: number;
     public meetingName: string;    
     public issues: IIssue[];
-    public attendees: IAttendees;
+    public meetingAttendance: IAttendees;
     public signOff: ISignOff
+    public isSignedOff: boolean;
 
     constructor(traId: number, meetingName: string, issues: IIssue[], attendees: IAttendees, signOff: ISignOff, id?: string){
         this.id = id || uuid();
         this.traId = traId;
         this.meetingName = meetingName;
         this.issues = issues;
-        this.attendees = attendees;
+        this.meetingAttendance = attendees;
         this.signOff = signOff;
+        this.isSignedOff = false;
     }
 }
