@@ -1,4 +1,4 @@
-import { IMeetingModel } from "../../Domain/Meeting";
+import { IMeetingModel, IUnreviewedMeetingModel } from "../../Domain/Meeting";
 import { GatewayResponse, IGatewayResponse } from "../../Boundary/GatewayResponse";
 
 export interface IMeetingGateway {
@@ -43,7 +43,7 @@ export default class MeetingGateway implements IMeetingGateway {
       return draftMeetings;
   }
 
-  public async saveMeetingData(traId: string, data: IMeetingModel): Promise<IGatewayResponse> {
+  public async saveMeetingData(traId: string, data: IMeetingModel | IUnreviewedMeetingModel): Promise<IGatewayResponse> {
     return await fetch(
       `${this.baseUrl}/TRA/${traId}/meetings`, 
       {
