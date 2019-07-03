@@ -14,8 +14,8 @@ const apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || "";
 
 export default function configureServices(container: IServiceContainer) {
     //Gateways
-    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway(apiBaseUrl));
     container.bind<IJWTGateway>("IJWTGateway", new JWTGateway());
+    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway(apiBaseUrl, container.get<IJWTGateway>("IJWTGateway")));
 
     //Use Cases
     container.bind<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase", new SaveMeetingDraftUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
