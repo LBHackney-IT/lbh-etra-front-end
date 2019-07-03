@@ -102,7 +102,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   handleReviewLater = async () => { 
     this.setState({ isAttemptingToSave: true });
     const successful = await this.createMeeting.Execute(this.getUnreviewedMeetingModel());
-    console.log(successful);
+
     if (successful) {
       this.props.onReviewLater();
     }
