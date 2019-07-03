@@ -37,7 +37,13 @@ export default class TokenLoader extends Component<TokenLoaderProps, TokenLoader
   }
 
   private loadTokens(){
-    if(!this.props.location || !this.props.location.search){
+
+    if(!this.props.location){
+      return;
+    }
+
+    if(!this.props.location.search){
+      this.setState({forwardUrl: this.props.location.pathname});
       return;
     }
   
