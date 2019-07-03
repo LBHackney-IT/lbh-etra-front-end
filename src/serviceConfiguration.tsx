@@ -10,9 +10,11 @@ import { SaveSignOffJWTUsecase } from "./UseCases/SaveSignoffTokenLocally";
 import { IGetMeetingDraftsUseCase } from "./Boundary/GetMeetingDrafts";
 import { GetMeetingDraftsUseCase } from "./UseCases/GetMeetingDrafts";
 
+const apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || "";
+
 export default function configureServices(container: IServiceContainer) {
     //Gateways
-    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway(""));
+    container.bind<IMeetingGateway>("IMeetingGateway", new MeetingGateway(apiBaseUrl));
     container.bind<IJWTGateway>("IJWTGateway", new JWTGateway());
 
     //Use Cases
