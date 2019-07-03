@@ -24,6 +24,7 @@ export interface IMeetingGateway {
   getMeetingDrafts: () => Promise<Array<IMeetingModel>>;
   saveMeetingData: (data: IMeetingModel | IUnreviewedMeetingModel) => Promise<GatewayResponse>;
   signOffMeeting: (data: IMeetingSignOffModel) => Promise<GatewayResponse>;
+  getMeetingData: () => Promise<IGetMeetingResponse>;
 }
 
 export default class MeetingGateway implements IMeetingGateway {
