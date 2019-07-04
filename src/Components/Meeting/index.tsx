@@ -27,7 +27,8 @@ export interface IMeetingState {
   detailsEditable: boolean,
   signOffEditable: boolean,
   errorMessage: string,
-  meeting: IMeetingModel
+  signOffMode: boolean,
+  meeting: IMeetingModel,
 }
 
 const emptyState : IMeetingState = {
@@ -35,6 +36,7 @@ const emptyState : IMeetingState = {
   detailsEditable: false,
   signOffEditable: false,
   errorMessage: "",
+  signOffMode: false,
   meeting: {
     id: "",
     traId: -1,
@@ -52,7 +54,7 @@ const emptyState : IMeetingState = {
       signature: "",
       role: ""
     },
-    isSignedOff: false
+    isSignedOff: false,
   }
 }
 
@@ -88,7 +90,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: signOffEditable})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: signOffEditable, signOffMode: true})
       return;
     }
 
@@ -154,6 +156,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           attendees={meeting.meetingAttendance}
           issues={meeting.issues}
           onSaveComplete={this.onSaveComplete}
+          signOffMode ={this.state.signOffMode}
         />
       </div>);
   }
