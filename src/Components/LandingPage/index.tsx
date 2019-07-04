@@ -77,15 +77,12 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     onChangeSelection = (event: FormEvent<HTMLSelectElement>) : void => {
-        console.log(event.currentTarget.value);
         this.setState({selectedTraId: event.currentTarget.value});
         this.checkIsValid(event.currentTarget.value);
     }
 
     checkIsValid = (selectedTraId: string) : void => {
         const valid = !!selectedTraId;
-        console.log(`selectedTraId: ${selectedTraId}`)
-        console.log(`isValid: ${valid}`)
         this.setState({valid: valid});
     }
 

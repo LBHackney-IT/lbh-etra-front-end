@@ -118,11 +118,6 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
         expect(element.exists()).toBe(false);
     });
 
-    it('Then the spinner is displayed', () => {
-        const element = wrapper.find('.spinner')
-        expect(element.exists()).toBe(true);
-    });
-
     it('Then onReviewNow method is called', () => {
         expect(onReviewNow).toHaveBeenCalled();
     });
@@ -152,11 +147,6 @@ describe('When we click the "Save and email issue list to TRA" button', ()  => {
     it('Then the "TRA representative to review later" button is NOT displayed', () => {
         const element = wrapper.find('#review-later')
         expect(element.exists()).toBe(false);
-    });
-
-    it('Then the spinner is displayed', () => {
-        const element = wrapper.find('.spinner')
-        expect(element.exists()).toBe(true);
     });
 
     it('Then onReviewLater method is called', () => {
