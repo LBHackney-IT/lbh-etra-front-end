@@ -8,10 +8,11 @@ import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
 import { ITraInfo } from '../../Boundary/TRAInfo';
-import { IMeetingModel } from '../../Domain/Meeting';
+import { IMeetingModel, MeetingModel } from '../../Domain/Meeting';
 import queryString from 'query-string';
 import { ServiceContext, IServiceProvider } from '../../ServiceContext';
 import { IGetMeetingUseCase } from '../../Boundary/GetMeeting';
+import { SignOff } from '../../Domain/SignOff';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
@@ -140,18 +141,18 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     }
 
     const meeting = this.state.meeting;
-    const selectedTra = this.props.location.state.selectedTra;
+    const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
     return (
       <div>
         {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
         <Attendees attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordIssues blocks={selectedTra.tra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordIssues blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewMeeting
           isComplete={!this.state.signOffIncomplete}
-          traId={selectedTra.tra.id}
+          traId={selectedTra && selectedTra.id}
           meetingId={meeting.id}
           meetingName={meeting.meetingName}
           attendees={meeting.meetingAttendance}
