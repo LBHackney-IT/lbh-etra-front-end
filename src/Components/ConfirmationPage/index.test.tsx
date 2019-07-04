@@ -18,7 +18,7 @@ describe('Given that start a new meeting', () => {
     describe('When we go to save the meeting', () => {
 
 
-        const wrapper = shallow(<Confirmation signOff={new SignOff("", repName, repRole)}/>);
+        const wrapper = shallow(<Confirmation signOff={new SignOff("asfdsfdfs", repName, repRole)} reviewedLater={false}/>);
 
          it('Then the "Signature of TRA representative" header is shown', () => {
             const divSignatureHeader=wrapper.find('.signature-header')
