@@ -10,6 +10,7 @@ import { ISignOff, SignOff } from '../../Domain/SignOff';
 import RepName from '../RepName'
 
 export interface IReviewMeetingProps {
+    isComplete: boolean,
     traId: number,
     meetingId?: string,
     meetingName: string,
@@ -23,7 +24,6 @@ export interface IReviewMeetingProps {
 export interface IReviewMeetingState {
     pageState: ReviewMeetingDisplayState,
     signOff: ISignOff,
-    readOnly:boolean,
 }
 
 export enum ReviewMeetingDisplayState {
@@ -48,10 +48,14 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
     public constructor(props: IReviewMeetingProps) {
         super(props);
+
+        const pageState = this.props.isComplete ? 
+            ReviewMeetingDisplayState.ReviewComplete : 
+            ReviewMeetingDisplayState.Ready;
+
         this.state = {
-            pageState: ReviewMeetingDisplayState.Ready,
+            pageState: pageState,
             signOff: this.props.signOff,
-            readOnly:false,
         }
     }
 
@@ -83,15 +87,12 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private onReviewLater = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
         this.props.onSaveComplete();
-        this.setState({ readOnly:true })
 
     }
 
     private onReviewNow = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
         this.props.onSaveComplete();
-        const readOnly = this.state.readOnly
-        this.setState({readOnly:readOnly})
     }
 
     render() {

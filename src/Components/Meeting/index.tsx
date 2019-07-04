@@ -25,7 +25,7 @@ export interface IMeetingProps {
 export interface IMeetingState {
   shouldDisplay: boolean,
   detailsEditable: boolean,
-  signOffEditable: boolean,
+  signOffIncomplete: boolean,
   errorMessage: string,
   signOffMode: boolean,
   meeting: IMeetingModel,
@@ -34,7 +34,7 @@ export interface IMeetingState {
 const emptyState : IMeetingState = {
   shouldDisplay: false,
   detailsEditable: false,
-  signOffEditable: false,
+  signOffIncomplete: false,
   errorMessage: "",
   signOffMode: false,
   meeting: {
@@ -90,7 +90,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: signOffEditable, signOffMode: true})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: true})
       return;
     }
 
@@ -105,13 +105,13 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const existingMeeting = this.props.location.state.meeting;
     if(existingMeeting){
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: true, detailsEditable: true})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: true})
       return;
     }
     
     let meeting = this.state.meeting;
     meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());
-    this.setState({shouldDisplay: true, signOffEditable: true, detailsEditable: true});
+    this.setState({shouldDisplay: true, signOffIncomplete: true, detailsEditable: true});
   }
 
   buildMeetingName = (traName: string, date: Date): string => {
@@ -119,7 +119,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   onSaveComplete = (): void => {
-    this.setState({ detailsEditable: false, signOffEditable: false })
+    this.setState({ detailsEditable: false })
   }
 
   onChangeAttendees = (newAttendees: IAttendees): void => {
@@ -150,6 +150,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           <RecordIssues blocks={selectedTra.tra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewMeeting
+          isComplete={!this.state.signOffIncomplete}
           traId={selectedTra.tra.id}
           meetingId={meeting.id}
           meetingName={meeting.meetingName}
