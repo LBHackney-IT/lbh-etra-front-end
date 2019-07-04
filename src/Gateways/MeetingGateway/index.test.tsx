@@ -3,6 +3,7 @@ import fetchMock from 'fetch-mock'
 import uuid from "uuid";
 import { IMeetingModel } from "../../Domain/Meeting";
 import { mockMeeting, mockAttendees, mockIssues, mockSignOff } from "../../Mocks/MockMeetingFactory";
+import JWTGateway from "../JWTGateway";
 
 beforeEach(() => {
     localStorage.clear();
@@ -10,13 +11,13 @@ beforeEach(() => {
 
 it("can set base url", async() => {
   const baseUrl = "http://localhost:3000";
-  const gateway : IMeetingGateway = new MeetingGateway(baseUrl)
+  const gateway : IMeetingGateway = new MeetingGateway(baseUrl, new JWTGateway())
 
   expect(gateway.baseUrl).toBe(baseUrl);
 })
 
 it("can save meeting draft", async () => {
-  const gateway : IMeetingGateway = new MeetingGateway("");
+  const gateway : IMeetingGateway = new MeetingGateway("", new JWTGateway());
 
   const testData : IMeetingModel = mockMeeting("Meeting 1");
   const dataArray = [
@@ -32,7 +33,7 @@ it("can save meeting draft", async () => {
 });
 
 it("can save multiple meeting drafts", async () => {
-  const gateway : IMeetingGateway = new MeetingGateway("");
+  const gateway : IMeetingGateway = new MeetingGateway("", new JWTGateway());
 
   const testData : IMeetingModel = mockMeeting("Meeting 1");
   const testData2 : IMeetingModel = mockMeeting("Meeting 2");
@@ -50,7 +51,7 @@ it("can save multiple meeting drafts", async () => {
 });
 
 it("saving pre-existing draft updates instead of adding new one", async () => {
-  const gateway : IMeetingGateway = new MeetingGateway("");
+  const gateway : IMeetingGateway = new MeetingGateway("", new JWTGateway());
 
   const testData : IMeetingModel = mockMeeting("Meeting 1");
   let editableData : IMeetingModel = mockMeeting("Meeting 2");
@@ -100,9 +101,8 @@ it("gets empty list when no meeting drafts are saved", async () => {
 
 describe("when saving a meeting", () => {
   const baseUrl = "http://localhost:3000";
-  const gateway : IMeetingGateway = new MeetingGateway(baseUrl);
-  const traId = uuid();
-  const postUrl = `${baseUrl}/TRA/${traId}/meetings`;
+  const gateway : IMeetingGateway = new MeetingGateway(baseUrl, new JWTGateway());
+  const postUrl = `${baseUrl}/v2/tra/meeting`;
 
   let testData : IMeetingModel;
 
@@ -114,7 +114,7 @@ describe("when saving a meeting", () => {
   it("save meeting data hits endpoint", async () => {
     fetchMock.post(postUrl, 200);
 
-    await gateway.saveMeetingData(traId, testData);
+    await gateway.saveMeetingData(testData);
 
     expect(fetchMock.done()).toEqual(true);
     expect(fetchMock.called(postUrl)).toBe(true);
@@ -123,7 +123,7 @@ describe("when saving a meeting", () => {
   it("save meeting data sends correct data", async () => {
     fetchMock.post(postUrl, 200);
 
-    await gateway.saveMeetingData(traId, testData);
+    await gateway.saveMeetingData(testData);
 
     const lastOptions = fetchMock.lastOptions();
     expect(lastOptions && lastOptions.body).toEqual(JSON.stringify(testData));
@@ -132,7 +132,7 @@ describe("when saving a meeting", () => {
   it("save meeting data returns correct response when returning 200", async () => {
     fetchMock.post(postUrl, 200);
 
-    const result = await gateway.saveMeetingData(traId, testData);
+    const result = await gateway.saveMeetingData(testData);
 
     expect(result.successful).toBe(true);
   });
@@ -140,7 +140,7 @@ describe("when saving a meeting", () => {
   it("save meeting data returns correct response when returning 500", async () => {
     fetchMock.post(postUrl, 500);
 
-    const result = await gateway.saveMeetingData(traId, testData);
+    const result = await gateway.saveMeetingData(testData);
 
     expect(result.successful).toBe(false);
     expect(result.result).toBe("Internal Server Error");
@@ -150,7 +150,7 @@ describe("when saving a meeting", () => {
     const errorMessage = "Network Error Occurred";
     fetchMock.post(postUrl, () => {throw new Error(errorMessage)});
 
-    const result = await gateway.saveMeetingData(traId, testData);
+    const result = await gateway.saveMeetingData(testData);
 
     expect(result.successful).toBe(false);
     expect(result.result).toBe(errorMessage);
