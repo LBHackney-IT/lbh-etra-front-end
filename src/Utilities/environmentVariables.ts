@@ -1,6 +1,5 @@
 export default function getEnvVariable(key: string) : string {
     const url = window.location.hostname.toLowerCase();
-    console.log(url);
     let prefix = "REACT_APP_";
     
     if(url.includes("prod")){
