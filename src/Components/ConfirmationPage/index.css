@@ -27,8 +27,7 @@
 
 #signature-image
 {
-  width: 299.7px;
-  height: 131.6px;
+  height: 150px;
 }
 
 .label-title
@@ -43,8 +42,14 @@
   letter-spacing: normal;
   color: #000000;
 }
-.tra-role{
+
+.tra-role {
   margin-bottom: 52px;
   font-size: 19px;
   font-weight: 500;
+}
+
+.name-confirmation {
+  margin-bottom: 30px;
+  font-size: 19px;
 }
