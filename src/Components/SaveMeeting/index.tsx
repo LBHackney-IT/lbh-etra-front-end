@@ -10,6 +10,7 @@ import { Redirect } from 'react-router-dom';
 import { ICreateMeetingUseCase } from '../../Boundary/CreateMeeting';
 
 export interface ISaveMeetingProps {
+  signOffMode: boolean,
   traId: number,
   meetingId?: string,
   meetingName: string,
@@ -124,6 +125,19 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   }
 
   private renderSaveMeetingButtons() {
+    if(this.props.signOffMode){
+      return (
+        <button 
+        id="save-meeting" 
+        className="button btn-primary button-margin" 
+        onClick={this.handleSaveMeeting}
+        disabled={!this.state.isValid}>
+          I confirm I have reviewed these issues
+        </button>
+      )
+    }
+
+
     return (
       <div>
         <button 

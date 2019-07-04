@@ -131,6 +131,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                 {roles.map(this.renderRole, this)}
                 <div className="review-button">
                     <SaveMeeting
+                        signOffMode={this.props.signOffMode}
                         traId={this.props.traId}
                         meetingId={this.props.meetingId}
                         meetingName={this.props.meetingName}
