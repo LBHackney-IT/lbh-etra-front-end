@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import getEnvVariable from '../../Utilities/environmentVariables';
 
 export interface IConfirmLaterProp{
 }
@@ -14,7 +15,7 @@ private readonly workTrayUrl : string;
 public constructor(props:IConfirmLaterProp){
   super(props);
 
-  this.workTrayUrl = process.env.REACT_APP_WORK_TRAY_URL || "";
+  this.workTrayUrl = getEnvVariable("WORK_TRAY_URL");
 
   this.state = {
     representativeName:""
