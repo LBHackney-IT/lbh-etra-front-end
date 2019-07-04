@@ -158,6 +158,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           attendees={meeting.meetingAttendance}
           issues={meeting.issues}
           onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
         />
       </div>);

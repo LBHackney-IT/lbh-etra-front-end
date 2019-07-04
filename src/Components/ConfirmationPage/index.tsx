@@ -30,14 +30,9 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
   render() {
     return (
       <div>
-        <div className="name-confirmation">
-          I { this.props.signOff.name } do hereby confirm that I have reviewed these issues.
-        </div>
         <div >
-          <div className="signature-header">Signature of TRA representative</div>
-          <div>
-            <img id="signature-image" src={this.props.signOff.signature} alt="signature" />
-          </div>
+          {this.props.signOff.signature && this.renderSignature()}
+          <div className="name-confirmation">{this.props.signOff.name}</div>
           <div className="tra-role">{this.props.signOff.role}</div>
         </div>
         <div className="message-box">
@@ -47,6 +42,17 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
           </div>
         </div>
       </div>
+    );
+  }
+
+  private renderSignature(){
+    return(
+      <>
+        <div className="signature-header">Signature of TRA representative</div>
+        <div>
+          <img id="signature-image" src={this.props.signOff.signature} alt="signature" />
+        </div>
+      </>
     );
   }
 }
