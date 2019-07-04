@@ -13,11 +13,13 @@ export interface IConfirmationState {
 }
 
 export class Confirmation extends React.Component<IConfirmationProps, IConfirmationState> {
-
+  private readonly workTrayUrl : string;
   jsonIssueResponse = []
 
   public constructor(props: IConfirmationProps) {
     super(props);
+    
+    this.workTrayUrl = process.env.REACT_APP_WORK_TRAY_URL || "";
 
     this.state = { 
       issues: this.jsonIssueResponse,
@@ -50,7 +52,7 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
     return (
       <>
        <div data-test="message-one" id="review-later-one" className="message-text message-one">Any issues have been saved and emailed to the TRA representative.</div>
-        <div data-test="message-two" id="review-later-two" className="message-text">You can access the issues from <a href="#">your work tray.</a></div>
+        <div data-test="message-two" id="review-later-two" className="message-text">You can access the issues from <a href={this.workTrayUrl}>your work tray.</a></div>
       </>
     );
   }
