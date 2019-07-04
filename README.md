@@ -22,7 +22,7 @@ The default route is a token loader that intercepts JWT tokens included as query
 #### Landing Page ([http://localhost:3000/](http://localhost:3000/))
 The landing page allows you to start a new meeting, and is what will be displayed when you go to the base url of the application. You can also add the query string `traId` to the base url to bypass the landing screen and immediately begin a new meeting, for example:
 
-`http://localhost:3000?=traId=47`
+`http://localhost:3000?traId=47`
 
 #### Meeting Page ([http://localhost:3000/meeting/](http://localhost:3000/meeting/))
 The meeting page allows you to create, modify, sign off and view completed meetings. It can be found at `/meeting/`. This is where you will be forwarded to from the landing page if you create a new meeting or choose to modify a saved draft meeting. You can also add the query string `existingMeeting` to load an existing meeting for signOff for viewing, depending on its current status. For example:
