@@ -62,7 +62,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       this.state = {
         meetingCreated: false,
         issues: existingMeeting.issues,
-        attendees: existingMeeting.meetingAttendance
+        attendees: existingMeeting.meetingAttendance,
         signOffMode:false
       }
     }
