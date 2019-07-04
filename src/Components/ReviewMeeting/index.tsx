@@ -107,7 +107,6 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         return this.renderReview();
     }
     renderSigniture(){
-        console.log("TEST");
         return(
             <div className="signature-wrapper">
             <div className="signature-of-TRA-rep">Signature of TRA representative</div>

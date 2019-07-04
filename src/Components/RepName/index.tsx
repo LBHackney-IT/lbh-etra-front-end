@@ -25,7 +25,7 @@ handleRepConfirmation = (event: React.ChangeEvent<HTMLInputElement>):void =>{
   render() {
     return(
       <div>
-        <div className="confirmation-title" >Your Name and confirmation </div>
+        <div className="confirmation-title" >Name of TRA representative</div>
         <div className="confirmation-input">I 
           <input onChange={this.handleRepConfirmation} 
                 className="representative-name" 
