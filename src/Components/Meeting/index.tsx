@@ -24,14 +24,16 @@ export interface IMeetingProps {
 
 export interface IMeetingState {
   shouldDisplay: boolean,
-  meetingCreated: boolean,
+  detailsEditable: boolean,
+  signOffEditable: boolean,
   errorMessage: string,
   meeting: IMeetingModel
 }
 
 const emptyState : IMeetingState = {
   shouldDisplay: false,
-  meetingCreated: false,
+  detailsEditable: false,
+  signOffEditable: false,
   errorMessage: "",
   meeting: {
     id: "",
@@ -85,7 +87,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
-      this.setState({meeting: existingMeeting, shouldDisplay: true})
+      const signOffEditable = !existingMeeting.isSignedOff;
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: signOffEditable})
       return;
     }
 
@@ -100,13 +103,13 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const existingMeeting = this.props.location.state.meeting;
     if(existingMeeting){
-      this.setState({meeting: existingMeeting, shouldDisplay: true})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffEditable: true, detailsEditable: true})
       return;
     }
     
     let meeting = this.state.meeting;
     meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());
-    this.setState({shouldDisplay: true});
+    this.setState({shouldDisplay: true, signOffEditable: true, detailsEditable: true});
   }
 
   buildMeetingName = (traName: string, date: Date): string => {
@@ -114,7 +117,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   onSaveComplete = (): void => {
-    this.setState({ meetingCreated: true })
+    this.setState({ detailsEditable: false, signOffEditable: false })
   }
 
   onChangeAttendees = (newAttendees: IAttendees): void => {
@@ -140,9 +143,9 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       <div>
         {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <Attendees attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
+        <Attendees attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordIssues blocks={selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordIssues blocks={selectedTra.tra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewMeeting
           traId={selectedTra.tra.id}
