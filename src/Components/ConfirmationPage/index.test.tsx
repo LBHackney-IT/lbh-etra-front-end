@@ -39,7 +39,7 @@ describe('Given that start a new meeting', () => {
          });
          it('Then the "TRA Role" is displayed', () => {
             const repNameElement=wrapper.find('.name-confirmation')
-            expect(repNameElement.text()).toBe("I Representative Name do hereby confirm that I have reviewed these issues."); 
+            expect(repNameElement.text()).toBe(repName); 
          });
 
       });
