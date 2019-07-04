@@ -1,6 +1,7 @@
 import { IMeetingModel, IUnreviewedMeetingModel, IMeetingSignOffModel } from "../../Domain/Meeting";
 import { GatewayResponse, IGatewayResponse } from "../../Boundary/GatewayResponse";
 import JWTGateway from "../JWTGateway";
+import getEnvVariable from "../../Utilities/environmentVariables";
 
 export interface IGetMeetingResponse extends IGatewayResponse {
   meeting?: IMeetingModel;
@@ -122,7 +123,7 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   private buildHeaders(token: string) {
-    const xApiKey = process.env.REACT_APP_X_API_KEY || "";
+    const xApiKey = getEnvVariable("X_API_KEY");
 
     return {
       "Authorization": `Bearer ${token}`,

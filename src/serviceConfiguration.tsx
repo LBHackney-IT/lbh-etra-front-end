@@ -15,8 +15,9 @@ import { ISignOffMeetingUseCase } from "./Boundary/SignOffMeeting";
 import { SignOffMeetingUseCase } from "./UseCases/SignOffMeeting";
 import { IGetMeetingUseCase } from "./Boundary/GetMeeting";
 import { GetMeetingUseCase } from "./UseCases/GetMeeting";
+import getEnvVariable from "./Utilities/environmentVariables";
 
-const apiBaseUrl: string = process.env.REACT_APP_API_BASE_URL || "";
+const apiBaseUrl: string = getEnvVariable("API_BASE_URL");
 
 export default function configureServices(container: IServiceContainer) {
     //Gateways

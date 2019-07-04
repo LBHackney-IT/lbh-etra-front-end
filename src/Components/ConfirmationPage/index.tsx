@@ -2,6 +2,7 @@ import React from 'react';
 import { IIssue } from '../../Domain/Issues';
 import './index.css';
 import { ISignOff } from '../../Domain/SignOff';
+import getEnvVariable from '../../Utilities/environmentVariables';
 
 export interface IConfirmationProps {
   signOff: ISignOff,
@@ -19,7 +20,7 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
   public constructor(props: IConfirmationProps) {
     super(props);
     
-    this.workTrayUrl = process.env.REACT_APP_WORK_TRAY_URL || "";
+    this.workTrayUrl = getEnvVariable("WORK_TRAY_URL");
 
     this.state = { 
       issues: this.jsonIssueResponse,
