@@ -17,6 +17,7 @@ export interface IReviewMeetingProps {
     onSaveComplete: () => void
     attendees:IAttendees,
     signOffMode: boolean;
+    signOff:ISignOff
 }
 
 export interface IReviewMeetingState {
@@ -49,7 +50,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         super(props);
         this.state = {
             pageState: ReviewMeetingDisplayState.Ready,
-            signOff: new SignOff("", "", roles[0].name),
+            signOff: this.props.signOff,
             readOnly:false,
         }
     }
@@ -57,7 +58,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     public static defaultProps = {
         issues: Array<IIssue>(),
         attendees: {},
-        signOffMode: false
+        signOffMode: false,
+        signOff: new SignOff("", "", roles[0].name)
     };
 
     private updateSignatureString = (value: string) : void => {
@@ -92,8 +94,6 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         this.setState({readOnly:readOnly})
     }
 
-    
-
     render() {
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
           return (<Confirmation signOff={this.state.signOff} />);
@@ -114,6 +114,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
             </div>
         )
     }
+   
     conditionalRender(signOffMode: any, notSignOffMode: any){
         return (<>{this.props.signOffMode ? signOffMode : notSignOffMode}</>);
     }
