@@ -8,7 +8,11 @@ import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
 import { ITraInfo } from '../../Boundary/TRAInfo';
-import { IMeetingModel } from '../../Domain/Meeting';
+import { IMeetingModel, MeetingModel } from '../../Domain/Meeting';
+import queryString from 'query-string';
+import { ServiceContext, IServiceProvider } from '../../ServiceContext';
+import { IGetMeetingUseCase } from '../../Boundary/GetMeeting';
+import { SignOff } from '../../Domain/SignOff';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
@@ -20,56 +24,95 @@ export interface IMeetingProps {
 }
 
 export interface IMeetingState {
-  meetingCreated: boolean,
-  issues: Array<IIssue>,
-  attendees: IAttendees,
-  signOffMode: boolean
+  shouldDisplay: boolean,
+  detailsEditable: boolean,
+  signOffIncomplete: boolean,
+  errorMessage: string,
+  signOffMode: boolean,
+  meeting: IMeetingModel,
 }
 
 const emptyState : IMeetingState = {
-  meetingCreated: false,
-  issues: [],
-  attendees:
-  {
-    Councillors: "",
-    HackneyStaff: "",
-    NumberOfAttendees: 0,
-  },
-  signOffMode: false
+  shouldDisplay: false,
+  detailsEditable: false,
+  signOffIncomplete: false,
+  errorMessage: "",
+  signOffMode: false,
+  meeting: {
+    id: "",
+    traId: -1,
+    meetingName: "",
+    issues: [],
+    meetingAttendance:
+    {
+      Councillors: "",
+      HackneyStaff: "",
+      NumberOfAttendees: 0
+    },
+    signOff: 
+    {
+      name: "",
+      signature: "",
+      role: ""
+    },
+    isSignedOff: false,
+  }
 }
 
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
-  private readonly selectedTra: ITraInfo | undefined;
-  private readonly meetingId: string | undefined;
-  private readonly meetingName: string;
+  public static contextType = ServiceContext;
+  private readonly getMeeting: IGetMeetingUseCase;
 
-  public constructor(props: IMeetingProps) {
+  public constructor(props: IMeetingProps, context: IServiceProvider) {
     super(props);
 
-    this.meetingName = "";
+    this.getMeeting = context.get<IGetMeetingUseCase>("IGetMeetingUseCase");
 
-    if(!this.props.location || !this.props.location.state || !this.props.location.state.selectedTra){
+    this.state = emptyState;
+  }
+
+  async componentDidMount(){
+    if(!this.props.location){
+      this.setState({errorMessage: "An error occurred."})
       return;
     }
 
-    this.selectedTra = this.props.location.state.selectedTra;
+    let loadExistingMeeting : boolean = false;
+    if(this.props.location.search){
+      const queries = queryString.parse(this.props.location.search, {parseBooleans: true});
+      loadExistingMeeting = queries.existingMeeting as boolean;
+    }
+
+    if(!loadExistingMeeting){
+      this.handleNewMeeting();
+      return;
+    }
+
+    const existingMeeting = await this.getMeeting.Execute();
+    if(existingMeeting){
+      const signOffEditable = !existingMeeting.isSignedOff;
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: true})
+      return;
+    }
+
+    this.setState({errorMessage: "Meeting could not be loaded."});
+  }
+
+  private handleNewMeeting(){
+    if(!this.props.location.state || !this.props.location.state.selectedTra){
+      this.setState({errorMessage: "No TRA was selected."})
+      return;
+    }
 
     const existingMeeting = this.props.location.state.meeting;
-
     if(existingMeeting){
-      this.meetingId = existingMeeting.id;
-      this.meetingName = existingMeeting.meetingName;
-      this.state = {
-        meetingCreated: false,
-        issues: existingMeeting.issues,
-        attendees: existingMeeting.meetingAttendance,
-        signOffMode:false
-      }
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: true})
+      return;
     }
-    else {
-      this.meetingName = this.buildMeetingName(this.selectedTra.tra.name, new Date());
-      this.state = emptyState;
-    }
+    
+    let meeting = this.state.meeting;
+    meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());
+    this.setState({shouldDisplay: true, signOffIncomplete: true, detailsEditable: true});
   }
 
   buildMeetingName = (traName: string, date: Date): string => {
@@ -77,37 +120,45 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   onSaveComplete = (): void => {
-    this.setState({ meetingCreated: true })
+    this.setState({ detailsEditable: false })
   }
 
   onChangeAttendees = (newAttendees: IAttendees): void => {
-    this.setState({attendees:newAttendees})
+    let meeting = this.state.meeting;
+    meeting.meetingAttendance = newAttendees;
+    this.setState({meeting:meeting})
   }
 
   onChangeIssues = (newIssues: Array<IIssue>): void => {
-    this.setState({issues: newIssues})
+    let meeting = this.state.meeting;
+    meeting.issues = newIssues;
+    this.setState({meeting:meeting})
   }
 
   render() {
-    if(!this.selectedTra){
-      return this.renderErrorScreen();
+    if(!this.state.shouldDisplay){
+      return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
+    const meeting = this.state.meeting;
+    const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
     return (
       <div>
         {this.renderBackArrow()}
-        <h1 className="tra-name-etra-meet">{this.meetingName}</h1>
-        <Attendees attendees={this.state.attendees} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.meetingCreated}/>
+        <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
+        <Attendees attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordIssues blocks={this.selectedTra.tra.blocks} readOnly={this.state.meetingCreated} onChangeIssues={this.onChangeIssues} issues={this.state.issues}/>
+          <RecordIssues blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewMeeting
-          traId={this.selectedTra.tra.id}
-          meetingId={this.meetingId}
-          meetingName={this.meetingName}
-          attendees={this.state.attendees}
-          issues={this.state.issues}
+          isComplete={!this.state.signOffIncomplete}
+          traId={selectedTra && selectedTra.id}
+          meetingId={meeting.id}
+          meetingName={meeting.meetingName}
+          attendees={meeting.meetingAttendance}
+          issues={meeting.issues}
           onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
         />
       </div>);
@@ -129,7 +180,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       <div>
         {this.renderBackArrow()}
         <div className="no-meeting-selected">
-          <p>You do not have a meeting in progress.</p>
+          <p>{this.state.errorMessage}</p>
           <p>
             Please return to the &nbsp;
             <Link to="">landing page.</Link>
@@ -138,6 +189,14 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       </div>
     );
   };
+
+  private renderSpinner() {
+    return (
+      <div className="spinner-wrapper">
+       <div className="loading-spinner"><div></div><div></div><div></div></div>
+      </div>
+    );
+  }
 }
 
 export default Meeting;

@@ -20,7 +20,7 @@ interface IRecordIssueState {
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
     private _issueFactory:IssueFactory;
-    private readonly blockInfo: IBlockInfo[];
+    private readonly blockInfo: IBlockInfo[] = [];
 
     constructor(props: IRecordIssueProps) {
         super(props);
@@ -31,6 +31,8 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
 
         this._issueFactory = new IssueFactory();
 
+
+        if(this.props.readOnly) { return; }
         this.blockInfo = this.props.blocks.map((block) => {
             return {id: uuid(), block: block};
         });

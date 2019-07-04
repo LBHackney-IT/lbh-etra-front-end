@@ -5,5 +5,5 @@ import { SignOff } from '../../Domain/SignOff';
 
 storiesOf('Confirmation', module)
   .add("opens correctly", () => (
-    <Confirmation signOff={new SignOff("", "Rep Name", "Rep Role")} />
+    <Confirmation reviewedLater={false} signOff={new SignOff("", "Rep Name", "Rep Role")} />
   ));

@@ -5,6 +5,7 @@ import SaveMeeting from '.';
 storiesOf('Save Meeting', module)
   .add("opens correctly", () => (
     <SaveMeeting
+      signOffMode={false}
       traId={1}
       meetingName="Test Meeting"
       signOff={{signature: "", name: "", role: ""}}

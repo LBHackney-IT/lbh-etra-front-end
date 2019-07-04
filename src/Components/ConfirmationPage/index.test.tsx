@@ -18,7 +18,7 @@ describe('Given that start a new meeting', () => {
     describe('When we go to save the meeting', () => {
 
 
-        const wrapper = shallow(<Confirmation signOff={new SignOff("", repName, repRole)}/>);
+        const wrapper = shallow(<Confirmation signOff={new SignOff("asfdsfdfs", repName, repRole)} reviewedLater={false}/>);
 
          it('Then the "Signature of TRA representative" header is shown', () => {
             const divSignatureHeader=wrapper.find('.signature-header')
@@ -39,7 +39,7 @@ describe('Given that start a new meeting', () => {
          });
          it('Then the "TRA Role" is displayed', () => {
             const repNameElement=wrapper.find('.name-confirmation')
-            expect(repNameElement.text()).toBe("I Representative Name do hereby confirm that I have reviewed these issues."); 
+            expect(repNameElement.text()).toBe(repName); 
          });
 
       });
