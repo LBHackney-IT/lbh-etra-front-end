@@ -67,7 +67,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     );
   }
   getMettingModelWithSignatureTrimmed = (): IMeetingModel => {
-    const signOffUpdate:ISignOff = {
+    const trimmedSignatureSignoff:ISignOff = {
       signature:this.props.signOff.signature.slice(22) ,
       name: this.props.signOff.name,
       role: this.props.signOff.role
@@ -77,7 +77,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.meetingName,
       this.props.issues, 
       this.props.attendees, 
-      signOffUpdate,
+      trimmedSignatureSignoff,
       this.props.meetingId, 
     )
   }
