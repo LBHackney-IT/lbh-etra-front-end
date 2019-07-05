@@ -42,37 +42,22 @@ export default class TokenLoader extends Component<TokenLoaderProps, TokenLoader
       return;
     }
 
-    if(!this.props.location.search){
+    if(!this.props.location.hash){
       this.setState({forwardUrl: this.props.location.pathname});
       return;
     }
   
-    const queries = queryString.parse(this.props.location.search);
+    const tokens = queryString.parse(this.props.location.hash);
 
-    if(queries.meetingtoken){
-      this.saveMeetingToken.Execute(queries.meetingtoken as string);
-      delete queries.meetingtoken;
+    if(tokens.officerToken){
+      this.saveMeetingToken.Execute(tokens.officerToken as string);
     }
-    else if(queries.token){
-      this.saveSignOffToken.Execute(queries.token as string);
-      delete queries.token;
-    }
-
-    this.setState({forwardUrl: this.buildForwardUrl(queries)});
-  }
-
-  buildForwardUrl(queries: ParsedQuery<string>) : string {
-    const keys = Object.keys(queries);
-    let query = "?";
-    for(let i = 0; i < keys.length; i++){
-      query += `${keys[i]}=${queries[keys[i]]}`;
-
-      if(i !== keys.length-1){
-        query += "&";
-      }
+    
+    if(tokens.traToken){
+      this.saveSignOffToken.Execute(tokens.traToken as string);
     }
 
-    return `${this.props.location.pathname}${query}`;
+    this.setState({forwardUrl: `${this.props.location.pathname}${this.props.location.search}`});
   }
 
   render() {
