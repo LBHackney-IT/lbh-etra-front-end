@@ -127,7 +127,8 @@ export default class MeetingGateway implements IMeetingGateway {
 
     return {
       "Authorization": `Bearer ${token}`,
-      "x-api-key": `${xApiKey}`
+      "x-api-key": `${xApiKey}`,
+      "content-type": "application/json"
     };
   }
 }
