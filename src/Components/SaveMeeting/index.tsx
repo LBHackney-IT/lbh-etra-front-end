@@ -66,6 +66,21 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.meetingId, 
     );
   }
+  getMettingModelWithSignatureTrimmed = (): IMeetingModel => {
+    const trimmedSignatureSignoff:ISignOff = {
+      signature:this.props.signOff.signature.slice(22) ,
+      name: this.props.signOff.name,
+      role: this.props.signOff.role
+    }
+    return new MeetingModel(
+      this.props.traId,
+      this.props.meetingName,
+      this.props.issues, 
+      this.props.attendees, 
+      trimmedSignatureSignoff,
+      this.props.meetingId, 
+    )
+  }
 
   getUnreviewedMeetingModel = () : IUnreviewedMeetingModel => {
     return new UnreviewedMeetingModel(
@@ -75,7 +90,6 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.attendees
     );
   }
-
   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
@@ -90,11 +104,12 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting = async () => { 
     this.setState({ isAttemptingToSave: true });
-    const successful = await this.createMeeting.Execute(this.getMeetingModel());
+    const successful = await this.createMeeting.Execute(this.getMettingModelWithSignatureTrimmed());
 
     if (successful) {
       this.props.onReviewNow();
     }
+
     else {
       this.setState({ isAttemptingToSave: false });
     }
@@ -136,7 +151,6 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
         </button>
       )
     }
-
 
     return (
       <div>
