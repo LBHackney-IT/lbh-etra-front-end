@@ -17,13 +17,13 @@ export interface TokenLoaderState {
 
 export default class TokenLoader extends Component<TokenLoaderProps, TokenLoaderState> {
   public static contextType = ServiceContext;
-  private readonly saveMeetingToken: ISaveMeetingJWTUseCase;
-  private readonly saveSignOffToken: ISaveSignOffJWTUsecase;
+  private readonly saveOfficerToken: ISaveMeetingJWTUseCase;
+  private readonly saveTraToken: ISaveSignOffJWTUsecase;
 
   public constructor(props: TokenLoaderProps, context: IServiceProvider) {
     super(props, context);
-    this.saveMeetingToken = context.get<ISaveMeetingJWTUseCase>("ISaveMeetingJWTUseCase");
-    this.saveSignOffToken = context.get<ISaveSignOffJWTUsecase>("ISaveSignOffJWTUsecase");
+    this.saveOfficerToken = context.get<ISaveMeetingJWTUseCase>("ISaveMeetingJWTUseCase");
+    this.saveTraToken = context.get<ISaveSignOffJWTUsecase>("ISaveSignOffJWTUsecase");
 
     this.state = {
       tokensLoaded: false,
@@ -50,11 +50,11 @@ export default class TokenLoader extends Component<TokenLoaderProps, TokenLoader
     const tokens = queryString.parse(this.props.location.hash);
 
     if(tokens.officerToken){
-      this.saveMeetingToken.Execute(tokens.officerToken as string);
+      this.saveOfficerToken.Execute(tokens.officerToken as string);
     }
     
     if(tokens.traToken){
-      this.saveSignOffToken.Execute(tokens.traToken as string);
+      this.saveTraToken.Execute(tokens.traToken as string);
     }
 
     this.setState({forwardUrl: `${this.props.location.pathname}${this.props.location.search}`});
