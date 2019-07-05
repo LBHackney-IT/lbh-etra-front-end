@@ -12,12 +12,12 @@
 make serve
 ```
 
-### Routes and query strings
+### Routes, query strings and url fragments
 
 #### Token Loader
-The default route is a token loader that intercepts JWT tokens included as query strings in the url and saves them, before forwarding you on to your original destination. These query strings will be picked up no matter which route you attempt to go to, for example:
+The default route is a token loader that intercepts JWT tokens included as url fragments and saves them, before forwarding you on to your original destination. These query strings will be picked up no matter which route you attempt to go to, for example:
 
-`http://localhost:3000?token=token&meetingtoken=meetingtoken`
+`http://localhost:3000#officerToken={officerToken}&traToken={traToken}`
 
 #### Landing Page ([http://localhost:3000/](http://localhost:3000/))
 The landing page allows you to start a new meeting or select saved drafts for editing, and is what will be displayed when you go to the base url of the application. You can also add the query string `traId` to the base url to bypass the landing screen and immediately begin a new meeting, for example:
