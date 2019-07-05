@@ -36,6 +36,18 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         }
 
         this.setState({attendees});
+        this.props.onChangeAttendees(attendees); 
+    }
+
+    onChangeNumber = (event: ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name;
+        const value = parseInt(event.currentTarget.value);
+        const attendees = {
+            ...this.state.attendees,
+            [name]: value
+        }
+
+        this.setState({attendees});
         this.props.onChangeAttendees(attendees);
     }
 
@@ -101,7 +113,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
                 className="input-box narrow-box" 
                 type="number" name="NumberOfAttendees" 
                 id="number-of-attendees"
-                onChange={this.onChangeForm} 
+                onChange={this.onChangeNumber} 
                 value={this.state.attendees.NumberOfAttendees} />
         )
     }
