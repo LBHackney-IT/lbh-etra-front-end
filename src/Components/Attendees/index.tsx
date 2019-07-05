@@ -32,7 +32,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         const value = event.target.value;
         const attendees = {
             ...this.state.attendees,
-            [name]: [value]
+            [name]: value
         }
 
         this.setState({attendees});
