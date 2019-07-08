@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { ServiceContext, IServiceProvider } from "./ServiceContext";
 import { Location } from 'history';
-import queryString, { ParsedQuery } from "query-string"
+import queryString from "query-string"
 import { ISaveMeetingJWTUseCase } from "./Boundary/SaveMeetingJWTLocally";
 import { ISaveSignOffJWTUsecase } from "./Boundary/SaveSignOffJWTLocally";
 
