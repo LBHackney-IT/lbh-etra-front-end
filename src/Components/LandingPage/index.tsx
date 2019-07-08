@@ -161,7 +161,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     private renderDraft(meeting: IMeetingModel){
-        if (meeting.traId== undefined){return;}
+        if (meeting.traId === undefined){return;}
         const tra = this.findSelectedTra(meeting.traId.toString());
         if(tra === undefined){return;}
 

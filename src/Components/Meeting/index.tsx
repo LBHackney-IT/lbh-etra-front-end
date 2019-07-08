@@ -8,11 +8,10 @@ import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../Domain/Attendees';
 import { ITraInfo } from '../../Boundary/TRAInfo';
-import { IMeetingModel, MeetingModel } from '../../Domain/Meeting';
+import { IMeetingModel } from '../../Domain/Meeting';
 import queryString from 'query-string';
 import { ServiceContext, IServiceProvider } from '../../ServiceContext';
 import { IGetMeetingUseCase } from '../../Boundary/GetMeeting';
-import { SignOff } from '../../Domain/SignOff';
 
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
