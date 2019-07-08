@@ -33,7 +33,7 @@ export function mockAttendees(): IAttendees {
     return {
         Councillors: listOfNames(),
         HackneyStaff: listOfNames(),
-        NumberOfAttendees: faker.random.number()
+        Attendees: faker.random.number()
     }
 }
 

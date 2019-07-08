@@ -11,7 +11,7 @@ configure({ adapter: new Adapter() });
 const defaultAttendees : IAttendees = {
    Councillors: "",
    HackneyStaff: "",
-   NumberOfAttendees: 0
+   Attendees: 0
 }
 
 it('Attendees component loads', () => {

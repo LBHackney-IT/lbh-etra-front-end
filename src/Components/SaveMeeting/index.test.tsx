@@ -17,7 +17,7 @@ function mockAttendees() : IAttendees {
     return {
         Councillors: "Jim, Bob, Steve",
         HackneyStaff: "Fleb",
-        NumberOfAttendees: 10
+        Attendees: 10
     }
 }
 
@@ -67,7 +67,7 @@ describe('When we render the "Save Meeting component"', ()  => {
 describe('When we render the "Save Meeting component"', () => {
     describe('with zero attendees in form', () => {
         let attendees = mockAttendees();
-        attendees.NumberOfAttendees = 0;
+        attendees.Attendees = 0;
         const wrapper = mount(
             <ServiceProvider value={mockServiceProvider}>
                 <SaveMeeting

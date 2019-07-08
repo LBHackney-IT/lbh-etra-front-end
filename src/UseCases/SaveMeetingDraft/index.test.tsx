@@ -26,7 +26,7 @@ function mockAttendees() : IAttendees {
   return {
       Councillors: "Jim, Bob, Steve",
       HackneyStaff: "Fleb",
-      NumberOfAttendees: 10
+      Attendees: 10
   }
 }
 
