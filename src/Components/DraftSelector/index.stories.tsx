@@ -13,7 +13,7 @@ const mockMeeting : IMeetingModel = {
   meetingAttendance: {
     Councillors: "",
     HackneyStaff: "",
-    NumberOfAttendees: 0
+    Attendees: 0
   },
   signOff: {
     signature: "",

@@ -77,7 +77,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
                 <div data-test="hackney-council-staff-label" className="input-label">Hackney Council Staff</div>
                 {this.conditionalRender(this.renderText(this.state.attendees.HackneyStaff, "staff-text"), this.renderHackneyStaff())}
                 <div data-test="number-of-attendees-label" className="input-label">Number of attendees</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.NumberOfAttendees.toString(), 'number-of-attendees-text'), this.renderNumberOfAttendees())}
+                {this.conditionalRender(this.renderText(this.state.attendees.Attendees.toString(), 'number-of-attendees-text'), this.renderAttendees())}
             </ div>
         );
     }
@@ -106,15 +106,15 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         )
     }
 
-    renderNumberOfAttendees() {
+    renderAttendees() {
         return (
             <input 
                 data-test="number-of-attendees-input" 
                 className="input-box narrow-box" 
-                type="number" name="NumberOfAttendees" 
+                type="number" name="Attendees" 
                 id="number-of-attendees"
                 onChange={this.onChangeNumber} 
-                value={this.state.attendees.NumberOfAttendees} />
+                value={this.state.attendees.Attendees} />
         )
     }
 

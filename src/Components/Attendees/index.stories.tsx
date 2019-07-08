@@ -5,7 +5,7 @@ import Attendees from './index';
 const attendees = {
   Councillors: "Councillor 1, Councillor 2, Councillor 3", 
   HackneyStaff: "Staff Member 1", 
-  NumberOfAttendees: 4}
+  Attendees: 4}
 
 storiesOf('Attendees', module)
   .add("opens correctly in editable mode", () => (
