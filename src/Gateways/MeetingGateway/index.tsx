@@ -66,13 +66,13 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async saveMeetingData(data: IMeetingModel | IUnreviewedMeetingModel): Promise<IGatewayResponse> {
-    const saveToken = await this.jwtGateway.getMeetingToken();
+    const officerToken = await this.jwtGateway.getOfficerToken();
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "post",
-        headers: this.buildHeaders(saveToken),
+        headers: this.buildHeaders(officerToken),
         body: JSON.stringify(data)
       }
     ).then((response) => {
@@ -83,13 +83,13 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async signOffMeeting(data: IMeetingSignOffModel): Promise<IGatewayResponse> {
-    const signOffToken = await this.jwtGateway.getSignoffToken();
+    const traToken = await this.jwtGateway.getTraToken();
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "patch",
-        headers: this.buildHeaders(signOffToken),
+        headers: this.buildHeaders(traToken),
         body: JSON.stringify(data)
       }
     )
@@ -101,14 +101,14 @@ export default class MeetingGateway implements IMeetingGateway {
   }
 
   public async getMeetingData() : Promise<IGetMeetingResponse> {
-    const getMeetingToken = await this.jwtGateway.getSignoffToken();
+    const traToken = await this.jwtGateway.getTraToken();
     let thisResponse: Response;
 
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
         method: "get",
-        headers: this.buildHeaders(getMeetingToken)
+        headers: this.buildHeaders(traToken)
       }
     )
     .then((response) => {

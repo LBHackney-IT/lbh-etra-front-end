@@ -3,8 +3,8 @@ import { Redirect } from "react-router-dom";
 import { ServiceContext, IServiceProvider } from "./ServiceContext";
 import { Location } from 'history';
 import queryString from "query-string"
-import { ISaveMeetingJWTUseCase } from "./Boundary/SaveMeetingJWTLocally";
-import { ISaveSignOffJWTUsecase } from "./Boundary/SaveSignOffJWTLocally";
+import { ISaveOfficerTokenUseCase } from "./Boundary/SaveOfficerTokenLocally";
+import { ISaveTraTokenUsecase } from "./Boundary/SaveTraTokenLocally";
 
 export interface TokenLoaderProps {
   location: Location
@@ -17,13 +17,13 @@ export interface TokenLoaderState {
 
 export default class TokenLoader extends Component<TokenLoaderProps, TokenLoaderState> {
   public static contextType = ServiceContext;
-  private readonly saveOfficerToken: ISaveMeetingJWTUseCase;
-  private readonly saveTraToken: ISaveSignOffJWTUsecase;
+  private readonly saveOfficerToken: ISaveOfficerTokenUseCase;
+  private readonly saveTraToken: ISaveTraTokenUsecase;
 
   public constructor(props: TokenLoaderProps, context: IServiceProvider) {
     super(props, context);
-    this.saveOfficerToken = context.get<ISaveMeetingJWTUseCase>("ISaveMeetingJWTUseCase");
-    this.saveTraToken = context.get<ISaveSignOffJWTUsecase>("ISaveSignOffJWTUsecase");
+    this.saveOfficerToken = context.get<ISaveOfficerTokenUseCase>("ISaveOfficerTokenUseCase");
+    this.saveTraToken = context.get<ISaveTraTokenUsecase>("ISaveTraTokenUsecase");
 
     this.state = {
       tokensLoaded: false,

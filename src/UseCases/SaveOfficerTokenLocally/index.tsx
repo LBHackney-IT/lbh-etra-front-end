@@ -1,7 +1,7 @@
 import { IJWTGateway } from "../../Gateways/JWTGateway";
-import{ISaveMeetingJWTUseCase} from "../../Boundary/SaveMeetingJWTLocally"
+import{ISaveOfficerTokenUseCase} from "../../Boundary/SaveOfficerTokenLocally"
 
-export class SaveMeetingJWTUseCase implements ISaveMeetingJWTUseCase{
+export class SaveOfficerTokenUseCase implements ISaveOfficerTokenUseCase{
 
   private readonly gateway:IJWTGateway;
 
@@ -11,7 +11,7 @@ export class SaveMeetingJWTUseCase implements ISaveMeetingJWTUseCase{
 
   public Execute(input:string){
 
-    this.gateway.saveMeetingToken(input)
+    this.gateway.saveOfficerToken(input)
 
     return true
   }
