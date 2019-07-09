@@ -1,7 +1,7 @@
 import { IJWTGateway } from "../../Gateways/JWTGateway";
-import{ISaveSignOffJWTUsecase} from "../../Boundary/SaveSignOffJWTLocally"
+import{ISaveTraTokenUsecase} from "../../Boundary/SaveTraTokenLocally"
 
-export class SaveSignOffJWTUsecase implements ISaveSignOffJWTUsecase{
+export class SaveTraTokenUsecase implements ISaveTraTokenUsecase{
   private readonly gateway:IJWTGateway;
 
   constructor(gateway:IJWTGateway){
@@ -9,7 +9,7 @@ export class SaveSignOffJWTUsecase implements ISaveSignOffJWTUsecase{
   }
 
   public Execute(input:string){
-    this.gateway.saveSignoffToken(input)
+    this.gateway.saveTraToken(input)
 
     return true
   }

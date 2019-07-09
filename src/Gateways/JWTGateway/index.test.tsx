@@ -13,11 +13,11 @@ it("can save JWT token for meeting", async () => {
   const testData :string = "encodedJWTTokenString";
 
 
-  await gateway.saveMeetingToken(testData);
+  await gateway.saveOfficerToken(testData);
 
   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
-  expect(localStorage.setItem).toHaveBeenLastCalledWith("MeetingToken", testData);
-  expect((localStorage.__STORE__["MeetingToken"])).toEqual(testData);
+  expect(localStorage.setItem).toHaveBeenLastCalledWith("OfficerToken", testData);
+  expect((localStorage.__STORE__["OfficerToken"])).toEqual(testData);
 });
 
 it("can save JWT token for signOff", async () => {
@@ -25,9 +25,9 @@ it("can save JWT token for signOff", async () => {
 
   const testData :string = "encodedJWTTokenString";
 
-  await gateway.saveSignoffToken(testData);
+  await gateway.saveTraToken(testData);
 
   expect(Object.keys(localStorage.__STORE__).length).toBe(1);
-  expect(localStorage.setItem).toHaveBeenLastCalledWith("SignOffToken", testData);
-  expect((localStorage.__STORE__["SignOffToken"])).toEqual(testData);
+  expect(localStorage.setItem).toHaveBeenLastCalledWith("TraToken", testData);
+  expect((localStorage.__STORE__["TraToken"])).toEqual(testData);
 });
