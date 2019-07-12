@@ -73,13 +73,13 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     }
 
     private updateRole = (event: FormEvent<HTMLInputElement>) : void => {
-        let signOff = this.state.signOff;
+        let signOff = this.state.signOff || {signature: ""};
         signOff.role = event.currentTarget.value;
         this.setState({ signOff: signOff });
     }
 
     private updateRepName = (value:string) : void => {
-        let signOff = this.state.signOff;
+        let signOff = this.state.signOff || {signature: ""};
         signOff.name = value;
         this.setState({ signOff:signOff });
     }
