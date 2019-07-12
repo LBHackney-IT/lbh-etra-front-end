@@ -44,9 +44,9 @@ const emptyState : IMeetingState = {
     issues: [],
     meetingAttendance:
     {
-      Councillors: "",
-      HackneyStaff: "",
-      Attendees: 0
+      councillors: "",
+      hackneyStaff: "",
+      attendees: 0
     },
     signOff: 
     {
@@ -89,6 +89,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
+      console.log(existingMeeting);
       const signOffEditable = !existingMeeting.isSignedOff;
       this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: true})
       return;

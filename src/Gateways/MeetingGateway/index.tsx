@@ -113,10 +113,10 @@ export default class MeetingGateway implements IMeetingGateway {
     )
     .then((response) => {
       thisResponse = response;
-      return response.json() as Promise<{ data: IMeetingModel }>
+      return response.json() as Promise<IMeetingModel>
     })
     .then((data) => {
-      return new GetMeetingResponse(thisResponse.ok, thisResponse.statusText, data.data);
+      return new GetMeetingResponse(thisResponse.ok, thisResponse.statusText, data);
     }).catch((error : Error) => {
       return new GetMeetingResponse(false, error.message);
     });

@@ -44,7 +44,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     const value = event.target.value;
 
     let issue = this.state.issue;
-    issue.Notes = value;
+    issue.notes = value;
     this.setState({ issue: issue });
 
     this.props.onChangeIssue(issue, this.props.index);
@@ -52,12 +52,12 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   handleChangeOfIssueTypeDropDownList = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     const issueId = event.target.value;
-    let issueType = this.state.issueTypes.find((issueType) => issueId === issueType.IssueId);
+    let issueType = this.state.issueTypes.find((issueType) => issueId === issueType.issueId);
 
     if(issueType === undefined){ return; }
 
     let issue = this.state.issue;
-    issue.IssueType = issueType;
+    issue.issueType = issueType;
     this.setState({ issue: issue });
 
     this.props.onChangeIssue(issue, this.props.index);
@@ -70,7 +70,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     if(blockInfo === undefined){ return; }
 
     let issue = this.state.issue;
-    issue.Location = blockInfo.block;
+    issue.location = blockInfo.block;
     this.setState({ issue: issue, selectedBlockId: blockKey });
 
     this.props.onChangeIssue(issue, this.props.index);
@@ -78,7 +78,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderIssueType(issueType: IIssueType, index: number) {
     return (
-      <option key={index} value={issueType.IssueId}>{issueType.IssueType}</option>
+      <option key={index} value={issueType.issueId}>{issueType.issueType}</option>
     );
   }
 
@@ -104,7 +104,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
 
   renderNotReadOnlyIssueType() {
     return (
-      <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="IssueType" value={this.state.issue.IssueType.IssueId}>
+      <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="issueType" value={this.state.issue.issueType.issueId}>
         {this.renderFirstOption("Select Issue Type")}
         {this._issueTypes.map(this.renderIssueType)}
       </select>
@@ -121,7 +121,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   renderNotReadOnlyNotes() {
-    return (<textarea className="note-input-box" data-test="notes" id="issue-note" value={this.state.issue.Notes} onChange={this.handleChangeOfIssueNote} name="notes" />);
+    return (<textarea className="note-input-box" data-test="notes" id="issue-note" value={this.state.issue.notes} onChange={this.handleChangeOfIssueNote} name="notes" />);
   }
 
   renderDeleteIssueButton() {
@@ -144,19 +144,19 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
         <div className="issue">
           <label data-test="issue-label" className="label">Issue type</label>
           <br />
-          {this.conditionalRender(this.renderReadOnly(this.state.issue.IssueType.IssueType, "issue-type-text"), this.renderNotReadOnlyIssueType())}
+          {this.conditionalRender(this.renderReadOnly(this.state.issue.issueType.issueType, "issue-type-text"), this.renderNotReadOnlyIssueType())}
         </div>
 
         <div className="issue">
           <label data-test="location-label" className="label">Location of issue</label>
           <br />
-          {this.conditionalRender(this.renderReadOnly(this.state.issue.Location.name, "location-text"), this.renderNotReadOnlyLocation())}
+          {this.conditionalRender(this.renderReadOnly(this.state.issue.location.name, "location-text"), this.renderNotReadOnlyLocation())}
         </div>
 
         <div className="issue">
           <label data-text="notes-label" className="label">Notes about issue</label>
           <br />
-          {this.conditionalRender(this.renderReadOnly(this.state.issue.Notes, "notes-text"), this.renderNotReadOnlyNotes())}
+          {this.conditionalRender(this.renderReadOnly(this.state.issue.notes, "notes-text"), this.renderNotReadOnlyNotes())}
         </div>
 
         {!this.props.readOnly && this.renderDeleteIssueButton()}

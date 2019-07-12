@@ -9,8 +9,8 @@ describe('When we go to create an issue', () => {
     });
 
     it('Then the issue id is not null, nan oe undefined', () => {
-        expect(issue.Id).not.toBeNull();
-        expect(issue.Id).not.toBeUndefined();
-        expect(issue.Id).not.toBeNaN();
+        expect(issue.id).not.toBeNull();
+        expect(issue.id).not.toBeUndefined();
+        expect(issue.id).not.toBeNaN();
     });
 });

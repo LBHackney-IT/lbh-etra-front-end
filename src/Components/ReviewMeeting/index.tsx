@@ -106,7 +106,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
 
         return this.renderReview();
     }
-    renderSigniture(){
+    renderSignature(){
         return(
             <div className="signature-wrapper">
             <div className="signature-of-TRA-rep">Signature of TRA representative</div>
@@ -122,7 +122,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     private renderReview() {
         return (
             <div>
-                {this.conditionalRender(<></>, this.renderSigniture())}
+                {this.conditionalRender(<></>, this.renderSignature())}
                 <div className="rep-name">
                     <RepName onUpdated={this.updateRepName}></RepName>
                 </div>
@@ -151,7 +151,7 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                     name="tra-role" 
                     value={role.name} 
                     onChange={this.updateRole} 
-                    checked={this.state.signOff.role === role.name}/>
+                    checked={this.state.signOff && this.state.signOff.role === role.name}/>
                 <div className="radio-unselected">
                     <div className="radio-selected"></div>
                 </div>

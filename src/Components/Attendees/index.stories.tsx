@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import Attendees from './index';
 
 const attendees = {
-  Councillors: "Councillor 1, Councillor 2, Councillor 3", 
-  HackneyStaff: "Staff Member 1", 
-  Attendees: 4}
+  councillors: "Councillor 1, Councillor 2, Councillor 3",
+  hackneyStaff: "Staff Member 1",
+  attendees: 4}
 
 storiesOf('Attendees', module)
   .add("opens correctly in editable mode", () => (

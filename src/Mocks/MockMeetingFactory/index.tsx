@@ -17,23 +17,23 @@ export function mockIssues(amount?: number): Array<IIssue> {
 
 export function mockIssue(): IIssue {
     return {
-        "Id": faker.random.uuid(),
-        "IssueType": {
-            "IssueId": faker.random.alphaNumeric(),
-            "IssueType": faker.random.words()
+        "id": faker.random.uuid(),
+        "issueType": {
+            "issueId": faker.random.alphaNumeric(),
+            "issueType": faker.random.words()
         },
-        "Location": {
+        "location": {
             "name": faker.address.streetAddress(),
         },
-        "Notes": faker.random.words(30)
+        "notes": faker.random.words(30)
     }
 }
 
 export function mockAttendees(): IAttendees {
     return {
-        Councillors: listOfNames(),
-        HackneyStaff: listOfNames(),
-        Attendees: faker.random.number()
+        councillors: listOfNames(),
+        hackneyStaff: listOfNames(),
+        attendees: faker.random.number()
     }
 }
 

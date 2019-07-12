@@ -24,27 +24,27 @@ describe("SaveMeetingDraftUseCase", () => {
 
 function mockAttendees() : IAttendees {
   return {
-      Councillors: "Jim, Bob, Steve",
-      HackneyStaff: "Fleb",
-      Attendees: 10
+      councillors: "Jim, Bob, Steve",
+      hackneyStaff: "Fleb",
+      attendees: 10
   }
 }
 
 const issues: Array<IIssue> = Array(
   { 
-    "Id": "", 
-    "IssueType": {
-      "IssueId": "100000222",
-      "IssueType": "Bushes and trees"
+    "id": "", 
+    "issueType": {
+      "issueId": "100000222",
+      "issueType": "Bushes and trees"
     },
-    "Location":{
+    "location":{
       "blockId": "00075265",
       "estateId":"",
       "key":"59a3f619-d2a5-442d-af79-6e07f6b03e7d",
       "locationType": 1,
       "name":"De Beauvoir Estate  1-56 Corbiere House",
     },
-    "Notes":"f" 
+    "notes":"f" 
   },
  
 );

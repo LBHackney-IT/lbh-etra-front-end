@@ -1,5 +1,5 @@
 export interface IAttendees {
-    Councillors: string,
-    HackneyStaff: string,
-    Attendees: number
+    councillors: string,
+    hackneyStaff: string,
+    attendees: number
 }
