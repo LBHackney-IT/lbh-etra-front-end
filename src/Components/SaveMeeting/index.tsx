@@ -66,7 +66,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.meetingId, 
     );
   }
-  getMettingModelWithSignatureTrimmed = (): IMeetingModel => {
+  getMeetingModelWithSignatureTrimmed = (): IMeetingModel => {
     const trimmedSignatureSignoff:ISignOff = {
       signature:this.props.signOff.signature.slice(22) ,
       name: this.props.signOff.name,
@@ -104,7 +104,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
   handleSaveMeeting = async () => { 
     this.setState({ isAttemptingToSave: true });
-    const successful = await this.createMeeting.Execute(this.getMettingModelWithSignatureTrimmed());
+    const successful = await this.createMeeting.Execute(this.getMeetingModelWithSignatureTrimmed());
 
     if (successful) {
       this.props.onReviewNow();
