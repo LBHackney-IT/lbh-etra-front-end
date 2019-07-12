@@ -13,7 +13,7 @@ function mockMeeting() : IMeetingModel {
         faker.random.number(),
         faker.random.word(),
         [],
-        {Attendees: 2, HackneyStaff: "", Councillors: ""},
+        {attendees: 2, hackneyStaff: "", councillors: ""},
         {signature: "", name: "", role: ""});
 }
 

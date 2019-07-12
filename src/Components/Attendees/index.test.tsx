@@ -9,9 +9,9 @@ import { IAttendees } from '../../Domain/Attendees';
 configure({ adapter: new Adapter() });
 
 const defaultAttendees : IAttendees = {
-   Councillors: "",
-   HackneyStaff: "",
-   Attendees: 0
+   councillors: "",
+   hackneyStaff: "",
+   attendees: 0
 }
 
 it('Attendees component loads', () => {

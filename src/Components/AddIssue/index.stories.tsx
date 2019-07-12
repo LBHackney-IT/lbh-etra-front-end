@@ -19,7 +19,7 @@ storiesOf('AddIssue',module)
             readOnly={false}
             index={1} 
             issue={issueFactory.create()}
-            onChangeIssue={(issue: IIssue, index: number) => {console.log(`${index}: ${issue.IssueType.IssueType} ${issue.Notes}`)}}
+            onChangeIssue={(issue: IIssue, index: number) => {console.log(`${index}: ${issue.issueType.issueType} ${issue.notes}`)}}
             onDeleteIssue={(index: number) => {console.log(`Delete issue ${index}`)}}/>
     </ServiceProvider>
 ));

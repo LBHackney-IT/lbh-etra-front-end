@@ -44,9 +44,9 @@ const emptyState : IMeetingState = {
     issues: [],
     meetingAttendance:
     {
-      Councillors: "",
-      HackneyStaff: "",
-      Attendees: 0
+      councillors: "",
+      hackneyStaff: "",
+      attendees: 0
     },
     signOff: 
     {

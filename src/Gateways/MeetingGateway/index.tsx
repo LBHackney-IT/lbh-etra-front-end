@@ -1,7 +1,6 @@
 import { IMeetingModel, IUnreviewedMeetingModel, IMeetingSignOffModel } from "../../Domain/Meeting";
 import { GatewayResponse, IGatewayResponse } from "../../Boundary/GatewayResponse";
 import JWTGateway from "../JWTGateway";
-import getEnvVariable from "../../Utilities/environmentVariables";
 
 export interface IGetMeetingResponse extends IGatewayResponse {
   meeting?: IMeetingModel;
@@ -71,7 +70,7 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "post",
+        method: "POST",
         headers: this.buildHeaders(officerToken),
         body: JSON.stringify(data)
       }
@@ -88,7 +87,7 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "patch",
+        method: "PATCH",
         headers: this.buildHeaders(traToken),
         body: JSON.stringify(data)
       }
@@ -107,28 +106,25 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "get",
+        method: "GET",
         headers: this.buildHeaders(traToken)
       }
     )
     .then((response) => {
       thisResponse = response;
-      return response.json() as Promise<{ data: IMeetingModel }>
+      return response.json() as Promise<IMeetingModel>
     })
     .then((data) => {
-      return new GetMeetingResponse(thisResponse.ok, thisResponse.statusText, data.data);
+      return new GetMeetingResponse(thisResponse.ok, thisResponse.statusText, data);
     }).catch((error : Error) => {
       return new GetMeetingResponse(false, error.message);
     });
   }
 
   private buildHeaders(token: string) {
-    const xApiKey = getEnvVariable("X_API_KEY");
-
     return {
       "Authorization": `Bearer ${token}`,
-      "x-api-key": `${xApiKey}`,
-      "content-type": "application/json"
+      "Content-Type": "application/json"
     };
   }
 }

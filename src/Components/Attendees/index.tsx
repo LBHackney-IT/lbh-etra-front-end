@@ -73,11 +73,11 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         return (
             <div className={`border-left ${this.props.readOnly ? "read-only-background" : ""}`}>
                 <div data-test="councillor-label" className="input-label">Councillors</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.Councillors, "councillors-text"), this.renderCouncillors())}
+                {this.conditionalRender(this.renderText(this.state.attendees.councillors, "councillors-text"), this.renderCouncillors())}
                 <div data-test="hackney-council-staff-label" className="input-label">Hackney Council Staff</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.HackneyStaff, "staff-text"), this.renderHackneyStaff())}
+                {this.conditionalRender(this.renderText(this.state.attendees.hackneyStaff, "staff-text"), this.renderHackneyStaff())}
                 <div data-test="number-of-attendees-label" className="input-label">Number of attendees</div>
-                {this.conditionalRender(this.renderText(this.state.attendees.Attendees.toString(), 'number-of-attendees-text'), this.renderAttendees())}
+                {this.conditionalRender(this.renderText(this.state.attendees.attendees.toString(), 'number-of-attendees-text'), this.renderAttendees())}
             </ div>
         );
     }
@@ -86,11 +86,11 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         return (
             <input 
                 data-test="councillor-input" 
-                className="input-box wide-box" 
-                type="text" name="Councillors"
+                className="input-box wide-box"
+                type="text" name="councillors"
                 id="councillors"
                 onChange={this.onChangeForm} 
-                value={this.state.attendees.Councillors} />
+                value={this.state.attendees.councillors} />
         )
     }
 
@@ -99,10 +99,10 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
             <input 
                 data-test="hackney-council-staff-input" 
                 className="input-box wide-box" 
-                type="text" name="HackneyStaff" 
+                type="text" name="hackneyStaff"
                 id="hackney-staff"
                 onChange={this.onChangeForm} 
-                value={this.state.attendees.HackneyStaff} />
+                value={this.state.attendees.hackneyStaff} />
         )
     }
 
@@ -111,10 +111,10 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
             <input 
                 data-test="number-of-attendees-input" 
                 className="input-box narrow-box" 
-                type="number" name="Attendees" 
+                type="number" name="attendees"
                 id="number-of-attendees"
                 onChange={this.onChangeNumber} 
-                value={this.state.attendees.Attendees} />
+                value={this.state.attendees.attendees} />
         )
     }
 

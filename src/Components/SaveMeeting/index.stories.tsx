@@ -10,7 +10,7 @@ storiesOf('Save Meeting', module)
       meetingName="Test Meeting"
       signOff={{signature: "", name: "", role: ""}}
       issues={[]} 
-      attendees={{Councillors: "", HackneyStaff: "", Attendees: 0}} 
+      attendees={{councillors: "", hackneyStaff: "", attendees: 0}} 
       onReviewLater={() => {}}
       onReviewNow={() => {}}/>
   ));

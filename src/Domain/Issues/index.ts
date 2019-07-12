@@ -3,23 +3,23 @@ import { IBlock } from '../Area';
 
 export interface IIssue  
 {
-  Id: string
-  IssueType: IIssueType
-  Location: IBlock
-  Notes:string
+  id: string
+  issueType: IIssueType
+  location: IBlock
+  notes:string
 }
 
 export class Issue implements IIssue
 {
-  public Id:string;
-  public IssueType:IIssueType;
-  public Location: IBlock;
-  public Notes:string;
+  public id:string;
+  public issueType:IIssueType;
+  public location: IBlock;
+  public notes:string;
 
   constructor(id: string, issueType: IIssueType, location: IBlock, notes:string){
-    this.Id = id;
-    this.IssueType = issueType;
-    this.Location = location;
-    this.Notes = notes;
+    this.id = id;
+    this.issueType = issueType;
+    this.location = location;
+    this.notes = notes;
   }
 }

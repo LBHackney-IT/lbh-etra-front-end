@@ -3,7 +3,8 @@ import './index.css';
 import { IIssue } from '../../Domain/Issues'
 import { IServiceProvider, ServiceContext } from '../../ServiceContext';
 import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
-import { MeetingModel, IMeetingModel, IUnreviewedMeetingModel, UnreviewedMeetingModel } from '../../Domain/Meeting';
+import { ISignOffMeetingUseCase } from '../../Boundary/SignOffMeeting';
+import { MeetingModel, IMeetingModel, IUnreviewedMeetingModel, UnreviewedMeetingModel, IMeetingSignOffModel, MeetingSignOffModel } from '../../Domain/Meeting';
 import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff } from '../../Domain/SignOff';
 import { Redirect } from 'react-router-dom';
@@ -31,11 +32,13 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   public static contextType = ServiceContext;
   private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
   private readonly createMeeting: ICreateMeetingUseCase;
+  private readonly signoffMeeting: ISignOffMeetingUseCase;
 
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
     this.saveMeetingDraft = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
     this.createMeeting = context.get<ICreateMeetingUseCase>("ICreateMeetingUseCase");
+    this.signoffMeeting = context.get<ISignOffMeetingUseCase>("ISignOffMeetingUseCase");
 
     this.state = {
       isAttemptingToSave: false,
@@ -49,7 +52,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   }
 
   private checkIsValid(props: ISaveMeetingProps){
-    if(props.attendees.Attendees <= 0){
+    if(props.attendees.attendees <= 0){
       return false;
     }
     
@@ -66,7 +69,8 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.meetingId, 
     );
   }
-  getMettingModelWithSignatureTrimmed = (): IMeetingModel => {
+
+  getMeetingModelWithSignatureTrimmed = (): IMeetingModel => {
     const trimmedSignatureSignoff:ISignOff = {
       signature:this.props.signOff.signature.slice(22) ,
       name: this.props.signOff.name,
@@ -82,6 +86,13 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     )
   }
 
+  getMeetingSignOffModel = () : IMeetingSignOffModel => {
+    return new MeetingSignOffModel(
+      this.props.meetingId!,
+      this.props.signOff
+    );
+  }
+
   getUnreviewedMeetingModel = () : IUnreviewedMeetingModel => {
     return new UnreviewedMeetingModel(
       this.props.traId,
@@ -90,6 +101,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       this.props.attendees
     );
   }
+
   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
@@ -102,9 +114,16 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
     }
   }
 
-  handleSaveMeeting = async () => { 
+  handleSaveMeeting = async () => {
+    let successful;
+
     this.setState({ isAttemptingToSave: true });
-    const successful = await this.createMeeting.Execute(this.getMettingModelWithSignatureTrimmed());
+
+    if(this.props.signOffMode){
+      successful = await this.signoffMeeting.Execute(this.getMeetingSignOffModel());
+    }else{
+      successful = await this.createMeeting.Execute(this.getMeetingModelWithSignatureTrimmed());
+    }
 
     if (successful) {
       this.props.onReviewNow();

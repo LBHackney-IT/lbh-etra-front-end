@@ -39,7 +39,7 @@ it('Issue notes can be changed', ()=>{
     notes.simulate('change', event);
     const issueState = wrapper.state("issue") as IIssue;
 
-    expect(issueState.Notes).toBe("hello");
+    expect(issueState.notes).toBe("hello");
  });
 
 describe('when we go to render the Add Issue Component',()=>{

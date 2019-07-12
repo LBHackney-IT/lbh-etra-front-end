@@ -11,9 +11,9 @@ const mockMeeting : IMeetingModel = {
   meetingName: "Test Meeting Name",
   issues: [],
   meetingAttendance: {
-    Councillors: "",
-    HackneyStaff: "",
-    Attendees: 0
+    councillors: "",
+    hackneyStaff: "",
+    attendees: 0
   },
   signOff: {
     signature: "",

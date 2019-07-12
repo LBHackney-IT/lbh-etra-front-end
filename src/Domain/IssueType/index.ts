@@ -1,15 +1,15 @@
 export interface IIssueType 
 {
-   IssueId:string;
-   IssueType:string;
+   issueId:string;
+   issueType:string;
 } 
 
 export class IssueType implements IIssueType
 {
-   public IssueType:string;
-   public IssueId:string;
+   public issueType:string;
+   public issueId:string;
    public constructor(issueType:string, issueId:string){
-      this.IssueType = issueType;
-      this.IssueId = issueId;
+      this.issueType = issueType;
+      this.issueId = issueId;
    }
 }
