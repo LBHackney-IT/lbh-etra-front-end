@@ -70,7 +70,7 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "post",
+        method: "POST",
         headers: this.buildHeaders(officerToken),
         body: JSON.stringify(data)
       }
@@ -87,7 +87,7 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "patch",
+        method: "PATCH",
         headers: this.buildHeaders(traToken),
         body: JSON.stringify(data)
       }
@@ -106,7 +106,7 @@ export default class MeetingGateway implements IMeetingGateway {
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
-        method: "get",
+        method: "GET",
         headers: this.buildHeaders(traToken)
       }
     )
