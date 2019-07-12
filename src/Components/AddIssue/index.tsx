@@ -76,6 +76,15 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     this.props.onChangeIssue(issue, this.props.index);
   }
 
+  lookupIssueType(issueId: string){
+    const issue = this._issueTypes.find(el => el.issueId === issueId);
+    if(issue){
+      return issue.issueType;
+    }else{
+      return issueId;
+    }
+  }
+
   renderIssueType(issueType: IIssueType, index: number) {
     return (
       <option key={index} value={issueType.issueId}>{issueType.issueType}</option>
@@ -144,7 +153,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
         <div className="issue">
           <label data-test="issue-label" className="label">Issue type</label>
           <br />
-          {this.conditionalRender(this.renderReadOnly(this.state.issue.issueType.issueType, "issue-type-text"), this.renderNotReadOnlyIssueType())}
+          {this.conditionalRender(this.renderReadOnly(this.lookupIssueType(this.state.issue.issueType.issueId), "issue-type-text"), this.renderNotReadOnlyIssueType())}
         </div>
 
         <div className="issue">
