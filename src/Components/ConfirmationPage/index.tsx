@@ -68,7 +68,13 @@ export class Confirmation extends React.Component<IConfirmationProps, IConfirmat
   }
 
   private signatureUrl(){
-    return "data:image/png;base64," + this.props.signOff.signature;
+    let signature = "";
+    let prefix = "data:image/png;base64,";
+    if(!this.props.signOff.signature.includes(prefix))
+      signature = "data:image/png;base64," + this.props.signOff.signature;
+    else
+      signature = this.props.signOff.signature;
+    return signature;
   }
 
   private renderSignature(){
