@@ -29,6 +29,7 @@ export interface IMeetingState {
   errorMessage: string,
   signOffMode: boolean,
   meeting: IMeetingModel,
+  isRequestFromWorkTray:boolean
 }
 
 const emptyState : IMeetingState = {
@@ -37,6 +38,7 @@ const emptyState : IMeetingState = {
   signOffIncomplete: false,
   errorMessage: "",
   signOffMode: false,
+  isRequestFromWorkTray:false,
   meeting: {
     id: "",
     traId: -1,
@@ -61,7 +63,7 @@ const emptyState : IMeetingState = {
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
-
+ 
   public constructor(props: IMeetingProps, context: IServiceProvider) {
     super(props);
 
@@ -77,9 +79,11 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     }
 
     let loadExistingMeeting : boolean = false;
+    let requestFromWorkTray: boolean=false;
     if(this.props.location.search){
       const queries = queryString.parse(this.props.location.search, {parseBooleans: true});
-      loadExistingMeeting = queries.existingMeeting as boolean;
+      loadExistingMeeting = queries.existingMeeting as boolean;   
+      requestFromWorkTray=queries.isRequestFromWorkTray as boolean;
     }
 
     if(!loadExistingMeeting){
@@ -90,7 +94,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: true})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: !requestFromWorkTray})
       return;
     }
 
@@ -159,6 +163,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           onSaveComplete={this.onSaveComplete}
           signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
+         
         />
       </div>);
   }
