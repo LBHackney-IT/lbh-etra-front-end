@@ -29,7 +29,7 @@ export interface IMeetingState {
   errorMessage: string,
   signOffMode: boolean,
   meeting: IMeetingModel,
-  isRequestFromWorkTray:boolean
+
 }
 
 const emptyState : IMeetingState = {
@@ -38,7 +38,7 @@ const emptyState : IMeetingState = {
   signOffIncomplete: false,
   errorMessage: "",
   signOffMode: false,
-  isRequestFromWorkTray:false,
+
   meeting: {
     id: "",
     traId: -1,
