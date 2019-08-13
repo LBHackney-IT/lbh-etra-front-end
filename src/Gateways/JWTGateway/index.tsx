@@ -12,6 +12,7 @@ export default class JWTGateway implements IJWTGateway {
   }
 
   public async saveTraToken(data: string): Promise<void> {
+     localStorage.removeItem("TraToken");
     return await localStorage.setItem("TraToken", data);
   }
 
