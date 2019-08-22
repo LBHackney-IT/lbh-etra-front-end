@@ -16,6 +16,7 @@ import { IGetMeetingUseCase } from '../../Boundary/GetMeeting';
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
+  noSession?:boolean;
 }
 
 export interface IMeetingProps {
@@ -145,6 +146,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
+    const noSessionLive = this.props.location.state && this.props.location.state.noSession;
+
     return (
       <div>
         {this.renderBackArrow()}
@@ -163,7 +166,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           onSaveComplete={this.onSaveComplete}
           signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
-         
+          isSessionLive={!noSessionLive}
         />
       </div>);
   }

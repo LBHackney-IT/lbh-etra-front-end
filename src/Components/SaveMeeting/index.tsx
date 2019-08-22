@@ -20,6 +20,7 @@ export interface ISaveMeetingProps {
   signOff: ISignOff,
   onReviewNow: () => void,
   onReviewLater: () => void,
+  isSessionLive?:boolean
 }
 
 export interface ISaveMeetingState {
@@ -177,7 +178,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           id="save-meeting" 
           className="button btn-primary button-margin" 
           onClick={this.handleSaveMeeting}
-          disabled={!this.state.isValid}>
+          disabled={!this.state.isValid || !this.props.isSessionLive}>
             Save the signed off issue list and email to TRA
         </button>
         <button 
@@ -191,7 +192,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           className="button btn-primary btn-stacked button-margin" 
           id="review-later" 
           onClick={this.handleReviewLater}
-          disabled={!this.state.isValid}>
+          disabled={!this.state.isValid || !this.props.isSessionLive}>
             Email issues to TRA for sign off
         </button>
       </div>

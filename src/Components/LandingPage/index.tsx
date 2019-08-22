@@ -19,6 +19,7 @@ export interface ILandingPageState {
     valid: boolean,
     redirect: boolean,
     selectedTraId: string,
+    noSession:boolean,
     draftMeetings: IMeetingModel[]
 }
 
@@ -38,6 +39,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
             valid: false,
             redirect: false,
             selectedTraId: "",
+            noSession:true,
             draftMeetings: []
         }
 
@@ -47,7 +49,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     public componentDidMount(){
         const query = queryString.parse(this.props.location.search);
         if(query.traId){
-            this.setState({selectedTraId: query.traId as string, redirect: true})
+            this.setState({selectedTraId: query.traId as string, redirect: true,noSession:false})
             return;
         }
 
@@ -87,7 +89,7 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
     }
 
     onClickStart = () : void => {
-        this.setState({redirect: true});
+        this.setState({redirect: true,noSession:true});
     }
 
     public render(){
@@ -97,7 +99,8 @@ export default class LandingPage extends Component<ILandingPageProps, ILandingPa
                         {
                             pathname:`/meeting/`,
                             state: {
-                                selectedTra: this.findSelectedTra(this.state.selectedTraId)
+                                selectedTra: this.findSelectedTra(this.state.selectedTraId),
+                                noSession:this.state.noSession
                             }
                         }} />;
         }

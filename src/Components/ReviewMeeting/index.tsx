@@ -17,6 +17,7 @@ export interface IReviewMeetingProps {
     issues: Array<IIssue>,
     onSaveComplete: () => void
     attendees:IAttendees,
+    isSessionLive?:boolean,
     signOffMode: boolean;
     signOff:ISignOff
 }
@@ -138,7 +139,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                         onReviewLater={this.onReviewLater}
                         issues={this.props.issues} 
                         signOff={this.state.signOff} 
-                        attendees={this.props.attendees}/>
+                        attendees={this.props.attendees}
+                        isSessionLive={this.props.isSessionLive}/>
                 </div>
             </div>
         );
