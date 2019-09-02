@@ -5,6 +5,8 @@ import { IServiceContainer } from "./ServiceContext";
 import JWTGateway, { IJWTGateway } from "./Gateways/JWTGateway";
 import { ISaveOfficerTokenUseCase } from "./Boundary/SaveOfficerTokenLocally";
 import { SaveOfficerTokenUseCase } from "./UseCases/SaveOfficerTokenLocally";
+import { IGetTokenUseCase } from "./Boundary/GetTokensForCurrentSession";
+import { GetTokenUseCase } from "./UseCases/GetTokensForCurrentSession";
 import { ISaveTraTokenUsecase } from "./Boundary/SaveTraTokenLocally";
 import { SaveTraTokenUsecase } from "./UseCases/SaveTraTokenLocally";
 import { IGetMeetingDraftsUseCase } from "./Boundary/GetMeetingDrafts";
@@ -32,6 +34,8 @@ export default function configureServices(container: IServiceContainer) {
     container.bind<ICreateMeetingUseCase>("ICreateMeetingUseCase", new CreateMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
     container.bind<ISignOffMeetingUseCase>("ISignOffMeetingUseCase", new SignOffMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
     container.bind<IGetMeetingUseCase>("IGetMeetingUseCase", new GetMeetingUseCase(container.get<IMeetingGateway>("IMeetingGateway")));
+    container.bind<IGetTokenUseCase>("IGetTokenUseCase", new GetTokenUseCase(container.get<IJWTGateway>("IJWTGateway")));
+
 
     return container;
 }

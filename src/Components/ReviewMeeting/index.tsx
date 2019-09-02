@@ -140,7 +140,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                         issues={this.props.issues} 
                         signOff={this.state.signOff} 
                         attendees={this.props.attendees}
-                        isSessionLive={this.props.isSessionLive}/>
+                        isSessionLive={this.props.isSessionLive}
+                        />
                 </div>
             </div>
         );

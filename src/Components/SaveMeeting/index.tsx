@@ -9,7 +9,7 @@ import { IAttendees } from '../../Domain/Attendees';
 import { ISignOff } from '../../Domain/SignOff';
 import { Redirect } from 'react-router-dom';
 import { ICreateMeetingUseCase } from '../../Boundary/CreateMeeting';
-
+import { IGetTokenUseCase } from "../../Boundary/GetTokensForCurrentSession";
 export interface ISaveMeetingProps {
   signOffMode: boolean,
   traId: number,
@@ -27,6 +27,7 @@ export interface ISaveMeetingState {
   isAttemptingToSave: boolean;
   isValid: boolean;
   redirectToLandingPage: boolean;
+ 
 }
 
 export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
@@ -34,22 +35,24 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
   private readonly createMeeting: ICreateMeetingUseCase;
   private readonly signoffMeeting: ISignOffMeetingUseCase;
-
+  private readonly getToken:IGetTokenUseCase;
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
     super(props, context);
     this.saveMeetingDraft = context.get<ISaveMeetingDraftUseCase>("ISaveMeetingUseCase");
     this.createMeeting = context.get<ICreateMeetingUseCase>("ICreateMeetingUseCase");
     this.signoffMeeting = context.get<ISignOffMeetingUseCase>("ISignOffMeetingUseCase");
-
+    this.getToken=context.get<IGetTokenUseCase>("IGetTokenUseCase");
+    
     this.state = {
       isAttemptingToSave: false,
       isValid: this.checkIsValid(this.props),
       redirectToLandingPage: false
     }
   }
-
+ 
   componentWillReceiveProps(newProps: ISaveMeetingProps){
     this.setState({isValid: this.checkIsValid(newProps)})
+   
   }
 
   private checkIsValid(props: ISaveMeetingProps){
@@ -158,8 +161,9 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
 
     return this.renderSaveMeetingButtons();
   }
-
+  
   private renderSaveMeetingButtons() {
+
     if(this.props.signOffMode){
       return (
         <button 
@@ -178,7 +182,9 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           id="save-meeting" 
           className="button btn-primary button-margin" 
           onClick={this.handleSaveMeeting}
-          disabled={!this.state.isValid || !this.props.isSessionLive}>
+          disabled={!this.state.isValid  || !this.props.isSessionLive 
+        }
+          >
             Save the signed off issue list and email to TRA
         </button>
         <button 
@@ -192,7 +198,8 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           className="button btn-primary btn-stacked button-margin" 
           id="review-later" 
           onClick={this.handleReviewLater}
-          disabled={!this.state.isValid || !this.props.isSessionLive}>
+          disabled={!this.state.isValid  || !this.props.isSessionLive
+          }>
             Email issues to TRA for sign off
         </button>
       </div>
