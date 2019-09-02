@@ -5,7 +5,9 @@ describe("SaveOfficerTokenUseCase", () => {
   it("successfully saves JWT for new meeting", async () => {
     const mockGateway: IJWTGateway = {
       saveOfficerToken: jest.fn(),
-      saveTraToken: jest.fn()
+      saveTraToken: jest.fn(),
+      getOfficerToken: jest.fn(),
+      getTraToken:jest.fn()
     };
 
     const input:string="encodedMeetingJWT";

@@ -66,14 +66,13 @@ it('Meeting component loads', () => {
 function createMockServiceProvider() : IServiceProvider {
     const mockGetMeeting: IGetMeetingUseCase = {
         Execute: jest.fn(() => {
-            return new Promise((resolve, reject) => { resolve(undefined); })
+            return new Promise((resolve, reject) => { resolve(); })
         })
     };
-  
+   // private readonly getMeeting: IGetMeetingUseCase;
     return {
-        get: jest.fn((service: string) => {
-            return mockGetMeeting;
-        })
+        get: jest.fn()
+    
     };
   };
 

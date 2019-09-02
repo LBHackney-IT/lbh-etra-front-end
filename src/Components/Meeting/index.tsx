@@ -12,10 +12,11 @@ import { IMeetingModel } from '../../Domain/Meeting';
 import queryString from 'query-string';
 import { ServiceContext, IServiceProvider } from '../../ServiceContext';
 import { IGetMeetingUseCase } from '../../Boundary/GetMeeting';
-
+import { IGetTokenUseCase } from "../../Boundary/GetTokensForCurrentSession";
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
+ 
 }
 
 export interface IMeetingProps {
@@ -29,7 +30,7 @@ export interface IMeetingState {
   errorMessage: string,
   signOffMode: boolean,
   meeting: IMeetingModel,
-
+  isSessionLive:boolean
 }
 
 const emptyState : IMeetingState = {
@@ -38,7 +39,7 @@ const emptyState : IMeetingState = {
   signOffIncomplete: false,
   errorMessage: "",
   signOffMode: false,
-
+  isSessionLive:false,
   meeting: {
     id: "",
     traId: -1,
@@ -63,12 +64,12 @@ const emptyState : IMeetingState = {
 export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
- 
+  private readonly getToken:IGetTokenUseCase;
   public constructor(props: IMeetingProps, context: IServiceProvider) {
     super(props);
 
     this.getMeeting = context.get<IGetMeetingUseCase>("IGetMeetingUseCase");
-
+    this.getToken=context.get<IGetTokenUseCase>("IGetTokenUseCase");
     this.state = emptyState;
   }
 
@@ -77,7 +78,12 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       this.setState({errorMessage: "An error occurred."})
       return;
     }
-
+    const availableToken = await this.getToken.Execute();
+    if(availableToken)
+    {
+       this.setState({isSessionLive:true});
+    }
+    
     let loadExistingMeeting : boolean = false;
     let requestFromWorkTray: boolean=false;
     if(this.props.location.search){
@@ -90,7 +96,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       this.handleNewMeeting();
       return;
     }
-
+   
     const existingMeeting = await this.getMeeting.Execute();
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
@@ -143,8 +149,11 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
+
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
+   
+
     return (
       <div>
         {this.renderBackArrow()}
@@ -163,7 +172,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           onSaveComplete={this.onSaveComplete}
           signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
-         
+         isSessionLive={this.state.isSessionLive}
         />
       </div>);
   }

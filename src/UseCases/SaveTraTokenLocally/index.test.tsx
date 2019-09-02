@@ -4,8 +4,10 @@ import { IJWTGateway } from "../../Gateways/JWTGateway";
 describe("SaveTraTokenUsecase", () => {
   it("can save JWT token for a singoff meeting", async () =>{
     const mockGateway:IJWTGateway={
-      saveOficerToken: jest.fn(),
-      saveTraToken: jest.fn()
+      saveOfficerToken: jest.fn(),
+      saveTraToken: jest.fn(),
+      getOfficerToken: jest.fn(),
+      getTraToken:jest.fn()
     }
     const input:string = "encodedSignoffToken";
 
