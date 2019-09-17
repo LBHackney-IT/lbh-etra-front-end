@@ -65,6 +65,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
+  private isAnExistingMeeting:boolean=false;
   public constructor(props: IMeetingProps, context: IServiceProvider) {
     super(props);
 
@@ -90,6 +91,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       const queries = queryString.parse(this.props.location.search, {parseBooleans: true});
       loadExistingMeeting = queries.existingMeeting as boolean;   
       requestFromWorkTray=queries.isRequestFromWorkTray as boolean;
+      this.isAnExistingMeeting=loadExistingMeeting;
     }
 
     if(!loadExistingMeeting){
@@ -156,7 +158,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
 
     return (
       <div>
-        {this.renderBackArrow()}
+         {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
         <Attendees attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
@@ -178,6 +180,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   renderBackArrow(){
+    if(!this.isAnExistingMeeting)
     return (
       <>
         <div className="back-arrow"> &#60;</div>
