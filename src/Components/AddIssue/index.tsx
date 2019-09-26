@@ -165,7 +165,9 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
         <div className="issue">
           <label data-text="notes-label" className="label">Notes about issue</label>
           <br />
-          {this.conditionalRender(this.renderReadOnly(this.state.issue.notes, "notes-text"), this.renderNotReadOnlyNotes())}
+          {this.state.issue.notes.split("\n").map((i,key) => {
+            return <div key={key}>{this.conditionalRender(this.renderReadOnly(i, "notes-text"), this.renderNotReadOnlyNotes())}</div>;
+        })}
         </div>
 
         {!this.props.readOnly && this.renderDeleteIssueButton()}
