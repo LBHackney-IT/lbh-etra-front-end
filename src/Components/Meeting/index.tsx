@@ -100,9 +100,10 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     }
    
     const existingMeeting = await this.getMeeting.Execute();
+    
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: !requestFromWorkTray})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
       return;
     }
 
