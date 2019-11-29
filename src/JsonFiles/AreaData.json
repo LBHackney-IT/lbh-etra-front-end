@@ -306,6 +306,27 @@
                             }
                           
                         ]
+                    },
+                    {
+                        "id": 6,
+                        "name": "Morland & Blanchard TRA",
+                        "blocks": [
+                            {
+                                "name": "Richmond Road  Morland Estate"
+                            },
+                            {
+                                "name": "Richmond Road  1-46 Morland Estate"
+                            },
+                            {
+                                "name": "Richmond Road  47-70 Morland Estate"
+                            },
+                            {
+                                "name": "Richmond Road  71-86 Morland Estate"
+                            },
+                            {
+                                "name": "Richmond Road  87-114 Morland Estate"
+                            }
+                        ]
                     }
                 ]
             },
@@ -335,28 +356,6 @@
                             },
                             {
                                 "name": "Rochford Walk 1-74"
-                            }
-                        ]
-                    },
-                    
-                    {
-                        "id": 6,
-                        "name": "Morland and Blanchard TRA",
-                        "blocks": [
-                            {
-                                "name": "Richmond Road  Morland Estate"
-                            },
-                            {
-                                "name": "Richmond Road  1-46 Morland Estate"
-                            },
-                            {
-                                "name": "Richmond Road  47-70 Morland Estate"
-                            },
-                            {
-                                "name": "Richmond Road  71-86 Morland Estate"
-                            },
-                            {
-                                "name": "Richmond Road  87-114 Morland Estate"
                             }
                         ]
                     },
