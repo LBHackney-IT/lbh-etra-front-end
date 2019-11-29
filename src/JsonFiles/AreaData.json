@@ -2730,38 +2730,6 @@
                 ]
             },
             {
-                "patchId": "SN6",
-                "officerName": "Neville Elliott",
-                "id": "d3a22684-8653-e811-8126-70106faaf8c1",
-                "tras": [
-                    {
-                        "id": 52,
-                        "name": "Forest, Acer & Holly Street",
-                        "blocks": [
-                            {
-                                "name": "Holly Street  Holly Street Estate"
-                            },
-                            {
-                                "name": "Acer Road 1-9 & 29-30"
-                            },
-                            {
-                                "name": "Forest Road 32-38 (Even)"
-                            },
-                            {
-                                "name": "Forest Road 40-44 EVEN"
-                            },
-                            {
-                                "name": "Forest Road 46-52"
-                            },
-                            {
-                                "name": "Holly Street  28-30 Even Forest Road Plus 60, 62 Holly Street"
-                            }
-                        ]
-                    }
-                    
-                ]
-            },
-            {
                 "patchId": "SN7",
                 "officerName": "Momodu Haddi",
                 "id": "f1a22684-8653-e811-8126-70106faaf8c1",
