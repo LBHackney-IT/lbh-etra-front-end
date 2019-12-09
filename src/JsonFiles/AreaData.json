@@ -1078,6 +1078,45 @@
                                 "name": "Myrtleberry Close  42-48 Even Beechwood Road Plus 1-2 Myrtleberry Close"
                             }
                         ]
+                    },
+                    {
+                        "id": 74,
+                        "name": "Forest Grove TRA",
+                        "blocks": [
+                            {
+                                "name": "1-7 ODD Forest Grove"
+                            },
+                            {
+                                "name": "9-15 ODD Forest Grove"
+                            },
+                            {
+                                "name": "17-23 ODD Forest Grove"
+                            },
+                            {
+                                "name": "25-31 ODD Forest Grove"
+                            },
+                            {
+                                "name": "33-39 ODD Forest Grove"
+                            },
+                            {
+                                "name": "41-47 ODD Forest Grove"
+                            }
+                            {
+                                "name": "2-8 EVEN Forest Grove"
+                            },
+                            {
+                                "name": "10-16 EVEN Forest Grove"
+                            },
+                            {
+                                "name": "18-24 EVEN Forest Grove"
+                            },
+                            {
+                                "name": "26-32 EVEN Forest Grove"
+                            },
+                            {
+                                "name": "34-40 EVEN Forest Grove"
+                            }
+                        ]
                     }
                 ]
             },

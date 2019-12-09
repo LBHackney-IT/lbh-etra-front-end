@@ -62,7 +62,7 @@ describe('When we go to render the landing page', () => {
 
     it('Then dropdown has correct number of options (includes hidden default option)', () => {
         const options = wrapper.find('[data-test="tra-option"]');
-        expect(options).toHaveLength(63);
+        expect(options).toHaveLength(64);
     })
 
     it('Then start etra meeting button is shown', () => {
