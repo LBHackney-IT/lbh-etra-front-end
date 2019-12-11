@@ -1,7 +1,7 @@
 {
   "name": "Manage A Tenancy - ETRA",
   "short_name": "ETRA",
-  "display": "standalone",
+  "display": "browser",
   "start_url": ".",
   "theme_color": "#000000",
   "background_color": "#ffffff",
