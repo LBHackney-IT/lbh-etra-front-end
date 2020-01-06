@@ -12,6 +12,30 @@
 		"issueId": "100000220"
 	},
 	{
+		"issueType": "Bike racks / storage - Central",
+		"issueId": "100000221"	
+	},
+	{
+		"issueType": "Bike racks / storage - Clapton",
+		"issueId": "100000243"	
+	},
+	{
+		"issueType": "Bike racks / storage - Homerton",
+		"issueId": "100000244"	
+	},
+	{
+		"issueType": "Bike racks / storage - Shoreditch",
+		"issueId": "100000245"	
+	},
+	{
+		"issueType": "Bike racks / storage - Stamford Hill",
+		"issueId": "100000246"	
+	},
+	{
+		"issueType": "Bike racks / storage - Stoke Newington",
+		"issueId": "100000247"		
+	},
+	{
 		"issueType": "Bushes and trees",
 		"issueId": "100000222"
 	},
@@ -142,29 +166,5 @@
 	{
 		"issueType": "Windows",
 		"issueId": "100000242"
-	},
-	{
-		"issueType": "Bike racks / storage - Central",
-		"issueId": "100000221"	
-	},
-	{
-		"issueType": "Bike racks / storage - Clapton",
-		"issueId": "100000243"	
-	},
-	{
-		"issueType": "Bike racks / storage - Homerton",
-		"issueId": "100000244"	
-	},
-	{
-		"issueType": "Bike racks / storage - Shoreditch",
-		"issueId": "100000245"	
-	},
-	{
-		"issueType": "Bike racks / storage - Stamford Hill",
-		"issueId": "100000246"	
-	},
-	{
-		"issueType": "Bike racks / storage - Stoke Newington",
-		"issueId": "100000247"		
 	}
 ]
