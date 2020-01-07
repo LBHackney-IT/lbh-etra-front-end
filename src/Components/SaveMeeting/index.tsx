@@ -170,7 +170,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
         id="save-meeting" 
         className="button btn-primary button-margin" 
         onClick={this.handleSaveMeeting}
-        disabled={!this.state.isValid}>
+        disabled={!this.state.isValid || this.state.isAttemptingToSave}>
           I confirm I have reviewed these issues
         </button>
       )
