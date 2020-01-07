@@ -182,7 +182,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           id="save-meeting" 
           className="button btn-primary button-margin" 
           onClick={this.handleSaveMeeting}
-          disabled={!this.state.isValid  || !this.props.isSessionLive 
+          disabled={!this.state.isValid  || !this.props.isSessionLive || this.state.isAttemptingToSave
         }
           >
             Save the signed off issue list and email to TRA
@@ -191,14 +191,14 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
           id="save-draft" 
           className="button btn-primary btn-stacked button-margin" 
           onClick={this.handleSaveDraft}
-          disabled={!this.state.isValid}>
+          disabled={!this.state.isValid || this.state.isAttemptingToSave}>
             Save issues for review with TRA later
         </button>
         <button 
           className="button btn-primary btn-stacked button-margin" 
           id="review-later" 
           onClick={this.handleReviewLater}
-          disabled={!this.state.isValid  || !this.props.isSessionLive
+          disabled={!this.state.isValid  || !this.props.isSessionLive || this.state.isAttemptingToSave
           }>
             Email issues to TRA for sign off
         </button>
