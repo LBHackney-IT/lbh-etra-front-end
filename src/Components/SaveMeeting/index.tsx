@@ -56,7 +56,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
   }
 
   private checkIsValid(props: ISaveMeetingProps){
-    if(isNaN(props.attendees.attendees) || props.attendees.attendees < 0){
+    if(isNaN(props.attendees.attendees) || props.attendees.attendees < 1){
       return false;
     }
     
