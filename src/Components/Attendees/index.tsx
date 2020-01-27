@@ -17,6 +17,9 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
 
     public constructor(props: IAttendeesProp) {
         super(props);
+        if(props.attendees === null)
+            props.attendees = {councillors: '', hackneyStaff: '',  attendees: 1};
+            
         this.state = {
             isCollapsed: false,
             attendees: this.props.attendees
