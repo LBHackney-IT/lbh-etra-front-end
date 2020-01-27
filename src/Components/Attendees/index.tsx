@@ -17,8 +17,15 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
 
     public constructor(props: IAttendeesProp) {
         super(props);
+        //fix for bad response from api
         if(props.attendees === null)
             props.attendees = {councillors: '', hackneyStaff: '',  attendees: 1};
+
+        if (props.attendees.councillors === null)
+            props.attendees.councillors = '';
+
+        if (props.attendees.hackneyStaff === null)
+            props.attendees.hackneyStaff = '';
             
         this.state = {
             isCollapsed: false,
