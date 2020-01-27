@@ -25,6 +25,9 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
     constructor(props: IRecordIssueProps) {
         super(props);
 
+        if(props.issues === null)
+            props.issues = [];
+
         this.state = {
             issues: props.issues,
         };
