@@ -12,27 +12,31 @@
 		"issueId": "100000220"
 	},
 	{
-		"issueType": "Bike racks / storage - Central",
+		"issueType": "Bike racks (Lockable)",
 		"issueId": "100000221"	
 	},
 	{
-		"issueType": "Bike racks / storage - Clapton",
+		"issueType": "Bike racks (Non lockable) - Central",
+		"issueId": "100000248"	
+	},
+	{
+		"issueType": "Bike racks (Non lockable) - Clapton",
 		"issueId": "100000243"	
 	},
 	{
-		"issueType": "Bike racks / storage - Homerton",
+		"issueType": "Bike racks (Non lockable)- Homerton",
 		"issueId": "100000244"	
 	},
 	{
-		"issueType": "Bike racks / storage - Shoreditch",
+		"issueType": "Bike racks (Non lockable) - Shoreditch",
 		"issueId": "100000245"	
 	},
 	{
-		"issueType": "Bike racks / storage - Stamford Hill",
+		"issueType": "Bike racks (Non lockable) - Stamford Hill",
 		"issueId": "100000246"	
 	},
 	{
-		"issueType": "Bike racks / storage - Stoke Newington",
+		"issueType": "Bike racks (Non lockable) - Stoke Newington",
 		"issueId": "100000247"		
 	},
 	{
@@ -64,7 +68,7 @@
 		"issueId": "100000225"
 	},
 	{
-		"issueType": "Fire risks",
+		"issueType": "Fire risks on estate",
 		"issueId": "100000041"
 	},
 	{
@@ -72,7 +76,7 @@
 		"issueId": "100000503"
 	},
 	{
-		"issueType": "Gates",
+		"issueType": "Metal gates",
 		"issueId": "100000188"
 	},
 	{
@@ -104,7 +108,7 @@
 		"issueId": "100000230"
 	},
 	{
-		"issueType": "Other",
+		"issueType": "Other surgery",
 		"issueId": "100000096"
 	},
 	{
@@ -128,8 +132,28 @@
 		"issueId": "100000235"
 	},
 	{
-		"issueType": "Playground",
+		"issueType": "Playground - Central",
 		"issueId": "100000236"
+	},
+	{
+		"issueType": "Playground - Clapton",
+		"issueId": "100000249"
+	},
+	{
+		"issueType": "Playground - Homerton",
+		"issueId": "100000250"
+	},
+	{
+		"issueType": "Playground - Shoreditch",
+		"issueId": "100000251"
+	},
+	{
+		"issueType": "Playground - Stamford Hill",
+		"issueId": "100000252"
+	},
+	{
+		"issueType": "Playground - Stoke Newington",
+		"issueId": "100000253"
 	},
 	{
 		"issueType": "Refuse and recycling",
@@ -140,12 +164,32 @@
 		"issueId": "100000238"
 	},
 	{
-		"issueType": "Signage",
+		"issueType": "Signage - Central",
 		"issueId": "100000239"
 	},
 	{
+		"issueType": "Signage - Clapton",
+		"issueId": "100000254"
+	},
+	{
+		"issueType": "Signage - Homerton",
+		"issueId": "100000255"
+	},
+	{
+		"issueType": "Signage - Shoreditch",
+		"issueId": "100000256"
+	},
+	{
+		"issueType": "Signage - Stamford Hill",
+		"issueId": "100000257"
+	},
+	{
+		"issueType": "Signage - Stoke Newington",
+		"issueId": "100000258"
+	},
+	{
 		"issueType": "TV aerials / satellites",
-		"issueId": "100000131"
+		"issueId": "200000010"
 	},
 	{
 		"issueType": "Tenancy management",
