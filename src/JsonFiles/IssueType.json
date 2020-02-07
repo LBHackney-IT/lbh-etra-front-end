@@ -5,7 +5,7 @@
 	},
 	{
 		"issueType": "Anti social behaviour - South",
-		"issueId": "100000501"
+		"issueId": "100000501" 
 	},
 	{
 		"issueType": "Bathrooms",
@@ -13,11 +13,11 @@
 	},
 	{
 		"issueType": "Bike racks (Lockable)",
-		"issueId": "100000221"	
+		"issueId": "100000248"	
 	},
 	{
 		"issueType": "Bike racks (Non lockable) - Central",
-		"issueId": "100000248"	
+		"issueId": "100000221"	  
 	},
 	{
 		"issueType": "Bike racks (Non lockable) - Clapton",
@@ -68,12 +68,16 @@
 		"issueId": "100000225"
 	},
 	{
-		"issueType": "Fire risks on estate",
-		"issueId": "100000041"
+		"issueType": "Fire risks",
+		"issueId": "616370001"
 	},
 	{
 		"issueType": "Garages",
 		"issueId": "100000503"
+	},
+	{
+		"issueType": "Gates",
+		"issueId": "616370002"
 	},
 	{
 		"issueType": "Metal gates",
@@ -106,10 +110,6 @@
 	{
 		"issueType": "Noticeboards",
 		"issueId": "100000230"
-	},
-	{
-		"issueType": "Other surgery",
-		"issueId": "100000096"
 	},
 	{
 		"issueType": "Parking",
@@ -188,16 +188,16 @@
 		"issueId": "100000258"
 	},
 	{
-		"issueType": "TV aerials / satellites",
-		"issueId": "200000010"
-	},
-	{
 		"issueType": "Tenancy management",
 		"issueId": "100000504"
 	},
 	{
 		"issueType": "Trees",
-		"issueId": "100000505"
+		"issueId": "100000505" 
+	},
+	{
+		"issueType": "TV aerials / satellites",
+		"issueId": "200000010"
 	},
 	{
 		"issueType": "Walls",
@@ -210,5 +210,9 @@
 	{
 		"issueType": "Windows",
 		"issueId": "100000242"
+	},
+	{
+		"issueType": "Other",
+		"issueId": "100000259"
 	}
 ]
