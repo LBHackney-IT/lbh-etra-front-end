@@ -5,7 +5,7 @@
         "patches": [
             {
                 "patchId": "CP1",
-                "officerName": "Emmanuel Malm",
+                "officerName": "Celestine Udenze",
                 "id": "4c37485a-8453-e811-8126-70106faaf8c1",
                 "tras": [
                     {
@@ -43,14 +43,7 @@
                                 "name": "Jackman Street  1-60 Broadway House"
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                "patchId": "CP2",
-                "officerName": "Isaac Osei-Poku",
-                "id": "f18b2363-8453-e811-8126-70106faaf8c1",
-                "tras": [
+                    },
                     {
                         "id": 4,
                         "name": "Lockner Estate TRA",
@@ -86,7 +79,14 @@
                                 "name": "St Peters Way  1-14 Portland Court"
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "patchId": "CP2",
+                "officerName": "Isaac Osei-Poku",
+                "id": "f18b2363-8453-e811-8126-70106faaf8c1",
+                "tras": [
                     {
                         "id": 5,
                         "name": "Middleton Road TRA",
