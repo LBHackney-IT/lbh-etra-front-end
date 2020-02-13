@@ -81,7 +81,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
                 data-test="add-issue"
                 className="button btn-primary btn-stacked"
                 onClick={this.addIssueComponent}>
-                    Add another issue
+                    Add an issue
             </button>
         );
     }
