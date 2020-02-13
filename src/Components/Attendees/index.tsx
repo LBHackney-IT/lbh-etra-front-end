@@ -65,7 +65,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         return (
             <div>
                 {this.renderArrow()}
-                <span data-test="meeting-attendance-header" className="attendance-header">Meeting Attendance</span>
+                <span data-test="meeting-attendance-header" className="attendance-header">Meeting attendance</span>
                 {!this.state.isCollapsed && this.renderInputs()}
             </div>
         )
