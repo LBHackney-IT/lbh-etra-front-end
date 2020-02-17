@@ -64,26 +64,24 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
     render() {
         return (
             <div>
-                {this.render48hreminder()}
+                {this.render48hReminder()}
+                {this.props.readOnly ? this.render48hReminder : ""}
                 {this.renderArrow()}
                 <span data-test="meeting-attendance-header" className="attendance-header">Meeting attendance</span>
                 {!this.state.isCollapsed && this.renderInputs()}
             </div>
         )
     }
-
-    render48hreminder(){
-        if (this.props.readOnly){
-            return(
-                <div>
-                    <p className ="heading">Issues for sign off by TRA representative</p>
-                    <p>Please confirm the issues from the recent ETRA meeting are correct. </p>
-                    <p>Please note: if you have not signed off the issues within 48 hours of the ETRA meeting taking place, 
-                    it will be assumed that what has been recorded is accurate.</p>
-                    <p>If you need to discuss any of the issues further, please contact your Housing Officer: neighbourhood@hackney.gov.uk, 020 8356 3330.</p>
-                </div>
-            );
-        }
+    render48hReminder(){
+        return(
+            <div>
+                <p className ="heading">Issues for sign off by TRA representative</p>
+                <p>Please confirm the issues from the recent ETRA meeting are correct. </p>
+                <p>Please note: if you have not signed off the issues within 48 hours of the ETRA meeting taking place, 
+                it will be assumed that what has been recorded is accurate.</p>
+                <p>If you need to discuss any of the issues further, please contact your Housing Officer: neighbourhood@hackney.gov.uk, 020 8356 3330.</p>
+            </div>
+        )
     }
     
     renderArrow() {
