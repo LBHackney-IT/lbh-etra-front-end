@@ -15,11 +15,11 @@ const defaultAttendees : IAttendees = {
 }
 
 it('Attendees component loads', () => {
-   shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false}/>);
+   shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false} isComplete={false}/>);
 });
 
 describe('When we go to render the Attendees form with readonly false', () => {
-   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false}/>); 
+   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={false} isComplete={false}/>); 
 
    it('Then the attendees header is shown', () => {
       const attendeeHeader = wrapper.find('[data-test="meeting-attendance-header"]')
@@ -52,7 +52,7 @@ describe('When we go to render the Attendees form with readonly false', () => {
 });
 
 describe('When we go to render the Attendees component with readonly true', () => {
-   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={true}/>); 
+   const wrapper = shallow(<Attendees attendees={defaultAttendees} onChangeAttendees={() => {}} readOnly={true} isComplete={true}/>); 
 
    it('Then the attendees header is shown', () => {
       const attendeeHeader = wrapper.find('[data-test="meeting-attendance-header"]')
