@@ -9,12 +9,13 @@ const attendees = {
 
 storiesOf('Attendees', module)
   .add("opens correctly in editable mode", () => (
-    <Attendees attendees={attendees} onChangeAttendees={() => {}} readOnly={false}/>
+    <Attendees isComplete={false} attendees={attendees} onChangeAttendees={() => {}} readOnly={false} />
   ))
   .add("opens correctly in read only mode", () => (
     <Attendees 
       onChangeAttendees={() => {}} 
       readOnly={true}
       attendees={attendees}
+      isComplete={true}
       />
   ));
