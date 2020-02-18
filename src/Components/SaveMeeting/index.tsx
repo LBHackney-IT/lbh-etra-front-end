@@ -180,7 +180,7 @@ export class SaveMeeting extends React.Component<ISaveMeetingProps, ISaveMeeting
       <div>
         <button 
           id="save-meeting" 
-          className="button btn-primary button-margin" 
+          className="button btn-primary button-margin btn-stacked" 
           onClick={this.handleSaveMeeting}
           disabled={!this.state.isValid  || !this.props.isSessionLive 
         }
