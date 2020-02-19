@@ -93,6 +93,22 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
             </div>
         );
     }
+
+    renderSavingSignMeetingText(){
+        return (
+        <div>
+            <div className="heading">Saving and signing off the ETRA meeting</div>
+            <p>The ETRA meeting needs to synchronise with Manage a tenancy. You need to be online and signed into Manage a tenancy 
+                for this to happen. Do not close your web browser or switch off your iPad until you have done this.</p>
+            <p>If you are offline or not signed into Manage a tenancy you can only ‘Save the issues for review with the TRA later’. The TRA 
+                representative’s signature, name and role will not be saved at this stage. Once you are back online and signed in, you will be 
+                able to ‘Email issues to the TRA for sign off’. To do this you need sign in to Manage a tenancy and navigate to the ETRA meetings 
+                page and click on the link: ‘Draft ETRA meetings for review’. You should then see a link to the meeting on the next page..</p>
+            <p>If at the meeting you are online, sign into Manage a tenancy and then the TRA representative can sign, add 
+            their name and role and you can ‘Save the signed off issue list and email to TRA’.</p>
+        </div>
+        );
+    }
     
     render() {
         return (
@@ -103,6 +119,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
                     <AddIssue blocks={this.blockInfo} key={issue.id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>
                 )}
                 {!this.props.readOnly && this.renderAddIssuesButton()}
+                {!this.props.readOnly && this.renderSavingSignMeetingText()}
             </div>
             );
     }
