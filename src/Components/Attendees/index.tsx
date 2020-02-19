@@ -65,7 +65,7 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
     render() {
         return (
             <div>
-                {this.props.readOnly && !this.props.isComplete ? this.render48hReminder() : ""}
+                {this.props.readOnly && this.props.isComplete === false ? this.render48hReminder() : ""}
                 {this.renderArrow()}
                 <span data-test="meeting-attendance-header" className="attendance-header">Meeting attendance</span>
                 {!this.state.isCollapsed && this.renderInputs()}
