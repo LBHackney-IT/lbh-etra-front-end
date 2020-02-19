@@ -18,6 +18,12 @@ interface IRecordIssueState {
     issues: Array<IIssue>
 }
 
+const divStyle = {
+    position: 'relative' as 'relative',
+    top: '40px',
+    margin: '0 0 40px 0',
+};
+
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
     private _issueFactory:IssueFactory;
     private readonly blockInfo: IBlockInfo[] = [];
@@ -76,13 +82,15 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
 
     renderAddIssuesButton(){
         return (
-            <button 
-                id="add-issue"
-                data-test="add-issue"
-                className="button btn-primary btn-stacked"
-                onClick={this.addIssueComponent}>
-                    Add an issue
-            </button>
+            <div style={ this.props.issues.length > 0 ? divStyle : {}}>
+                <button 
+                    id="add-issue"
+                    data-test="add-issue"
+                    className="button btn-primary btn-stacked"
+                    onClick={this.addIssueComponent}>
+                        Add an issue
+                </button>
+            </div>
         );
     }
     
