@@ -20,8 +20,7 @@ interface IRecordIssueState {
 
 const divStyle = {
     position: 'relative' as 'relative',
-    top: '40px',
-    margin: '0 0 40px 0',
+    margin: '0 0 5px 0',
 };
 
 export default class RecordIssues extends React.Component<IRecordIssueProps, IRecordIssueState>{
