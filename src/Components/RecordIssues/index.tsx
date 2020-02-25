@@ -81,7 +81,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
 
     renderAddIssuesButton(){
         return (
-            <>
+            <React.Fragment>
                 <div style={ this.props.issues.length > 0 ? divStyle : {}}>
                     <button 
                         id="add-issue"
@@ -102,7 +102,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
                     <p>If at the meeting you are online, sign into Manage a tenancy and then the TRA representative can sign, add 
                     their name and role and you can ‘Save the signed off issue list and email to TRA’.</p>
                 </div>
-            </>
+            </React.Fragment>
         );
     }
     
