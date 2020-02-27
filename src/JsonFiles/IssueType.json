@@ -214,5 +214,9 @@
 	{
 		"issueType": "Other",
 		"issueId": "100000259"
+	},
+	{
+		"issueType": "Other surgery",
+		"issueId": "100000096"
 	}
 ]
