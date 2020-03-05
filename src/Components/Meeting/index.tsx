@@ -107,7 +107,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
       //Check that the meeting attendance contains values to display
-      const isEmpty = !Object.values(existingMeeting.meetingAttendance).some(x => (x === null && x === ''));
+      const isEmpty = !Object.values(existingMeeting.meetingAttendance).some(x => (x !== null));
       if(!isEmpty)
         this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
       else

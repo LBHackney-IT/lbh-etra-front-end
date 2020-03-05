@@ -21,7 +21,6 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
         //fix for bad response from api
         if(!props.attendees)
             props.attendees = {councillors: '', hackneyStaff: '',  attendees: 1};
-debugger
         if (!props.attendees.councillors)
             props.attendees.councillors = '';
 
