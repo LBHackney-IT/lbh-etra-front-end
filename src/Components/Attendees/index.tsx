@@ -19,13 +19,12 @@ export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
     public constructor(props: IAttendeesProp) {
         super(props);
         //fix for bad response from api
-        if(props.attendees === null)
+        if(!props.attendees)
             props.attendees = {councillors: '', hackneyStaff: '',  attendees: 1};
-
-        if (props.attendees.councillors === null)
+        if (!props.attendees.councillors)
             props.attendees.councillors = '';
 
-        if (props.attendees.hackneyStaff === null)
+        if (!props.attendees.hackneyStaff)
             props.attendees.hackneyStaff = '';
             
         this.state = {

@@ -25,6 +25,7 @@ export interface IMeetingProps {
 
 export interface IMeetingState {
   shouldDisplay: boolean,
+  apiError: boolean,
   detailsEditable: boolean,
   signOffIncomplete: boolean,
   errorMessage: string,
@@ -35,6 +36,7 @@ export interface IMeetingState {
 
 const emptyState : IMeetingState = {
   shouldDisplay: false,
+  apiError: false,
   detailsEditable: false,
   signOffIncomplete: false,
   errorMessage: "",
@@ -66,6 +68,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
   private isAnExistingMeeting:boolean=false;
+
   public constructor(props: IMeetingProps, context: IServiceProvider) {
     super(props);
 
@@ -93,17 +96,23 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       requestFromWorkTray=queries.isRequestFromWorkTray as boolean;
       this.isAnExistingMeeting=loadExistingMeeting;
     }
-
     if(!loadExistingMeeting){
       this.handleNewMeeting();
       return;
     }
+    
    
     const existingMeeting = await this.getMeeting.Execute();
     
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
+      //Check that the meeting attendance contains values to display
+      const isEmpty = !Object.values(existingMeeting.meetingAttendance).some(x => (x !== null));
+      if(!isEmpty)
+        this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
+      else
+        this.setState({apiError: true})
+
       return;
     }
 
@@ -148,6 +157,11 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   render() {
+
+    if(this.state.apiError){
+      return this.renderAPIErrorScreen();
+    } 
+
     if(!this.state.shouldDisplay){
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
@@ -189,6 +203,29 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           <Link to="" id="lnkBack" href="#">Back</Link>
         </div>
       </>
+    );
+  };
+
+  renderAPIErrorScreen(){
+    return (
+      <div>
+        {this.renderBackArrow()}
+        <div className="api-error">
+          <p>Sorry, something seems to have gone wrong.<br />
+          We're not sure why this has happened.<br />
+          You can try going back to your previous page or to your Home page.<br />
+          Please tell us what you were trying to do when this happened so we can fix it.<br />
+          </p>
+          <p>Link for the feedback form is:&nbsp; 
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+          tell us what you were trying to do
+          </a></p>
+          <p>
+           Return to the&nbsp;
+            <Link to="">landing page.</Link>
+          </p>
+        </div>
+      </div>
     );
   };
 
