@@ -214,11 +214,10 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           <p>Sorry, something seems to have gone wrong.<br />
           We're not sure why this has happened.<br />
           You can try going back to your previous page or to your Home page.<br />
-          Please tell us what you were trying to do when this happened so we can fix it.<br />
+          Please&nbsp; 
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+            tell us what you were trying to do</a> when this happened so we can fix it.<br />
           </p>
-          <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
-          Click this link for the feedback form
-          </a></p>
           <p>
            Return to the&nbsp;
             <Link to="">ETRA meetings page.</Link>
@@ -234,10 +233,10 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         {this.renderBackArrow()}
         <div className="no-meeting-selected">
           <p>{this.state.errorMessage}</p>
-          <p className="api-error">Please tell us what you were trying to do when this happened so we can fix it.<br />
+          <p className="api-error">Please&nbsp; 
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
-          Click this link for the feedback form
-          </a></p>
+            tell us what you were trying to do</a> when this happened so we can fix it.<br />
+          </p>
           <p className="api-error">
             Return to the &nbsp;
             <Link to="">ETRA meetings page.</Link>
