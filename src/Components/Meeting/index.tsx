@@ -222,7 +222,7 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           </a></p>
           <p>
            Return to the&nbsp;
-            <Link to="">landing page.</Link>
+            <Link to="">ETRA meetings page.</Link>
           </p>
         </div>
       </div>
@@ -235,9 +235,14 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         {this.renderBackArrow()}
         <div className="no-meeting-selected">
           <p>{this.state.errorMessage}</p>
-          <p>
+          <p className="api-error">Please tell us what you were trying to do when this happened so we can fix it.<br />
+            Link for the feedback form is:&nbsp; 
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+          tell us what you were trying to do
+          </a></p>
+          <p className="api-error">
             Please return to the &nbsp;
-            <Link to="">landing page.</Link>
+            <Link to="">ETRA meetings page.</Link>
           </p>
         </div>
       </div>
