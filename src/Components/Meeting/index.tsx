@@ -216,9 +216,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
           You can try going back to your previous page or to your Home page.<br />
           Please tell us what you were trying to do when this happened so we can fix it.<br />
           </p>
-          <p>Link for the feedback form is:&nbsp; 
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
-          tell us what you were trying to do
+          <p><a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+          Click this link for the feedback form
           </a></p>
           <p>
            Return to the&nbsp;
@@ -236,12 +235,11 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
         <div className="no-meeting-selected">
           <p>{this.state.errorMessage}</p>
           <p className="api-error">Please tell us what you were trying to do when this happened so we can fix it.<br />
-            Link for the feedback form is:&nbsp; 
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
-          tell us what you were trying to do
+          Click this link for the feedback form
           </a></p>
           <p className="api-error">
-            Please return to the &nbsp;
+            Return to the &nbsp;
             <Link to="">ETRA meetings page.</Link>
           </p>
         </div>
