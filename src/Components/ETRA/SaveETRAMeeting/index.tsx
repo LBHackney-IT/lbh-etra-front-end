@@ -77,18 +77,6 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     }
   }
 
-  renderBackArrow(){
-    return (
-      <>
-        <div className="back-arrow"> &#60;</div>
-        <div className="back-link">
-          <Link to="" id="lnkBack" href="#">Back</Link>
-        </div>
-      </>
-    );
-   
-  };
-
   render() {
     if(this.state.redirectToLandingPage){
       return <Redirect to="" />
@@ -104,13 +92,12 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
   private renderSaveMeetingButtons() {
     return (
       <div>
-          {this.renderBackArrow()}
         <button 
           id="save-draft" 
           className="button btn-primary btn-stacked button-margin" 
           onClick={this.handleSaveDraft}
           disabled={!this.state.isValid}>
-            Save Meeting
+            Save meeting
         </button>
       </div>
     );

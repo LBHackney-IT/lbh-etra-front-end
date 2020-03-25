@@ -1,8 +1,8 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewMeeting from '../../ReviewMeeting';
-import RecordIssues from '../../RecordIssues'
+import ReviewMeeting from '../ReviewMeeting';
+import RecordActions from '../RecordActions'
 import Attendees from '../../Attendees';
 import { Location } from 'history';
 import { Link } from 'react-router-dom';
@@ -177,7 +177,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
         <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordIssues blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewMeeting
           isComplete={!this.state.signOffIncomplete}
@@ -200,7 +200,8 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
       <>
         <div className="back-arrow"> &#60;</div>
         <div className="back-link">
-          <Link to="" id="lnkBack" href="#">Back</Link>
+          <Link to="/etra/"
+          id="lnkBack" href="#">Back</Link>
         </div>
       </>
     );

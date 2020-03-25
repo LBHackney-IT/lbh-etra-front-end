@@ -12,8 +12,8 @@ export default function AppRouter() {
       <Route component={TokenLoader} />
       <Route path="/" exact component={LandingPage} />
       <Route path="/etra/" exact component={ETRALandingPage} />
-      <Route path="/meeting/" component={Meeting} />
       <Route path="/etra/savemeeting/" component={ETRAMeeting} />
+      <Route path="/meeting/" component={Meeting} />
     </Router>
   );
 }
