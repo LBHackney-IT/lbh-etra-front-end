@@ -1,14 +1,14 @@
 import React from 'react';
 import './index.css';
-import { IIssue } from '../../Domain/Issues'
-import { IServiceProvider, ServiceContext } from '../../ServiceContext';
-import { ISaveMeetingDraftUseCase } from '../../Boundary/SaveMeetingDraft';
-import { MeetingModel, IMeetingModel } from '../../Domain/Meeting';
-import { IAttendees } from '../../Domain/Attendees';
-import { ISignOff } from '../../Domain/SignOff';
+import { IIssue } from '../../../Domain/Issues'
+import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
+import { ISaveMeetingDraftUseCase } from '../../../Boundary/SaveMeetingDraft';
+import { MeetingModel, IMeetingModel } from '../../../Domain/Meeting';
+import { IAttendees } from '../../../Domain/Attendees';
+import { ISignOff } from '../../../Domain/SignOff';
 import { Redirect, Link } from 'react-router-dom';
-import Attendees from '../Attendees';
-import RecordIssues from '../RecordIssues';
+import Attendees from '../../Attendees';
+import RecordIssues from '../../RecordIssues';
 export interface ISaveMeetingProps {
   signOffMode: boolean,
   traId: number,
@@ -27,7 +27,7 @@ export interface ISaveMeetingState {
  
 }
 
-export class SaveMeetingETRA extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
+export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
   private readonly saveMeetingDraft: ISaveMeetingDraftUseCase;
   public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
@@ -125,4 +125,4 @@ export class SaveMeetingETRA extends React.Component<ISaveMeetingProps, ISaveMee
   }
 }
 
-export default SaveMeetingETRA;
+export default SaveETRAMeeting;
