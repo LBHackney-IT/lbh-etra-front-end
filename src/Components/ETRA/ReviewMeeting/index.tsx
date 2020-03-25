@@ -98,13 +98,13 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     }
 
     render() {
-        if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
+        /*if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
           return (<Confirmation signOff={this.state.signOff} reviewedLater={this.props.signOffMode}/>);
         }
 
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
             return (<ConfirmLater />);
-        }
+        }*/
 
         return this.renderReview();
     }

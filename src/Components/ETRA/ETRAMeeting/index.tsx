@@ -176,7 +176,25 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
           signOffMode ={this.state.signOffMode}
          isSessionLive={this.state.isSessionLive}
         />
+        <div className="record-issues-padding">
+        {this.renderSignOffMeetingOptions()}
+        </div>
       </div>);
+  }
+
+  renderSignOffMeetingOptions() {
+    if(this.props.location.state.meeting){
+      return (
+        <>
+           <div className="heading">Sign off meeting options</div>
+           <div>
+             <p>When you select one of the following options you will still be able to edit the actions, but you will not be able to add 
+               any new ones. Please make sure you have all the actions you need before proceeding.
+              </p>
+            </div>
+        </>
+      );
+    }
   }
 
   renderBackArrow(){
