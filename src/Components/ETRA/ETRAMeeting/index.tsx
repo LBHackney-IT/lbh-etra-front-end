@@ -101,22 +101,6 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
       return;
     }
     
-   
-    const existingMeeting = await this.getMeeting.Execute();
-    
-    if(existingMeeting){
-      const signOffEditable = !existingMeeting.isSignedOff;
-      //Check that the meeting attendance contains values to display
-      const isEmpty = !Object.values(existingMeeting.meetingAttendance).some(x => (x !== null));
-      if(!isEmpty)
-        this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
-      else
-        this.setState({apiError: true})
-
-      return;
-    }
-
-    this.setState({errorMessage: "Meeting could not be loaded."});
   }
 
   private handleNewMeeting(){
@@ -125,6 +109,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
       return;
     }
 
+    //Meeting loaded from browser local storage
     const existingMeeting = this.props.location.state.meeting;
     if(existingMeeting){
       this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: true})
