@@ -2,7 +2,7 @@ import { configure, shallow } from 'enzyme';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import React from 'react';
 import RecordIssues from '.';
-import { IBlock } from '../../Domain/Area';
+import { IBlock } from '../../../Domain/Area';
 
 configure ({adapter:new Adapter()});
 

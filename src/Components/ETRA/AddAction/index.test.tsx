@@ -1,12 +1,12 @@
 import React from 'react'
-import AddIssue from '.'
+import AddAction from '.'
 import {default as Adapter} from 'enzyme-adapter-react-16'
 import { configure, shallow, mount } from 'enzyme';
-import {IssueFactory} from '../../Factories/Issue/'
-import { ServiceContainer, ServiceProvider } from '../../ServiceContext';
-import configureServices from '../../serviceConfiguration';
-import { IIssue } from '../../Domain/Issues';
-import { IBlockInfo } from '../../Boundary/BlockInfo';
+import {IssueFactory} from '../../../Factories/Issue/'
+import { ServiceContainer, ServiceProvider } from '../../../ServiceContext';
+import configureServices from '../../../serviceConfiguration';
+import { IIssue } from '../../../Domain/Issues';
+import { IBlockInfo } from '../../../Boundary/BlockInfo';
 
 configure({adapter:new Adapter()});
 
@@ -21,9 +21,9 @@ const mockBlocks : IBlockInfo[] = [
     {id: "1", block: { name: "Block 2" }}
 ];
 
-it('Add Issue component loads',() => {
+it('Add Action component loads',() => {
     shallow( <ServiceProvider value={serviceContainer}>
-        <AddIssue readOnly={false} blocks={[]} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
+        <AddAction readOnly={false} blocks={[]} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
     </ServiceProvider>)
 });
 
@@ -31,7 +31,7 @@ it('Issue notes can be changed', ()=>{
 
     const wrapper = mount( 
         <ServiceProvider value={serviceContainer}>
-            <AddIssue readOnly={false} blocks={[]} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
+            <AddAction readOnly={false} blocks={[]} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
         </ServiceProvider>)
     const event = { target: { name: 'notes', value: "hello"}};
     const notes = wrapper.find('[data-test="notes"]');
@@ -45,7 +45,7 @@ it('Issue notes can be changed', ()=>{
 describe('when we go to render the Add Issue Component',()=>{
     const wrapper = mount(
         <ServiceProvider value={serviceContainer}>
-            <AddIssue readOnly={false} blocks={mockBlocks} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
+            <AddAction readOnly={false} blocks={mockBlocks} index={0} onDeleteIssue={mockfunction} onChangeIssue={jest.fn()} issue={issue}/>
         </ServiceProvider>);
 
     it('Then the issue label and dropdown is shown', () => {

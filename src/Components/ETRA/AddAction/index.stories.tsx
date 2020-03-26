@@ -1,5 +1,5 @@
 import React from 'react'
-import AddIssue from '.'
+import AddAction from '.'
 import {storiesOf} from '@storybook/react'
 import { IIssue } from '../../../Domain/Issues';
 import { IssueFactory } from '../../../Factories/Issue';
@@ -14,7 +14,7 @@ configureServices(serviceContainer);
 storiesOf('AddIssue',module)
 .add('Opens Correctly',()=>(
     <ServiceProvider value={serviceContainer}>
-        <AddIssue
+        <AddAction
             blocks={[]}
             readOnly={false}
             index={1} 
