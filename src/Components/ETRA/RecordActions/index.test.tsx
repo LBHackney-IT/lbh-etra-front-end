@@ -38,12 +38,12 @@ it('RecordIssues component loads', () => {
    });
 
     it('Then another issue can be added', () => {
-       expect(wrapper.find('AddIssue')).toHaveLength(1);
+       expect(wrapper.find('AddAction')).toHaveLength(1);
     });
 
     it('Then we can add two more issues', () => {
         addIssueButton.simulate('click');
         addIssueButton.simulate('click');
-        expect(wrapper.find('AddIssue')).toHaveLength(3);
+        expect(wrapper.find('AddAction')).toHaveLength(3);
      });
 });
