@@ -32,7 +32,7 @@ export class MeetingSaved extends React.Component<IMeetingProps> {
     }
     return(
       <div>
-        {this.props.location.state.meetingname}
+        <h1 className="tra-name-etra-meet">{this.props.location.state.meetingname}</h1>
       <div className="read-only-background">
         <div className="landing-page-header" data-test="header-text">ETRA Meeting has been saved locally
         <br />

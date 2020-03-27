@@ -190,6 +190,15 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
            <div>
              <p>When you select one of the following options you will still be able to edit the actions, but you will not be able to add 
                any new ones. Please make sure you have all the actions you need before proceeding.
+               <br />&nbsp;
+              </p>
+              <p>
+              <Link to="/etra/"
+          id="signoff" href="#">TRA representative is present to sign off meeting</Link>
+              </p>
+              <p>
+              <Link to="/etra/"
+          id="signoff" href="#">TRA representative is not present to sign off meeting</Link>
               </p>
             </div>
         </>

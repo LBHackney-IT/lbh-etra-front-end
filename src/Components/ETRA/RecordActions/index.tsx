@@ -94,7 +94,7 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
                 <div>
                 <div className="heading">End of meeting</div>
                     <p>At the end of the meeting, please save the meeting. You will then be able to proceed with signing 
-                        off the actions from the meeting with the TRA representative now oe later</p>
+                        off the actions from the meeting with the TRA representative now or later</p>
                 </div>
             </React.Fragment>
         );
