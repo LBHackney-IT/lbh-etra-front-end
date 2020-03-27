@@ -107,7 +107,7 @@ export default class ETRALandingPage extends Component<ILandingPageProps, ILandi
 
         return (
             <div className="landing-page-form">
-                <div className="landing-page-header" data-test="header-text">ETRA Meetings...</div>
+                <div className="landing-page-header" data-test="header-text">ETRA Meetings</div>
                 {this.renderDropdown()}
                 <button
                     id="start-meeting-button"
