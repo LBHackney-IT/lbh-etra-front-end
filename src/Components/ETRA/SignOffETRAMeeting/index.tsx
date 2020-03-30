@@ -13,7 +13,6 @@ import queryString from 'query-string';
 import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
 import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';
 import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
-import SaveETRAMeeting from '../SaveETRAMeeting'
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
@@ -64,7 +63,7 @@ const emptyState : IMeetingState = {
   }
 }
 
-export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
+export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
@@ -165,18 +164,18 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
         <div className="record-issues-padding">
           <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
-        <div className="review-button">
-              <SaveETRAMeeting
-                  signOff={meeting.signOff}
-                  signOffMode ={this.state.signOffMode}
-                  traId={selectedTra && selectedTra.id}
-                  meetingId={meeting.id}
-                  meetingName={meeting.meetingName}
-                  attendees={meeting.meetingAttendance}
-                  issues={meeting.issues} 
-                  isSessionLive={this.state.isSessionLive}
-                  />
-          </div>
+        <ReviewMeeting
+          isComplete={!this.state.signOffIncomplete}
+          traId={selectedTra && selectedTra.id}
+          meetingId={meeting.id}
+          meetingName={meeting.meetingName}
+          attendees={meeting.meetingAttendance}
+          issues={meeting.issues}
+          onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
+          signOffMode ={this.state.signOffMode}
+         isSessionLive={this.state.isSessionLive}
+        />
         <div className="record-issues-padding">
         {this.renderSignOffMeetingOptions()}
         </div>
@@ -194,11 +193,11 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
                <br />&nbsp;
               </p>
               <p>
-              <Link to="/etra/signoff/"
+              <Link to="/etra/"
           id="signoff" href="#">TRA representative is present to sign off meeting</Link>
               </p>
               <p>
-              <Link to="/etra/signoff/"
+              <Link to="/etra/"
           id="signoff" href="#">TRA representative is not present to sign off meeting</Link>
               </p>
             </div>
@@ -269,4 +268,4 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 }
 
-export default ETRAMeeting;
+export default SignOffETRAMeeting;

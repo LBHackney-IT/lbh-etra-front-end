@@ -97,7 +97,7 @@ export default class ETRALandingPage extends Component<ILandingPageProps, ILandi
             return <Redirect 
                     push to={
                         {
-                            pathname:`/etra/savemeeting/`,
+                            pathname:`/etra/meeting/`,
                             state: {
                                 selectedTra: this.findSelectedTra(this.state.selectedTraId),
                                 noSession:this.state.noSession
