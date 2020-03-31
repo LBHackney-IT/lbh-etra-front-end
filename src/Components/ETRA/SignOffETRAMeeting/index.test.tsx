@@ -4,7 +4,7 @@ import ETRAMeeting, { IMeetingRedirectProps } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 import { shallow } from 'enzyme';
-import ReviewMeeting from '../ReviewMeeting';
+import ReviewMeeting from '../ReviewETRAMeeting';
 import { Location } from 'history';
 import { ServiceProvider, IServiceProvider } from '../../../ServiceContext';
 import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';

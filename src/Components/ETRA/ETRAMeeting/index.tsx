@@ -1,7 +1,7 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewMeeting from '../ReviewMeeting';
+import ReviewMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
 import Attendees from '../../Attendees';
 import { Location } from 'history';

@@ -48,7 +48,7 @@ const roles : Array<IRole> = [
     {id: "treasurer", name: "Treasurer"},
 ]
 
-export default class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
+export default class ReviewETRAMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
 
     public constructor(props: IReviewMeetingProps) {
         super(props);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewMeeting from '../ReviewMeeting';
+import ReviewETRAMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
 import Attendees from '../../Attendees';
 import { Location } from 'history';
@@ -164,7 +164,7 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
         <div className="record-issues-padding">
           <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
-        <ReviewMeeting
+        <ReviewETRAMeeting
           isComplete={!this.state.signOffIncomplete}
           traId={selectedTra && selectedTra.id}
           meetingId={meeting.id}
