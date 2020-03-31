@@ -22,7 +22,8 @@ export interface IReviewMeetingProps {
     attendees:IAttendees,
     isSessionLive?:boolean,
     signOffMode: boolean;
-    signOff:ISignOff
+    signOff:ISignOff,
+    traEmailSignOff: boolean
 }
 
 export interface IReviewMeetingState {
@@ -67,7 +68,8 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
         issues: Array<IIssue>(),
         attendees: {},
         signOffMode: false,
-        signOff: new SignOff("", "", roles[0].name)
+        signOff: new SignOff("", "", roles[0].name),
+        traEmailSignOff: false
     };
 
     private updateSignatureString = (value: string) : void => {
@@ -100,7 +102,10 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
     }
 
     render() {
-        return this.renderReview();
+        if(this.props.traEmailSignOff){
+            return this.renderEmailSignOff();
+        }
+        return this.renderSignatureSignOff();
     }
     
     renderSignature(){

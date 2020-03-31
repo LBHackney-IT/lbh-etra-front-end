@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import ETRAMeeting from '.';
+import SignOffETRAMeeting  from '.';
 
 const location = {
   pathname: "",
@@ -25,5 +25,5 @@ const location = {
 
 storiesOf('Meeting', module)
   .add("opens correctly", () => (
-    <ETRAMeeting location={location}/>
+    <SignOffETRAMeeting location={location}/>
   ));

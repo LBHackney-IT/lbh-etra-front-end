@@ -194,12 +194,26 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
                <br />&nbsp;
               </p>
               <p>
-              <Link to="/etra/signoff/"
-          id="signoff" href="#">TRA representative is present to sign off meeting</Link>
+              <Link to={{
+                pathname: "/etra/signoff/",
+                  state: {
+                      meeting: this.state.meeting,
+                      selectedTra: this.props.location.state && this.props.location.state.selectedTra.tra,
+                      traEmailSignOff: false
+                  }
+                }}
+              id="signoffsignature" href="#">TRA representative is present to sign off meeting</Link>
               </p>
               <p>
-              <Link to="/etra/signoff/"
-          id="signoff" href="#">TRA representative is not present to sign off meeting</Link>
+              <Link to={{
+                pathname: "/etra/signoff/",
+                state: {
+                    meeting: this.state.meeting,
+                    selectedTra: this.props.location.state && this.props.location.state.selectedTra.tra,
+                    traEmailSignOff: true
+                }
+            }}
+            id="signoffemail" href="#">TRA representative is not present to sign off meeting</Link>
               </p>
             </div>
         </>

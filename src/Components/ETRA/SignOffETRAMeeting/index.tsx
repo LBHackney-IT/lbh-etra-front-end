@@ -16,7 +16,7 @@ import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
- 
+  traEmailSignOff?: boolean;
 }
 
 export interface IMeetingProps {
@@ -175,35 +175,11 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
           signOff={meeting.signOff}
           signOffMode ={this.state.signOffMode}
          isSessionLive={this.state.isSessionLive}
+         traEmailSignOff = {this.props.location.state.traEmailSignOff}
         />
         <div className="record-issues-padding">
-        {this.renderSignOffMeetingOptions()}
         </div>
       </div>);
-  }
-
-  renderSignOffMeetingOptions() {
-    if(this.props.location.state.meeting){
-      return (
-        <>
-           <div className="heading">Sign off meeting options</div>
-           <div>
-             <p>When you select one of the following options you will still be able to edit the actions, but you will not be able to add 
-               any new ones. Please make sure you have all the actions you need before proceeding.
-               <br />&nbsp;
-              </p>
-              <p>
-              <Link to="/etra/"
-          id="signoff" href="#">TRA representative is present to sign off meeting</Link>
-              </p>
-              <p>
-              <Link to="/etra/"
-          id="signoff" href="#">TRA representative is not present to sign off meeting</Link>
-              </p>
-            </div>
-        </>
-      );
-    }
   }
 
   renderBackArrow(){

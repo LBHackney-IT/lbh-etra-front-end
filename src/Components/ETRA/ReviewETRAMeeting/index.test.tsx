@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReviewMeeting, { ReviewMeetingDisplayState } from '.';
+import ReviewETRAMeeting, { ReviewMeetingDisplayState } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
@@ -13,11 +13,11 @@ import { ISignOff } from '../../../Domain/SignOff';
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting meetingName="" onSaveComplete={jest.fn()} />);
+   shallow(<ReviewETRAMeeting meetingName="" onSaveComplete={jest.fn()} />);
 });
 
 describe('When we display the review meeting component', ()  => {
-    const wrapper = shallow(<ReviewMeeting meetingName="Test" onSaveComplete={jest.fn()}/>);
+    const wrapper = shallow(<ReviewETRAMeeting meetingName="Test" onSaveComplete={jest.fn()}/>);
 
     /*it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
