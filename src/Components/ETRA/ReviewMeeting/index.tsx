@@ -9,6 +9,8 @@ import ConfirmLater from '../../ConfirmLater';
 import { IAttendees } from '../../../Domain/Attendees';
 import { ISignOff, SignOff } from '../../../Domain/SignOff';
 import RepName from '../../RepName'
+import EmailSignOff from '../EmailSignOff';
+import SignatureSignOff from '../SignatureSignOff';
 
 export interface IReviewMeetingProps {
     isComplete: boolean,
@@ -118,7 +120,45 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         return (
             <div>
                 <div className="review-button">
-                    <SaveETRAMeeting
+                    <EmailSignOff
+                        signOffMode={this.props.signOffMode}
+                        traId={this.props.traId}
+                        meetingId={this.props.meetingId}
+                        meetingName={this.props.meetingName}
+                        issues={this.props.issues} 
+                        signOff={this.state.signOff} 
+                        attendees={this.props.attendees}
+                        isSessionLive={this.props.isSessionLive}
+                        />
+                </div>
+            </div>
+        );
+    }
+
+    private renderEmailSignOff() {
+        return (
+            <div>
+                <div className="review-button">
+                    <EmailSignOff
+                        signOffMode={this.props.signOffMode}
+                        traId={this.props.traId}
+                        meetingId={this.props.meetingId}
+                        meetingName={this.props.meetingName}
+                        issues={this.props.issues} 
+                        signOff={this.state.signOff} 
+                        attendees={this.props.attendees}
+                        isSessionLive={this.props.isSessionLive}
+                        />
+                </div>
+            </div>
+        );
+    }
+
+    private renderSignatureSignOff() {
+        return (
+            <div>
+                <div className="review-button">
+                    <SignatureSignOff
                         signOffMode={this.props.signOffMode}
                         traId={this.props.traId}
                         meetingId={this.props.meetingId}

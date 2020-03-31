@@ -29,7 +29,7 @@ export interface ISaveMeetingState {
  
 }
 
-export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
+export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
   private readonly signoffMeeting: ISignOffMeetingUseCase;
   private readonly createMeeting: ICreateMeetingUseCase;
@@ -165,4 +165,4 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
   }
 }
 
-export default SaveETRAMeeting;
+export default SignatureSignOff;
