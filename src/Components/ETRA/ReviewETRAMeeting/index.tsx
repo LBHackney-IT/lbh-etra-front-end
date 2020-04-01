@@ -121,25 +121,6 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
         return (<>{this.props.signOffMode ? signOffMode : notSignOffMode}</>);
     }
 
-    private renderReview() {
-        return (
-            <div>
-                <div className="review-button">
-                    <EmailSignOff
-                        signOffMode={this.props.signOffMode}
-                        traId={this.props.traId}
-                        meetingId={this.props.meetingId}
-                        meetingName={this.props.meetingName}
-                        issues={this.props.issues} 
-                        signOff={this.state.signOff} 
-                        attendees={this.props.attendees}
-                        isSessionLive={this.props.isSessionLive}
-                        />
-                </div>
-            </div>
-        );
-    }
-
     private renderEmailSignOff() {
         return (
             <div>
@@ -162,19 +143,25 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
     private renderSignatureSignOff() {
         return (
             <div>
-                <div className="review-button">
-                    <SignatureSignOff
-                        signOffMode={this.props.signOffMode}
-                        traId={this.props.traId}
-                        meetingId={this.props.meetingId}
-                        meetingName={this.props.meetingName}
-                        issues={this.props.issues} 
-                        signOff={this.state.signOff} 
-                        attendees={this.props.attendees}
-                        isSessionLive={this.props.isSessionLive}
-                        />
-                </div>
+            {this.conditionalRender(<></>, this.renderSignature())}
+            <div className="rep-name">
+                <RepName onUpdated={this.updateRepName}></RepName>
             </div>
+            <div className="role-of-TRA-representative">Role of TRA representative</div>
+            {roles.map(this.renderRole, this)}
+            <div className="review-button">
+                <SignatureSignOff
+                    signOffMode={this.props.signOffMode}
+                    traId={this.props.traId}
+                    meetingId={this.props.meetingId}
+                    meetingName={this.props.meetingName}
+                    issues={this.props.issues} 
+                    signOff={this.state.signOff} 
+                    attendees={this.props.attendees}
+                    isSessionLive={this.props.isSessionLive}
+                    />
+            </div>
+        </div>
         );
     }
 
