@@ -17,16 +17,7 @@ export interface IAttendeesProp {
 export class Attendees extends Component<IAttendeesProp, IAttendeesState> {
 
     public constructor(props: IAttendeesProp) {
-        super(props);
-        //fix for bad response from api
-        if(!props.attendees)
-            props.attendees = {councillors: '', hackneyStaff: '',  attendees: 1};
-        if (!props.attendees.councillors)
-            props.attendees.councillors = '';
-
-        if (!props.attendees.hackneyStaff)
-            props.attendees.hackneyStaff = '';
-            
+        super(props);    
         this.state = {
             isCollapsed: false,
             attendees: this.props.attendees

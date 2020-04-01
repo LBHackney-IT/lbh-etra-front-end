@@ -101,14 +101,25 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       return;
     }
     
-   
     const existingMeeting = await this.getMeeting.Execute();
     
     if(existingMeeting){
       const signOffEditable = !existingMeeting.isSignedOff;
-      //Check that the meeting attendance contains values to display
-      const isEmpty = !Object.values(existingMeeting.meetingAttendance).some(x => (x !== null));
-      if(!isEmpty)
+
+      //fix for bad response from api
+      if(existingMeeting.meetingAttendance.attendees === null){
+        existingMeeting.meetingAttendance.attendees = 0;
+      }
+      if (existingMeeting.meetingAttendance.councillors === null){
+        existingMeeting.meetingAttendance.councillors = '';
+      }
+      if (existingMeeting.meetingAttendance.hackneyStaff === null){
+        existingMeeting.meetingAttendance.hackneyStaff = '';
+      }
+      
+      //!Object.values(existingMeeting.meetingAttendance).some(x => (x !== null)) || 
+      const meetingNotEmpty =  (existingMeeting.issues !== null);
+      if(meetingNotEmpty)
         this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: signOffEditable, signOffMode: (!requestFromWorkTray || signOffEditable)})
       else
         this.setState({apiError: true})
@@ -166,10 +177,8 @@ export class Meeting extends React.Component<IMeetingProps, IMeetingState> {
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
-
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
-   
 
     return (
       <div>
