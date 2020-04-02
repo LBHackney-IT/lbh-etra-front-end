@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReviewMeeting, { ReviewMeetingDisplayState } from '.';
+import ReviewETRAMeeting, { ReviewMeetingDisplayState } from '.';
 import { default as Adapter } from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 import { shallow } from 'enzyme';
@@ -9,15 +9,16 @@ import SaveETRAMeeting from '../SaveETRAMeeting';
 import Confirmation from '../../ConfirmationPage';;
 import ConfirmLater from '../../ConfirmLater';
 import { ISignOff } from '../../../Domain/SignOff';
+import EmailSignOff from '../EmailSignOff';
 
 configure({ adapter: new Adapter() });
 
 it('Meeting component loads', () => {
-   shallow(<ReviewMeeting meetingName="" onSaveComplete={jest.fn()} />);
+   shallow(<ReviewETRAMeeting meetingName="" onSaveComplete={jest.fn()} />);
 });
 
 describe('When we display the review meeting component', ()  => {
-    const wrapper = shallow(<ReviewMeeting meetingName="Test" onSaveComplete={jest.fn()}/>);
+    const wrapper = shallow(<ReviewETRAMeeting traEmailSignOff={true} meetingName="Test" onSaveComplete={jest.fn()}/>);
 
     /*it('Then the save "Signature of TRA representative" text and component is displayed', () => {
         const element = wrapper.find('.signature-of-TRA-rep')
@@ -65,13 +66,13 @@ describe('When we display the review meeting component', ()  => {
     })*/
 
     it('Then the SaveMeeting component is displayed', () => {
-        const element = wrapper.find(SaveETRAMeeting)
+        const element = wrapper.find(EmailSignOff)
         expect(element).toHaveLength(1);
     });
 
     /*describe('And we change the page state to ReviewComplete', ()  => {
         it('Then the Confirmation component is displayed', () => {
-            wrapper.setState({pageState: ReviewMeetingDisplayState.ReviewComplete})
+            wrapper.setState({pageState: })
             const element = wrapper.find(Confirmation);
             expect(element).toHaveLength(1);
         });

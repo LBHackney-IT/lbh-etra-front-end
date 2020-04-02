@@ -20,7 +20,7 @@ export default class DraftSelector extends Component<IDraftSelectorProps, {}> {
                 className="draft-selection-text"
                 data-test="meeting-name" 
                 to={{
-                    pathname: "/etra/savemeeting/",
+                    pathname: "/etra/meeting/",
                     state: {
                         meeting: this.props.meeting,
                         selectedTra: this.props.tra

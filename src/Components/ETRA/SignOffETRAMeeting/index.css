@@ -1,0 +1,32 @@
+.back-arrow
+{
+  float: left;
+  padding-right:4px;
+}
+
+.tra-name-etra-meet {
+  font-size: 36px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.53;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.record-issues-padding {
+  padding: 50px 0px 30px 0px;
+}
+
+.no-meeting-selected {
+  text-align: center;
+  font-size: 36px;
+}
+
+.api-error {
+  font-size: 22px;
+}
+
+.spinner-wrapper {
+  text-align: center;
+}

@@ -9,6 +9,8 @@ import ConfirmLater from '../../ConfirmLater';
 import { IAttendees } from '../../../Domain/Attendees';
 import { ISignOff, SignOff } from '../../../Domain/SignOff';
 import RepName from '../../RepName'
+import EmailSignOff from '../EmailSignOff';
+import SignatureSignOff from '../SignatureSignOff';
 
 export interface IReviewMeetingProps {
     isComplete: boolean,
@@ -20,7 +22,8 @@ export interface IReviewMeetingProps {
     attendees:IAttendees,
     isSessionLive?:boolean,
     signOffMode: boolean;
-    signOff:ISignOff
+    signOff:ISignOff,
+    traEmailSignOff: boolean
 }
 
 export interface IReviewMeetingState {
@@ -46,7 +49,7 @@ const roles : Array<IRole> = [
     {id: "treasurer", name: "Treasurer"},
 ]
 
-export default class ReviewMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
+export default class ReviewETRAMeeting extends React.Component<IReviewMeetingProps, IReviewMeetingState> {
 
     public constructor(props: IReviewMeetingProps) {
         super(props);
@@ -65,7 +68,8 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         issues: Array<IIssue>(),
         attendees: {},
         signOffMode: false,
-        signOff: new SignOff("", "", roles[0].name)
+        signOff: new SignOff("", "", roles[0].name),
+        traEmailSignOff: false
     };
 
     private updateSignatureString = (value: string) : void => {
@@ -98,7 +102,10 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
     }
 
     render() {
-        return this.renderReview();
+        if(this.props.traEmailSignOff){
+            return this.renderEmailSignOff();
+        }
+        return this.renderSignatureSignOff();
     }
     
     renderSignature(){
@@ -114,11 +121,11 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
         return (<>{this.props.signOffMode ? signOffMode : notSignOffMode}</>);
     }
 
-    private renderReview() {
+    private renderEmailSignOff() {
         return (
             <div>
                 <div className="review-button">
-                    <SaveETRAMeeting
+                    <EmailSignOff
                         signOffMode={this.props.signOffMode}
                         traId={this.props.traId}
                         meetingId={this.props.meetingId}
@@ -130,6 +137,31 @@ export default class ReviewMeeting extends React.Component<IReviewMeetingProps, 
                         />
                 </div>
             </div>
+        );
+    }
+
+    private renderSignatureSignOff() {
+        return (
+            <div>
+            {this.conditionalRender(<></>, this.renderSignature())}
+            <div className="rep-name">
+                <RepName onUpdated={this.updateRepName}></RepName>
+            </div>
+            <div className="role-of-TRA-representative">Role of TRA representative</div>
+            {roles.map(this.renderRole, this)}
+            <div className="review-button">
+                <SignatureSignOff
+                    signOffMode={this.props.signOffMode}
+                    traId={this.props.traId}
+                    meetingId={this.props.meetingId}
+                    meetingName={this.props.meetingName}
+                    issues={this.props.issues} 
+                    signOff={this.state.signOff} 
+                    attendees={this.props.attendees}
+                    isSessionLive={this.props.isSessionLive}
+                    />
+            </div>
+        </div>
         );
     }
 

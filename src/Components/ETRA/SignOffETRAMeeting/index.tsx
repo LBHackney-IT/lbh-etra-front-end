@@ -1,7 +1,7 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewMeeting from '../ReviewETRAMeeting';
+import ReviewETRAMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
 import Attendees from '../../Attendees';
 import { Location } from 'history';
@@ -13,11 +13,10 @@ import queryString from 'query-string';
 import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
 import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';
 import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
-import SaveETRAMeeting from '../SaveETRAMeeting'
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
- 
+  traEmailSignOff?: boolean;
 }
 
 export interface IMeetingProps {
@@ -64,7 +63,7 @@ const emptyState : IMeetingState = {
   }
 }
 
-export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
+export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
@@ -159,66 +158,28 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
 
     return (
       <div>
-         {this.renderBackArrow()}
+         {this.renderBackArrow()}&nbsp;{this.renderEditLink()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
+        <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
-        <div className="review-button">
-              <SaveETRAMeeting
-                  signOff={meeting.signOff}
-                  signOffMode ={this.state.signOffMode}
-                  traId={selectedTra && selectedTra.id}
-                  meetingId={meeting.id}
-                  meetingName={meeting.meetingName}
-                  attendees={meeting.meetingAttendance}
-                  issues={meeting.issues} 
-                  isSessionLive={this.state.isSessionLive}
-                  />
-          </div>
+        <ReviewETRAMeeting
+          isComplete={!this.state.signOffIncomplete}
+          traId={selectedTra && selectedTra.id}
+          meetingId={meeting.id}
+          meetingName={meeting.meetingName}
+          attendees={meeting.meetingAttendance}
+          issues={meeting.issues}
+          onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
+          signOffMode ={this.state.signOffMode}
+         isSessionLive={this.state.isSessionLive}
+         traEmailSignOff = {this.props.location.state.traEmailSignOff}
+        />
         <div className="record-issues-padding">
-        {this.renderSignOffMeetingOptions()}
         </div>
       </div>);
-  }
-
-  renderSignOffMeetingOptions() {
-    if(this.props.location.state.meeting){
-      return (
-        <>
-           <div className="heading">Sign off meeting options</div>
-           <div>
-             <p>When you select one of the following options you will still be able to edit the actions, but you will not be able to add 
-               any new ones. Please make sure you have all the actions you need before proceeding.
-               <br />&nbsp;
-              </p>
-              <p>
-              <Link to={{
-                pathname: "/etra/signoff/",
-                  state: {
-                      meeting: this.state.meeting,
-                      selectedTra: this.props.location.state.selectedTra,
-                      traEmailSignOff: false
-                  }
-                }}
-              id="signoffsignature" href="#">TRA representative is present to sign off meeting</Link>
-              </p>
-              <p>
-              <Link to={{
-                pathname: "/etra/signoff/",
-                state: {
-                    meeting: this.state.meeting,
-                    selectedTra: this.props.location.state.selectedTra,
-                    traEmailSignOff: true
-                }
-            }}
-            id="signoffemail" href="#">TRA representative is not present to sign off meeting</Link>
-              </p>
-            </div>
-        </>
-      );
-    }
   }
 
   renderBackArrow(){
@@ -229,6 +190,24 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
         <div className="back-link">
           <Link to="/etra/"
           id="lnkBack" href="#">Back</Link>
+        </div>
+      </>
+    );
+  };
+
+  renderEditLink(){
+    if(!this.isAnExistingMeeting)
+    return (
+      <>
+        <div className="back-link">
+          <Link to={{
+                    pathname: "/etra/meeting/",
+                    state: {
+                        meeting: this.state.meeting,
+                        selectedTra: this.props.location.state.selectedTra
+                    }
+                }}
+          id="lnkBack" href="#">Edit Meeting</Link>
         </div>
       </>
     );
@@ -283,4 +262,4 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 }
 
-export default ETRAMeeting;
+export default SignOffETRAMeeting;
