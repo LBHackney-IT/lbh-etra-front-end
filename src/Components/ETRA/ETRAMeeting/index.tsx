@@ -198,7 +198,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
                 pathname: "/etra/signoff/",
                   state: {
                       meeting: this.state.meeting,
-                      selectedTra: this.props.location.state && this.props.location.state.selectedTra.tra,
+                      selectedTra: this.props.location.state.selectedTra,
                       traEmailSignOff: false
                   }
                 }}
@@ -209,7 +209,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
                 pathname: "/etra/signoff/",
                 state: {
                     meeting: this.state.meeting,
-                    selectedTra: this.props.location.state && this.props.location.state.selectedTra.tra,
+                    selectedTra: this.props.location.state.selectedTra,
                     traEmailSignOff: true
                 }
             }}

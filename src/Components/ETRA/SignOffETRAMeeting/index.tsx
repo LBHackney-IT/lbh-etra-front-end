@@ -158,11 +158,11 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
 
     return (
       <div>
-         {this.renderBackArrow()}
+         {this.renderBackArrow()}&nbsp;{this.renderEditLink()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
+        <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.detailsEditable}/>
         <div className="record-issues-padding">
-          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewETRAMeeting
           isComplete={!this.state.signOffIncomplete}
@@ -190,6 +190,24 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
         <div className="back-link">
           <Link to="/etra/"
           id="lnkBack" href="#">Back</Link>
+        </div>
+      </>
+    );
+  };
+
+  renderEditLink(){
+    if(!this.isAnExistingMeeting)
+    return (
+      <>
+        <div className="back-link">
+          <Link to={{
+                    pathname: "/etra/meeting/",
+                    state: {
+                        meeting: this.state.meeting,
+                        selectedTra: this.props.location.state.selectedTra
+                    }
+                }}
+          id="lnkBack" href="#">Edit Meeting</Link>
         </div>
       </>
     );

@@ -153,7 +153,7 @@ export class AddAction extends React.Component<IAddIssuesProps, IAddIssueState> 
         <div className="issue">
           <label data-test="issue-label" className="label">Issue type</label>
           <br />
-          {this.renderNotReadOnlyIssueType()}
+          {this.conditionalRender(this.renderReadOnly(this.lookupIssueType(this.state.issue.issueType.issueId), "issue-type-text"), this.renderNotReadOnlyIssueType())}
         </div>
 
         <div className="issue">
