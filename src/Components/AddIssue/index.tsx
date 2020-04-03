@@ -30,7 +30,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
     super(props);
 
     this.state = {
-      selectedBlockId: "",
+      selectedBlockId: this.props.issue.location.name,
       issue: this.props.issue,
       issueTypes: this._issueTypes,
     };
@@ -112,6 +112,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   renderNotReadOnlyIssueType() {
+    
     return (
       <select id="issue-dropdown" data-test="issue-dropdown" className="select" onChange={this.handleChangeOfIssueTypeDropDownList} name="issueType" value={this.state.issue.issueType.issueId}>
         {this.renderFirstOption("Select Issue Type")}
@@ -121,6 +122,7 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   renderNotReadOnlyLocation() {
+    debugger
     return (
       <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation" value={this.state.selectedBlockId}>
         {this.renderFirstOption("Select Location")}

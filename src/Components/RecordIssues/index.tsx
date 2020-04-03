@@ -44,6 +44,7 @@ export default class RecordIssues extends React.Component<IRecordIssueProps, IRe
         this.blockInfo = this.props.blocks.map((block) => {
             return {id: uuid(), block: block};
         });
+        
     }
 
     addIssueComponent = () : void => {
