@@ -122,7 +122,6 @@ export class AddIssue extends React.Component<IAddIssuesProps, IAddIssueState> {
   }
 
   renderNotReadOnlyLocation() {
-    debugger
     return (
       <select id="location-dropdown" data-test="location-dropdown" className="select" onChange={this.handleChangeOfIssueLocationDropDownList} name="IssueLocation" value={this.state.selectedBlockId}>
         {this.renderFirstOption("Select Location")}
