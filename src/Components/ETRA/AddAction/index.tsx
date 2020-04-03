@@ -30,7 +30,7 @@ export class AddAction extends React.Component<IAddIssuesProps, IAddIssueState> 
     super(props);
 
     this.state = {
-      selectedBlockId: "",
+      selectedBlockId: this.props.issue.location.name,
       issue: this.props.issue,
       issueTypes: this._issueTypes,
     };

@@ -40,10 +40,10 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
         this._issueFactory = new IssueFactory();
 
 
-        /*if(this.props.readOnly) { return; }
+        if(this.props.readOnly) { return; }
         this.blockInfo = this.props.blocks.map((block) => {
             return {id: uuid(), block: block};
-        });*/
+        });
     }
 
     addIssueComponent = () : void => {
