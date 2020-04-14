@@ -151,19 +151,19 @@ export class AddAction extends React.Component<IAddIssuesProps, IAddIssueState> 
     return (
       <div className={`wrapper ${this.props.readOnly ? "read-only-background" : ""}`}>
         <div className="issue">
-          <label data-test="issue-label" className="label">Issue type</label>
+          <label data-test="issue-label" className="label">Action type</label>
           <br />
           {this.conditionalRender(this.renderReadOnly(this.lookupIssueType(this.state.issue.issueType.issueId), "issue-type-text"), this.renderNotReadOnlyIssueType())}
         </div>
 
         <div className="issue">
-          <label data-test="location-label" className="label">Location of issue</label>
+          <label data-test="location-label" className="label">Location of action</label>
           <br />
           {this.conditionalRender(this.renderReadOnly(this.state.issue.location.name, "location-text"), this.renderNotReadOnlyLocation())}
         </div>
 
         <div className="issue">
-          <label data-text="notes-label" className="label">Notes about issue</label>
+          <label data-text="notes-label" className="label">Notes about action</label>
           <br />
           {this.state.issue.notes.split("\n").map((i,key) => {
             return <div key={key}>{this.conditionalRender(this.renderReadOnly(i, "notes-text"), this.renderNotReadOnlyNotes())}</div>;
