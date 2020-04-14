@@ -95,8 +95,13 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
   private renderSaveMeetingButtons() {
     return (
       <div>
+         <div>
+              <div className="heading">End of meeting</div>
+                  <p>At the end of the meeting, please save the meeting. You will then be able to proceed with signing 
+                      off the actions from the meeting with the TRA representative now or later</p>
+          </div>
         <button 
-          id="save-draft" 
+          id="save-draft" style={{width: "170px"}}
           className="button btn-primary btn-stacked button-margin" 
           onClick={this.handleSaveDraft}
           disabled={!this.state.isValid}>

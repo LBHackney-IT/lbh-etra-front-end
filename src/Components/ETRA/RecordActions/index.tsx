@@ -88,13 +88,8 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
                         data-test="add-issue"
                         className="button btn-primary btn-stacked"
                         onClick={this.addIssueComponent}>
-                            Add an issue
+                            Add a new action
                     </button>
-                </div>
-                <div>
-                <div className="heading">End of meeting</div>
-                    <p>At the end of the meeting, please save the meeting. You will then be able to proceed with signing 
-                        off the actions from the meeting with the TRA representative now or later</p>
                 </div>
             </React.Fragment>
         );
