@@ -10,6 +10,10 @@ import { Redirect, Link } from 'react-router-dom';
 import { Location } from 'history';
 import Attendees from '../../Attendees';
 import RecordIssues from '../../RecordIssues';
+import getEnvVariable from '../../../Utilities/environmentVariables';
+
+const workTrayUrl = getEnvVariable("WORK_TRAY_URL")
+
 export interface IMeetingNameRedirectProps {
   meetingname: string;
 }
@@ -33,33 +37,25 @@ export class MeetingSaved extends React.Component<IMeetingProps> {
     return(
       <div>
         <h1 className="tra-name-etra-meet">{this.props.location.state.meetingname}</h1>
-      <div className="read-only-background">
-        <div className="landing-page-header" data-test="header-text">ETRA Meeting has been saved locally
-        <br />
-      </div>
-      <div className="issue">
-        You need to synchronise  this meeting with Manage a Tenancy. Do not close this page in your web browser or tuen off your 
-        iPad until you have synchronised it.
-        <br />
-      </div>
-      <div className="issue">
-        If you are online (4G/wifi) you can sign off the meeting with the TRA representative now.
-        <br />
-      </div>
-      <div className="issue">
-        If you are offline or are unable to sign off the meeting now, you can sign off the draft of the meeting later.
-        <br />
-      </div>
-      <div className="button-wrapper">
-          <button
-          id="delete-issue"
-          className="button btn-secondary"
-          data-test="delete-issue">
-          Cancel
-        </button>
-        </div>
+        <section className="lbh-page-announcement">
+          <h3 className="lbh-page-announcement__title">ETRA Meeting has been saved locally</h3>
+          <div className="lbh-page-announcement__content">
+            <p>You need to synchronise  this meeting with Manage a Tenancy. Do not close this page in your web browser or tuen off your 
+            iPad until you have synchronised it.<br/>&nbsp;</p>
+            <p>If you are online (4G/wifi) you can sign off the meeting with the TRA representative now.<br/>&nbsp;</p>
+              <p>If you are offline or are unable to sign off the meeting now, you can sign off the draft of the meeting later.
+              <br/>&nbsp;
+              </p>
+          </div>
+          <div style={{marginTop: "20px"}}>
+          <a href={workTrayUrl} role="button" className="govuk-button  lbh-button" data-module="govuk-button">
+          Sign in to Manage a Tenancy
+        </a>&nbsp;&nbsp;<span style={{paddingLeft: "25px", paddingTop: "7px"}}>
+          <Link to={{pathname: "/etra/"}}
+            id="signoffemail" href="#">Return to ETRA meeting page</Link></span>
+            </div>
+        </section>
     </div>
-  </div>
     );
   }
 }
