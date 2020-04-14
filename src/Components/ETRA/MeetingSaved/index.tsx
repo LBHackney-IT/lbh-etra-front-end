@@ -38,9 +38,9 @@ export class MeetingSaved extends React.Component<IMeetingProps> {
       <div>
         <h1 className="tra-name-etra-meet">{this.props.location.state.meetingname}</h1>
         <section className="lbh-page-announcement">
-          <h3 className="lbh-page-announcement__title">ETRA Meeting has been saved locally</h3>
+          <h3 className="lbh-page-announcement__title">ETRA meeting has been saved locally</h3>
           <div className="lbh-page-announcement__content">
-            <p>You need to synchronise  this meeting with Manage a Tenancy. Do not close this page in your web browser or tuen off your 
+            <p>You need to synchronise  this meeting with Manage a Tenancy. Do not close this page in your web browser or turn off your 
             iPad until you have synchronised it.<br/>&nbsp;</p>
             <p>If you are online (4G/wifi) you can sign off the meeting with the TRA representative now.<br/>&nbsp;</p>
               <p>If you are offline or are unable to sign off the meeting now, you can sign off the draft of the meeting later.
