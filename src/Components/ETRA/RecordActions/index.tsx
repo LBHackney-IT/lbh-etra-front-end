@@ -68,18 +68,18 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
         this.props.onChangeIssues(issues)
     }
 
-    renderNoIssuesText(){
+    renderNoActionsText(){
         return (
             <div 
                 className="no-issues-text"
                 id="no-issues"
                 data-test="no-issues">
-                    No issues in meeting
+                    No actions in meeting
             </div>
         );
     }
 
-    renderAddIssuesButton(){
+    renderAddActionsButton(){
         return (
             <React.Fragment>
                 <div style={ this.props.issues.length > 0 ? divStyle : {}}>
@@ -88,13 +88,8 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
                         data-test="add-issue"
                         className="button btn-primary btn-stacked"
                         onClick={this.addIssueComponent}>
-                            Add an issue
+                            Add a new action
                     </button>
-                </div>
-                <div>
-                <div className="heading">End of meeting</div>
-                    <p>At the end of the meeting, please save the meeting. You will then be able to proceed with signing 
-                        off the actions from the meeting with the TRA representative now or later</p>
                 </div>
             </React.Fragment>
         );
@@ -103,12 +98,12 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
     render() {
         return (
             <div>
-                <div className="heading" data-test="issues-header">Record issues at meeting</div>
-                {this.state.issues.length === 0 && this.renderNoIssuesText()}
+                <div className="heading" data-test="issues-header">Record actions at meeting</div>
+                {this.state.issues.length === 0 && this.renderNoActionsText()}
                 {this.state.issues.map((issue:IIssue, index: number) =>
                     <AddAction blocks={this.blockInfo} key={issue.id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>
                 )}
-                {!this.props.readOnly && this.renderAddIssuesButton()}
+                {!this.props.readOnly && this.renderAddActionsButton()}
             </div>
             );
     }
