@@ -98,7 +98,7 @@ export default class RecordActions extends React.Component<IRecordIssueProps, IR
     render() {
         return (
             <div>
-                <div className="heading" data-test="issues-header">Record actions at meeting</div>
+                <div className="heading" data-test="issues-header">{this.props.readOnly ? "Actions confirmed" :"Record actions at meeting"}</div>
                 {this.state.issues.length === 0 && this.renderNoActionsText()}
                 {this.state.issues.map((issue:IIssue, index: number) =>
                     <AddAction blocks={this.blockInfo} key={issue.id} index={index} onChangeIssue={this.onChangeIssue} onDeleteIssue={this.onDeleteIssue} issue={issue} readOnly={this.props.readOnly}/>

@@ -11,6 +11,7 @@ import { ISignOff } from '../../../Domain/SignOff';
 import { Redirect, Link } from 'react-router-dom';
 import Attendees from '../../Attendees';
 import RecordIssues from '../../RecordIssues';
+import { ITraInfo } from '../../../Boundary/TRAInfo';
 
 export interface ISaveMeetingProps {
   signOffMode: boolean,
@@ -20,7 +21,8 @@ export interface ISaveMeetingProps {
   attendees: IAttendees,
   issues: Array<IIssue>,
   signOff: ISignOff,
-  isSessionLive?:boolean
+  isSessionLive?:boolean,
+  selectedTra: ITraInfo
 }
 
 export interface ISaveMeetingState {
@@ -141,16 +143,31 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
   private renderSaveMeetingButtons() {
     return (
       <div>
+        <div>
         Please ensure you have agreed the list of actions with the TRA representative before emailing them. 
-        Once the email has been sent, the actions will no longer be editable.
-        <button 
-          className="button btn-primary btn-stacked button-margin" 
-          id="review-later" 
-          onClick={this.handleReviewLater}
-          disabled={!this.state.isValid  || !this.props.isSessionLive
-          }>
-            Save and email issues to TRA for sign off
-        </button>
+        Once the email has been sent, the actions will no longer be editable.<br/>&nbsp;
+        </div>
+        <div>
+          <p>
+          <button className="govuk-button  lbh-button" data-module="govuk-button" 
+            id="review-later" 
+            onClick={this.handleReviewLater}
+            disabled={!this.state.isValid  || !this.props.isSessionLive
+            }>
+              Email to TRA for sign off
+          </button>
+            <span style={{display: "inline", marginLeft: "50px"}} >
+            <Link to={{
+                        pathname: "/etra/meeting/",
+                        state: {
+                            meeting: this.getMeetingModel(),
+                            selectedTra: this.props.selectedTra
+                        }
+                    }}
+              id="lnkBack" href="#">Cancel to edit actions</Link>
+            </span>
+            </p>
+          </div>
       </div>
     );
   }
