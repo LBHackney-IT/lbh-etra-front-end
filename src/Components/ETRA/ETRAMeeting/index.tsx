@@ -3,7 +3,7 @@ import { IIssue } from '../../../Domain/Issues';
 import './index.css';
 import ReviewMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
-import Attendees from '../../Attendees';
+import MeetingAttendees from '../MeetingAttendees';
 import { Location } from 'history';
 import { Link } from 'react-router-dom';
 import { IAttendees } from '../../../Domain/Attendees';
@@ -161,7 +161,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
       <div>
          {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <Attendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
+        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
         <div className="record-issues-padding">
           <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
@@ -204,7 +204,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
               </p>
               <div className="heading" style={{paddingTop: "37px"}}>TRA representative is not present</div>
               <p>If a TRA representative is not present to sign off the meeting, please make sure you have agreed the actions with the TRA 
-                TRA representative before emailing them for the sign off.
+                representative before emailing them for the sign off.
               </p>
               <p>
               <Link to={{

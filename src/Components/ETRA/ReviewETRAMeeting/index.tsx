@@ -7,6 +7,7 @@ import Signature from '../../Signature';
 import Confirmation from '../../ConfirmationPage';
 import ConfirmLater from '../../ConfirmLater';
 import { IAttendees } from '../../../Domain/Attendees';
+import { ITraInfo } from '../../../Boundary/TRAInfo';
 import { ISignOff, SignOff } from '../../../Domain/SignOff';
 import RepName from '../../RepName'
 import EmailSignOff from '../EmailSignOff';
@@ -23,7 +24,8 @@ export interface IReviewMeetingProps {
     isSessionLive?:boolean,
     signOffMode: boolean;
     signOff:ISignOff,
-    traEmailSignOff: boolean
+    traEmailSignOff: boolean,
+    selectedTra: ITraInfo,
 }
 
 export interface IReviewMeetingState {
@@ -69,7 +71,8 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
         attendees: {},
         signOffMode: false,
         signOff: new SignOff("", "", roles[0].name),
-        traEmailSignOff: false
+        traEmailSignOff: false,
+        selectedTra: {}
     };
 
     private updateSignatureString = (value: string) : void => {
@@ -134,6 +137,7 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
                         signOff={this.state.signOff} 
                         attendees={this.props.attendees}
                         isSessionLive={this.props.isSessionLive}
+                        selectedTra={this.props.selectedTra}
                         />
                 </div>
             </div>
