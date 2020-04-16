@@ -155,8 +155,6 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
-    //const rLinks = this.props.location.state.meeting == undefined ? true : false;
-    //debugger
 
     return (
       <div>
