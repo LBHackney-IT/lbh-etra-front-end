@@ -155,7 +155,6 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
 
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
-   
 
     return (
       <div>
@@ -175,52 +174,11 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
                   attendees={meeting.meetingAttendance}
                   issues={meeting.issues} 
                   isSessionLive={this.state.isSessionLive}
+                  renderSignOffLinks={this.props.location.state.meeting != undefined ? true : false}
+                  selectedTra={this.props.location.state.selectedTra}
                   />
           </div>
-        <div className="record-issues-padding">
-        {this.renderSignOffMeetingOptions()}
-        </div>
       </div>);
-  }
-
-  renderSignOffMeetingOptions() {
-    if(this.props.location.state.meeting){
-      return (
-        <>
-           <div className="heading">TRA representative is present</div>
-           <div>
-             <p>If a TRA representative is present, review the actions with them. You can then sign off the meeting.
-              </p>
-              <p>
-              <Link to={{
-                pathname: "/etra/signoff/",
-                  state: {
-                      meeting: this.state.meeting,
-                      selectedTra: this.props.location.state.selectedTra,
-                      traEmailSignOff: false
-                  }
-                }}
-              id="signoffsignature" href="#">Sign off agreed meeting now</Link>
-              </p>
-              <div className="heading" style={{paddingTop: "37px"}}>TRA representative is not present</div>
-              <p>If a TRA representative is not present to sign off the meeting, please make sure you have agreed the actions with the TRA 
-                representative before emailing them for the sign off.
-              </p>
-              <p>
-              <Link to={{
-                pathname: "/etra/signoff/",
-                state: {
-                    meeting: this.state.meeting,
-                    selectedTra: this.props.location.state.selectedTra,
-                    traEmailSignOff: true
-                }
-            }}
-            id="signoffemail" href="#">Confirm agreed actions for sign off later</Link>
-              </p>
-            </div>
-        </>
-      );
-    }
   }
 
   renderBackArrow(){

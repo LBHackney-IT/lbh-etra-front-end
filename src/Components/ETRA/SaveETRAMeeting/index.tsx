@@ -7,6 +7,7 @@ import { MeetingModel, IMeetingModel } from '../../../Domain/Meeting';
 import { IAttendees } from '../../../Domain/Attendees';
 import { ISignOff } from '../../../Domain/SignOff';
 import { Redirect, Link } from 'react-router-dom';
+import { ITraInfo } from '../../../Boundary/TRAInfo';
 import Attendees from '../../Attendees';
 import RecordIssues from '../../RecordIssues';
 export interface ISaveMeetingProps {
@@ -17,7 +18,9 @@ export interface ISaveMeetingProps {
   attendees: IAttendees,
   issues: Array<IIssue>,
   signOff: ISignOff,
-  isSessionLive?:boolean
+  isSessionLive?:boolean,
+  renderSignOffLinks?: boolean,
+  selectedTra?: ITraInfo;
 }
 
 export interface ISaveMeetingState {
@@ -77,6 +80,16 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     }
   }
 
+  //Save draft in case user attempts to leave signoff page before saving
+  handleSaveDraftLink = () => {
+    this.setState({ isAttemptingToSave: true });
+    const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
+
+    if (!successful) {
+      this.setState({ isAttemptingToSave: false });
+    }
+  }
+
   render() {
     if(this.state.redirectToLandingPage){
       return <Redirect to={{
@@ -107,7 +120,48 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
           disabled={!this.state.isValid}>
             Save meeting
         </button>
+          <div className="record-issues-padding">
+            {this.props.renderSignOffLinks ? this.renderSignOffMeetingOptions(): ""}
+        </div>
       </div>
+    );
+  }
+
+  renderSignOffMeetingOptions() {
+    return (
+      <>
+         <div className="heading">TRA representative is present</div>
+         <div>
+           <p>If a TRA representative is present, review the actions with them. You can then sign off the meeting.
+            </p>
+            <p>
+            <Link onClick={this.handleSaveDraftLink} to={{
+              pathname: "/etra/signoff/",
+              state: {
+                meeting: this.getMeetingModel(),
+                selectedTra: this.props.selectedTra,
+                    traEmailSignOff: false
+                }
+              }}
+            id="signoffsignature" href="#">Sign off agreed meeting now</Link>
+            </p>
+            <div className="heading" style={{paddingTop: "37px"}}>TRA representative is not present</div>
+            <p>If a TRA representative is not present to sign off the meeting, please make sure you have agreed the actions with the TRA 
+              representative before emailing them for the sign off.
+            </p>
+            <p>
+            <Link onClick={this.handleSaveDraftLink} to={{
+              pathname: "/etra/signoff/",
+              state: {
+                  meeting: this.getMeetingModel(),
+                  selectedTra: this.props.selectedTra,
+                  traEmailSignOff: true
+              }
+          }}
+          id="signoffemail" href="#">Confirm agreed actions for sign off later</Link>
+            </p>
+          </div>
+      </>
     );
   }
 
