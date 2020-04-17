@@ -78,8 +78,8 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
   }
 
   async componentDidMount(){
-    if(!this.props.location){
-      this.setState({errorMessage: "An error occurred."})
+    if(!this.props.location){ 
+      this.setState({errorMessage: "An error occurred."}) 
       return;
     }
     const availableToken = await this.getToken.Execute();

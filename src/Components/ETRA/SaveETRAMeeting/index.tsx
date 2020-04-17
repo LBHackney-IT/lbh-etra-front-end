@@ -94,7 +94,10 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     if(this.state.redirectToLandingPage){
       return <Redirect to={{
         pathname: "/etra/saved/",
-        state: { meetingname: this.props.meetingName }
+        state: { 
+          meeting: this.getMeetingModel(),
+          selectedTra: this.props.selectedTra
+         }
       }} />
     }
 

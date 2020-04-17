@@ -1,21 +1,16 @@
 import React from 'react';
 import './index.css';
-import { IIssue } from '../../../Domain/Issues'
-import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
-import { ISaveMeetingDraftUseCase } from '../../../Boundary/SaveMeetingDraft';
 import { MeetingModel, IMeetingModel } from '../../../Domain/Meeting';
-import { IAttendees } from '../../../Domain/Attendees';
-import { ISignOff } from '../../../Domain/SignOff';
 import { Redirect, Link } from 'react-router-dom';
 import { Location } from 'history';
-import Attendees from '../../Attendees';
-import RecordIssues from '../../RecordIssues';
+import { ITraInfo } from '../../../Boundary/TRAInfo';
 import getEnvVariable from '../../../Utilities/environmentVariables';
 
 const workTrayUrl = getEnvVariable("WORK_TRAY_URL")
 
 export interface IMeetingNameRedirectProps {
-  meetingname: string;
+  selectedTra: ITraInfo;
+  meeting: IMeetingModel;
 }
 
 export interface IMeetingProps {
@@ -36,7 +31,7 @@ export class MeetingSaved extends React.Component<IMeetingProps> {
     }
     return(
       <div>
-        <h1 className="tra-name-etra-meet">{this.props.location.state.meetingname}</h1>
+        <h1 className="tra-name-etra-meet">{this.props.location.state.meeting.meetingName}</h1>
         <section className="lbh-page-announcement">
           <h3 className="lbh-page-announcement__title">ETRA meeting has been saved locally</h3>
           <div className="lbh-page-announcement__content">
@@ -51,7 +46,13 @@ export class MeetingSaved extends React.Component<IMeetingProps> {
           <a href={workTrayUrl} role="button" className="govuk-button  lbh-button" data-module="govuk-button">
           Sign in to Manage a Tenancy
         </a>&nbsp;&nbsp;<span style={{paddingLeft: "25px", paddingTop: "7px"}}>
-          <Link to={{pathname: "/etra/"}}
+          <Link to={{
+                    pathname: "/etra/meeting/",
+                    state: {
+                        meeting: this.props.location.state.meeting,
+                        selectedTra: this.props.location.state.selectedTra
+                    }
+                }}
             id="signoffemail" href="#">Return to ETRA meeting page</Link></span>
             </div>
         </section>
