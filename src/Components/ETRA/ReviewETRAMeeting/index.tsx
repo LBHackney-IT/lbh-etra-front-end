@@ -95,21 +95,36 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
 
     private onReviewLater = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewLater})
-        this.props.onSaveComplete();
+        //this.props.onSaveComplete();
 
     }
 
     private onReviewNow = () : void => {
         this.setState({pageState: ReviewMeetingDisplayState.ReviewComplete});
-        this.props.onSaveComplete();
+        //this.props.onSaveComplete();
     }
 
     render() {
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewComplete){
+          return (<Confirmation signOff={this.state.signOff} reviewedLater={this.props.signOffMode}/>);
+        }
+
+        if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
+            return (<ConfirmLater />);
+        }
+
         if(this.props.traEmailSignOff){
             return this.renderEmailSignOff();
         }
         return this.renderSignatureSignOff();
     }
+
+   /*  render() {
+        if(this.props.traEmailSignOff){
+            return this.renderEmailSignOff();
+        }
+        return this.renderSignatureSignOff();
+    } */
     
     renderSignature(){
         return(
@@ -129,6 +144,7 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
             <div>
                 <div className="review-button">
                     <EmailSignOff
+                        onReviewLater={this.onReviewLater}
                         signOffMode={this.props.signOffMode}
                         traId={this.props.traId}
                         meetingId={this.props.meetingId}

@@ -22,12 +22,13 @@ export interface ISaveMeetingProps {
   issues: Array<IIssue>,
   signOff: ISignOff,
   isSessionLive?:boolean,
+  onReviewLater: () => void,
   selectedTra: ITraInfo
 }
 
 export interface ISaveMeetingState {
   isAttemptingToSave: boolean;
-  isValid: boolean;
+  //isValid: boolean;
   redirectToLandingPage: boolean;
  
 }
@@ -63,12 +64,12 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     
     this.state = {
       isAttemptingToSave: false,
-      isValid: this.checkIsValid(this.props),
+      //isValid: this.checkIsValid(this.props),
       redirectToLandingPage: false
     }
   }
  
-  componentWillReceiveProps(newProps: ISaveMeetingProps){
+ /*  componentWillReceiveProps(newProps: ISaveMeetingProps){
     this.setState({isValid: this.checkIsValid(newProps)})
    
   }
@@ -79,7 +80,7 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     }
     
     return true;
-  }
+  } */
 
   getUnreviewedMeetingModel = () : IUnreviewedMeetingModel => {
     return new UnreviewedMeetingModel(
@@ -92,14 +93,14 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
 
   handleReviewLater = async () => { 
     this.setState({ isAttemptingToSave: true });
-    /*const successful = await this.createMeeting.Execute(this.getUnreviewedMeetingModel());
+    const successful = await this.createMeeting.Execute(this.getUnreviewedMeetingModel());
 
     if (successful) {
       this.props.onReviewLater();
     }
     else {
       this.setState({ isAttemptingToSave: false });
-    }*/
+    }
   }
 
   getMeetingModel = () : IMeetingModel => {
@@ -113,17 +114,17 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     );
   }
 
-  handleSaveDraft = () => {
+/*   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
-    /*const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
+    const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
 
     if (successful) {
       this.setState({ redirectToLandingPage: true });
     }
     else {
       this.setState({ isAttemptingToSave: false });
-    }*/
-  }
+    }
+  } */
 
   render() {
     if(this.state.redirectToLandingPage){
@@ -152,8 +153,7 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
           <button className="govuk-button  lbh-button" data-module="govuk-button" 
             id="review-later" 
             onClick={this.handleReviewLater}
-            disabled={!this.state.isValid  || !this.props.isSessionLive
-            }>
+            disabled={!this.props.isSessionLive}>
               Email to TRA for sign off
           </button>
             <span style={{display: "inline", marginLeft: "50px"}} >
