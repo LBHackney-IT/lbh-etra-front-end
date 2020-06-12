@@ -160,9 +160,9 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
       <div>
          {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={this.state.detailsEditable}/>
+        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={true}/>
         <div className="record-issues-padding">
-          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={true} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
         <ReviewETRAMeeting
           isComplete={!this.state.signOffIncomplete}

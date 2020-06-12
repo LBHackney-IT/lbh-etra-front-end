@@ -138,7 +138,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
            <p>If a TRA representative is present, review the actions with them. You can then sign off the meeting.
             </p>
             <p>
-            <Link onClick={this.handleSaveDraftLink} to={{
+            <Link /*onClick={this.handleSaveDraftLink}*/ to={{
               pathname: "/etra/signoff/",
               state: {
                 meeting: this.getMeetingModel(),
@@ -153,7 +153,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
               representative before emailing them for the sign off.
             </p>
             <p>
-            <Link onClick={this.handleSaveDraftLink} to={{
+            <Link /*onClick={this.handleSaveDraftLink}*/ to={{
               pathname: "/etra/signoff/",
               state: {
                   meeting: this.getMeetingModel(),
