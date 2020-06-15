@@ -68,6 +68,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     );
   }
 
+  //Save meeting to local storage
   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
@@ -130,6 +131,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     );
   }
 
+  //Click a link to load the SignOffETRAMeeting component
   renderSignOffMeetingOptions() {
     return (
       <>
@@ -139,7 +141,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
             </p>
             <p>
             <Link /*onClick={this.handleSaveDraftLink}*/ to={{
-              pathname: "/etra/signoff/",
+              pathname: "/etra/signoff/", 
               state: {
                 meeting: this.getMeetingModel(),
                 selectedTra: this.props.selectedTra,

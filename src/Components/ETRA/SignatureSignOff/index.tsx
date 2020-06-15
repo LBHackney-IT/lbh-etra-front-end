@@ -107,9 +107,8 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
 
   handleSaveMeeting = async () => {
     let successful;
-
     this.setState({ isAttemptingToSave: true });
-
+    
     if(this.props.signOffMode){
       successful = await this.signoffMeeting.Execute(this.getMeetingSignOffModel());
     }else{

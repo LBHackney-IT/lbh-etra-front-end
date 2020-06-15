@@ -66,7 +66,7 @@ export default class MeetingGateway implements IMeetingGateway {
 
   public async saveMeetingData(data: IMeetingModel | IUnreviewedMeetingModel): Promise<IGatewayResponse> {
     const officerToken = await this.jwtGateway.getOfficerToken();
-
+    
     return await fetch(
       `${this.baseUrl}/v2/tra/meeting`, 
       {
