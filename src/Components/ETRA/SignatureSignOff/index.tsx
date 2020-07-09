@@ -11,6 +11,7 @@ import Attendees from '../../Attendees';
 import RecordIssues from '../../RecordIssues';
 import { ISignOffMeetingUseCase } from '../../../Boundary/SignOffMeeting';
 import { ICreateMeetingUseCase } from '../../../Boundary/CreateMeeting';
+import { ITraInfo } from '../../../Boundary/TRAInfo';
 export interface ISaveMeetingProps {
   signOffMode: boolean,
   traId: number,
@@ -19,7 +20,8 @@ export interface ISaveMeetingProps {
   attendees: IAttendees,
   issues: Array<IIssue>,
   signOff: ISignOff,
-  isSessionLive?:boolean
+  isSessionLive?:boolean,
+  selectedTra: ITraInfo
 }
 
 export interface ISaveMeetingState {
@@ -141,16 +143,22 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
   
   private renderSaveMeetingButtons() {
     return (
-      <div>
-             <button 
-          id="save-meeting" 
-          className="button btn-primary button-margin btn-stacked" 
+      <div style={{marginTop: "40px"}}>
+             <button className="govuk-button  lbh-button" data-module="govuk-button"
+          id="save-meeting"
           onClick={this.handleSaveMeeting}
           disabled={!this.state.isValid  || !this.props.isSessionLive 
-        }
-          >
-            Save the signed off issue list and email to TRA
-        </button>
+        }>Save meeting and email to TRA</button>
+        <span style={{display: "inline", marginLeft: "50px"}} >
+            <Link to={{
+                        pathname: "/etra/meeting/",
+                        state: {
+                            meeting: this.getMeetingModel(),
+                            selectedTra: this.props.selectedTra
+                        }
+                    }}
+              id="lnkBack" href="#">Cancel to edit actions</Link>
+            </span>
       </div>
     );
   }

@@ -1,26 +1,15 @@
-
-
   .spinner-wrapper {
     margin: 50px 0;
   }
-
-    
-  #save-meeting {
+  /*#save-meeting {
     width: 450px;
     margin: 24 0px;
-  }
+  }*/
 
   #save-draft{
     width: 370px;
     margin: 24 0px;
   }
-
-  /*#review-later {
-    width: 320px;
-    margin-top: 36px;
-    margin-bottom: 0px;
-    padding: 0px 25px;
-  }*/
   .button {
     /* width: 320px; */
     height: 47px;
@@ -39,6 +28,9 @@
   margin-top: 36px;
    /* width: 500px;*/
 }
- 
-
-  
+ /*#review-later {
+    width: 320px;
+    margin-top: 36px;
+    margin-bottom: 0px;
+    padding: 0px 25px;
+  }*/ 

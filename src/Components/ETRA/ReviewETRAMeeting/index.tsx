@@ -112,7 +112,7 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
         if(this.state.pageState === ReviewMeetingDisplayState.ReviewLater){
             return (<ConfirmLater />);
         }
-
+        console.log("signoff:" + this.props.signOffMode);
         if(this.props.traEmailSignOff){
             return this.renderEmailSignOff();
         }
@@ -179,6 +179,7 @@ export default class ReviewETRAMeeting extends React.Component<IReviewMeetingPro
                     signOff={this.state.signOff} 
                     attendees={this.props.attendees}
                     isSessionLive={this.props.isSessionLive}
+                    selectedTra={this.props.selectedTra}
                     />
             </div>
         </div>
