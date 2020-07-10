@@ -32,8 +32,7 @@ export interface ISaveMeetingProps {
 export interface ISaveMeetingState {
   isAttemptingToSave: boolean;
   meetingSaved: boolean;
-  redirectToLandingPage: boolean;
- 
+  //redirectToLandingPage: boolean;
 }
 
 export interface IUnreviewedMeetingModel {
@@ -57,7 +56,6 @@ export class UnreviewedMeetingModel implements IUnreviewedMeetingModel {
   }
 }
 
-
 export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
   public static contextType = ServiceContext;
   private readonly createMeeting: ICreateMeetingUseCase;
@@ -67,11 +65,10 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     
     this.state = {
       isAttemptingToSave: false,
-      meetingSaved: false,
-      redirectToLandingPage: false
+      meetingSaved: false
+      //redirectToLandingPage: false
     }
   }
- 
  /*  componentWillReceiveProps(newProps: ISaveMeetingProps){
     this.setState({isValid: this.checkIsValid(newProps)})
    
@@ -118,7 +115,6 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
       this.props.meetingId, 
     );
   }
-
 /*   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());

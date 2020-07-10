@@ -151,10 +151,8 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
-
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
-   
 
     return (
       <div>

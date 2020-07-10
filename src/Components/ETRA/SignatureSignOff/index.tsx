@@ -12,6 +12,10 @@ import RecordIssues from '../../RecordIssues';
 import { ISignOffMeetingUseCase } from '../../../Boundary/SignOffMeeting';
 import { ICreateMeetingUseCase } from '../../../Boundary/CreateMeeting';
 import { ITraInfo } from '../../../Boundary/TRAInfo';
+import getEnvVariable from '../../../Utilities/environmentVariables';
+
+const workTrayUrl = getEnvVariable("WORK_TRAY_URL")
+
 export interface ISaveMeetingProps {
   signOffMode: boolean,
   traId: number,
@@ -28,7 +32,7 @@ export interface ISaveMeetingState {
   isAttemptingToSave: boolean;
   isValid: boolean;
   redirectToLandingPage: boolean;
- 
+  meetingSaved: boolean;
 }
 
 export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
@@ -44,6 +48,7 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
     this.state = {
       isAttemptingToSave: false,
       isValid: this.checkIsValid(this.props),
+      meetingSaved: false,
       redirectToLandingPage: false
     }
   }
@@ -70,18 +75,6 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
       this.props.signOff,
       this.props.meetingId, 
     );
-  }
-
-  handleSaveDraft = () => {
-    this.setState({ isAttemptingToSave: true });
-    /*const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
-
-    if (successful) {
-      this.setState({ redirectToLandingPage: true });
-    }
-    else {
-      this.setState({ isAttemptingToSave: false });
-    }*/
   }
 
   getMeetingModelWithSignatureTrimmed = (): IMeetingModel => {
@@ -111,34 +104,37 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
     let successful;
     this.setState({ isAttemptingToSave: true });
     
-    if(this.props.signOffMode){
+    successful = await this.createMeeting.Execute(this.getMeetingModelWithSignatureTrimmed());
+    /*if(this.props.signOffMode){
       successful = await this.signoffMeeting.Execute(this.getMeetingSignOffModel());
     }else{
       successful = await this.createMeeting.Execute(this.getMeetingModelWithSignatureTrimmed());
-    }
-
-    if (successful) {
-      //this.props.onReviewNow();
-    }
-
-    else {
+    }*/
+    if (!successful) {
       this.setState({ isAttemptingToSave: false });
+    }
+    else{
+      this.setState({meetingSaved: true})
     }
   }
 
   render() {
-    if(this.state.redirectToLandingPage){
+    /*if(this.state.redirectToLandingPage){
       return <Redirect to={{
         pathname: "/etra/saved/",
         state: { meetingname: this.props.meetingName }
       }} />
-    }
+    }*/
 
     if(this.state.isAttemptingToSave){
       return this.renderSpinner();
     }
 
-    return this.renderSaveMeetingButtons();
+    if(!this.state.meetingSaved){
+      return this.renderSaveMeetingButtons();
+    }
+    //Meeting is saved
+    return this.renderSignoffConfirmation();
   }
   
   private renderSaveMeetingButtons() {
@@ -169,6 +165,21 @@ export class SignatureSignOff extends React.Component<ISaveMeetingProps, ISaveMe
        <div className="loading-spinner"><div></div><div></div><div></div></div>
       </div>
     );
+  }
+
+  private renderSignoffConfirmation(){
+    return (
+      <div>
+        <section className="lbh-etra-announcement">
+          <label data-test="issue-label" className="label">
+            The meeting has been emailed to the TRA representative for sign off.</label>
+          <div style={{paddingTop: "1.25rem"}}>
+          <label data-test="issue-label" className="label">
+            You can access the actions from <a href={workTrayUrl}>your work tray</a>.</label>
+            </div>
+        </section>
+    </div>
+    )
   }
 }
 
