@@ -1,195 +1,238 @@
 import React from 'react';
+import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import { IIssue } from '../../../Domain/Issues'
-import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
-import { ISaveMeetingDraftUseCase } from '../../../Boundary/SaveMeetingDraft';
-import { ISignOffMeetingUseCase } from '../../../Boundary/SignOffMeeting';
-import { ICreateMeetingUseCase } from '../../../Boundary/CreateMeeting'
-import { MeetingModel, IMeetingModel } from '../../../Domain/Meeting';
+import ReviewETRAMeeting from '../ReviewETRAMeeting';
+import RecordActions from '../RecordActions'
+import MeetingAttendees from '../MeetingAttendees';
+import { Location } from 'history';
+import { Link } from 'react-router-dom';
 import { IAttendees } from '../../../Domain/Attendees';
-import { ISignOff } from '../../../Domain/SignOff';
-import { Redirect, Link } from 'react-router-dom';
-import Attendees from '../../Attendees';
-import RecordIssues from '../../RecordIssues';
 import { ITraInfo } from '../../../Boundary/TRAInfo';
-import getEnvVariable from '../../../Utilities/environmentVariables';
+import { IMeetingModel } from '../../../Domain/Meeting';
+import queryString from 'query-string';
+import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
+import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';
+import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
+export interface IMeetingRedirectProps {
+  selectedTra: ITraInfo;
+  meeting?: IMeetingModel;
+  traEmailSignOff?: boolean;
+}
 
-const workTrayUrl = getEnvVariable("WORK_TRAY_URL")
+export interface IMeetingProps {
+  location: Location<IMeetingRedirectProps>
+}
 
-export interface ISaveMeetingProps {
+export interface IMeetingState {
+  shouldDisplay: boolean,
+  apiError: boolean,
+  detailsEditable: boolean,
+  signOffIncomplete: boolean,
+  errorMessage: string,
   signOffMode: boolean,
-  traId: number,
-  meetingId?: string,
-  meetingName: string,
-  attendees: IAttendees,
-  issues: Array<IIssue>,
-  signOff: ISignOff,
-  isSessionLive?:boolean,
-  onReviewLater: () => void,
-  selectedTra: ITraInfo
+  meeting: IMeetingModel,
+  isSessionLive:boolean
 }
 
-export interface ISaveMeetingState {
-  isAttemptingToSave: boolean;
-  meetingSaved: boolean;
-  //redirectToLandingPage: boolean;
-}
-
-export interface IUnreviewedMeetingModel {
-  traId: number;
-  meetingName: string;
-  issues: Array<IIssue>;
-  meetingAttendance: IAttendees;
-}
-
-export class UnreviewedMeetingModel implements IUnreviewedMeetingModel {  
-  public readonly traId: number;
-  meetingName: string;
-  issues: IIssue[];
-  meetingAttendance: IAttendees;
-
-  constructor(traId: number, meetingName: string, issues: IIssue[], attendees: IAttendees){
-      this.traId = traId;
-      this.meetingName = meetingName;
-      this.issues = issues;
-      this.meetingAttendance = attendees;
+const emptyState : IMeetingState = {
+  shouldDisplay: false,
+  apiError: false,
+  detailsEditable: false,
+  signOffIncomplete: false,
+  errorMessage: "",
+  signOffMode: false,
+  isSessionLive:false,
+  meeting: {
+    id: "",
+    traId: -1,
+    meetingName: "",
+    issues: [],
+    meetingAttendance:
+    {
+      councillors: "",
+      hackneyStaff: "",
+      attendees: 0
+    },
+    signOff: 
+    {
+      name: "",
+      signature: "",
+      role: ""
+    },
+    isSignedOff: false,
   }
 }
 
-export class SignOffConfirmation extends React.Component<ISaveMeetingProps, ISaveMeetingState> {
+export class SignOffConfirmation extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
-  private readonly createMeeting: ICreateMeetingUseCase;
-  public constructor(props: ISaveMeetingProps, context: IServiceProvider) {
-    super(props, context);
-    this.createMeeting = context.get<ICreateMeetingUseCase>("ICreateMeetingUseCase");
+  private readonly getMeeting: IGetMeetingUseCase;
+  private readonly getToken:IGetTokenUseCase;
+  private isAnExistingMeeting:boolean=false;
+
+  public constructor(props: IMeetingProps, context: IServiceProvider) {
+    super(props);
+
+    this.getMeeting = context.get<IGetMeetingUseCase>("IGetMeetingUseCase");
+    this.getToken=context.get<IGetTokenUseCase>("IGetTokenUseCase");
+    this.state = emptyState;
+  }
+
+  async componentDidMount(){
+    if(!this.props.location){ 
+      this.setState({errorMessage: "An error occurred."}) 
+      return;
+    }
+    const availableToken = await this.getToken.Execute();
+    if(availableToken)
+    {
+       this.setState({isSessionLive:true});
+    }
     
-    this.state = {
-      isAttemptingToSave: false,
-      meetingSaved: false
-      //redirectToLandingPage: false
+    let loadExistingMeeting : boolean = false;
+    let requestFromWorkTray: boolean=false;
+    if(this.props.location.search){
+      const queries = queryString.parse(this.props.location.search, {parseBooleans: true});
+      loadExistingMeeting = queries.existingMeeting as boolean;   
+      requestFromWorkTray=queries.isRequestFromWorkTray as boolean;
+      this.isAnExistingMeeting=loadExistingMeeting;
     }
-  }
- /*  componentWillReceiveProps(newProps: ISaveMeetingProps){
-    this.setState({isValid: this.checkIsValid(newProps)})
-   
-  }
-
-  private checkIsValid(props: ISaveMeetingProps){
-    if(isNaN(props.attendees.attendees) || props.attendees.attendees < 1){
-      return false;
+    if(!loadExistingMeeting){
+      this.handleNewMeeting();
+      return;
     }
     
-    return true;
-  } */
-
-  getUnreviewedMeetingModel = () : IUnreviewedMeetingModel => {
-    return new UnreviewedMeetingModel(
-      this.props.traId,
-      this.props.meetingName,
-      this.props.issues,
-      this.props.attendees
-    );
   }
 
-  handleReviewLater = async () => { 
-    //Render the spinner image
-    this.setState({ isAttemptingToSave: true });
-    const successful = await this.createMeeting.Execute(this.getUnreviewedMeetingModel());
-
-    if (!successful) {
-      this.setState({ isAttemptingToSave: false });
-    }
-    else{
-      this.setState({meetingSaved: true})
+  private handleNewMeeting(){
+    if(!this.props.location.state || !this.props.location.state.selectedTra){
+      this.setState({errorMessage: "No TRA was selected."})
+      return;
     }
 
+    //Meeting loaded from browser local storage
+    const existingMeeting = this.props.location.state.meeting;
+    if(existingMeeting){
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: true})
+      return;
+    }
+    
+    let meeting = this.state.meeting;
+    meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());
+    this.setState({shouldDisplay: true, signOffIncomplete: true, detailsEditable: true});
   }
 
-  getMeetingModel = () : IMeetingModel => {
-    return new MeetingModel(
-      this.props.traId,
-      this.props.meetingName,
-      this.props.issues, 
-      this.props.attendees, 
-      this.props.signOff,
-      this.props.meetingId, 
-    );
+  buildMeetingName = (traName: string, date: Date): string => {
+    return `${traName} meeting ${date.toLocaleDateString('en-GB')}`;
   }
-/*   handleSaveDraft = () => {
-    this.setState({ isAttemptingToSave: true });
-    const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
 
-    if (successful) {
-      this.setState({ redirectToLandingPage: true });
-    }
-    else {
-      this.setState({ isAttemptingToSave: false });
-    }
-  } */
-     /*  if(this.state.redirectToLandingPage){
-      return <Redirect to={{
-        pathname: "/etra/saved/",
-        state: { meetingname: this.props.meetingName }
-      }} /> */
-   // }
+  onSaveComplete = (): void => {
+    this.setState({ detailsEditable: false })
+  }
+
+  onChangeAttendees = (newAttendees: IAttendees): void => {
+    let meeting = this.state.meeting;
+    meeting.meetingAttendance = newAttendees;
+    this.setState({meeting:meeting})
+  }
+
+  onChangeIssues = (newIssues: Array<IIssue>): void => {
+    let meeting = this.state.meeting;
+    meeting.issues = newIssues;
+    this.setState({meeting:meeting})
+  }
 
   render() {
-    //User clicked signoff button
-    if(this.state.isAttemptingToSave){
-      return this.renderSpinner();
+
+    if(this.state.apiError){
+      return this.renderAPIErrorScreen();
+    } 
+
+    if(!this.state.shouldDisplay){
+      return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
-    if(!this.state.meetingSaved){
-      return this.renderSaveMeetingButtons();
-    }
-    //Meeting is saved
-    return this.renderSignoffConfirmation();
-  }
-  
-  private renderSaveMeetingButtons() {
+    const meeting = this.state.meeting;
+    const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
+
     return (
       <div>
-        <div>
-        Please ensure you have agreed the list of actions with the TRA representative before emailing them. 
-        Once the email has been sent, the actions will no longer be editable.<br/>&nbsp;
+         {this.renderBackArrow()}
+        <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
+        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={true}/>
+        <div className="record-issues-padding">
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={true} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
         </div>
-        <div>
+        <ReviewETRAMeeting
+          isComplete={!this.state.signOffIncomplete}
+          traId={selectedTra && selectedTra.id}
+          meetingId={meeting.id}
+          meetingName={meeting.meetingName}
+          attendees={meeting.meetingAttendance}
+          issues={meeting.issues}
+          onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
+          signOffMode ={this.state.signOffMode}
+          isSessionLive={this.state.isSessionLive}
+          traEmailSignOff = {this.props.location.state.traEmailSignOff}
+          selectedTra={this.props.location.state.selectedTra}
+        />
+        <div className="record-issues-padding">
+        </div>
+      </div>);
+  }
+
+  renderBackArrow(){
+    if(!this.isAnExistingMeeting)
+    return (
+      <>
+        <div className="back-arrow"> &#60;</div>
+        <div className="back-link">
+          <Link to="/etra/"
+          id="lnkBack" href="#">Back</Link>
+        </div>
+      </>
+    );
+  };
+
+  renderAPIErrorScreen(){
+    return (
+      <div>
+        {this.renderBackArrow()}
+        <div className="api-error">
+          <p>Sorry, something seems to have gone wrong.<br />
+          We're not sure why this has happened.<br />
+          You can try going back to your previous page or to your Home page.<br />
+          Please&nbsp; 
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+            tell us what you were trying to do</a> when this happened so we can fix it.<br />
+          </p>
           <p>
-          <button className="govuk-button  lbh-button" data-module="govuk-button" 
-            id="review-later" 
-            onClick={this.handleReviewLater}
-            disabled={!this.props.isSessionLive}>
-              Email to TRA for sign off
-          </button>
-            <span style={{display: "inline", marginLeft: "50px"}} >
-            <Link to={{
-                        pathname: "/etra/meeting/",
-                        state: {
-                            meeting: this.getMeetingModel(),
-                            selectedTra: this.props.selectedTra
-                        }
-                    }}
-              id="lnkBack" href="#">Cancel to edit actions</Link>
-            </span>
-            </p>
-          </div>
+           Return to the&nbsp;
+            <Link to="">ETRA meetings page.</Link>
+          </p>
+        </div>
       </div>
     );
-  }
-  private renderSignoffConfirmation(){
+  };
+
+  renderErrorScreen(){
     return (
       <div>
-        <section className="lbh-etra-announcement">
-          <label data-test="issue-label" className="label">
-            The meeting has been emailed to the TRA representative for sign off.</label>
-          <div style={{paddingTop: "1.25rem"}}>
-          <label data-test="issue-label" className="label">
-            You can access the actions from <a href={workTrayUrl}>your work tray</a>.</label>
-            </div>
-        </section>
-    </div>
-    )
-  }
+        {this.renderBackArrow()}
+        <div className="no-meeting-selected">
+          <p>{this.state.errorMessage}</p>
+          <p className="api-error">Please&nbsp; 
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
+            tell us what you were trying to do</a> when this happened so we can fix it.<br />
+          </p>
+          <p className="api-error">
+            Return to the &nbsp;
+            <Link to="">ETRA meetings page.</Link>
+          </p>
+        </div>
+      </div>
+    );
+  };
 
   private renderSpinner() {
     return (
@@ -199,5 +242,4 @@ export class SignOffConfirmation extends React.Component<ISaveMeetingProps, ISav
     );
   }
 }
-
 export default SignOffConfirmation;

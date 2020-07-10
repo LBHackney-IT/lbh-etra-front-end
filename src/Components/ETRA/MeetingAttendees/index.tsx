@@ -14,8 +14,9 @@ export interface IAttendeesProp {
     onChangeAttendees: (attendees: IAttendees) => void;
 }
 
-export class MeetingAttendees extends Component<IAttendeesProp, IAttendeesState> {
 
+export class MeetingAttendees extends Component<IAttendeesProp, IAttendeesState> {
+    
     public constructor(props: IAttendeesProp) {
         super(props);    
         this.state = {
@@ -23,6 +24,10 @@ export class MeetingAttendees extends Component<IAttendeesProp, IAttendeesState>
             attendees: this.props.attendees
         }
     }
+    static defaultProps ={
+        onChangeAttendees: ()=> {}
+    }
+   
 
     toggleCollapsed = () => {
         this.setState({ isCollapsed: !this.state.isCollapsed });

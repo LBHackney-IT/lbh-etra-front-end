@@ -10,7 +10,7 @@ import {v4 as uuid} from 'uuid';
 interface IRecordIssueProps {
     blocks: IBlock[];
     issues: Array<IIssue>;
-    onChangeIssues: (newIssues: Array<IIssue>) => void;
+    onChangeIssues: (newIssues: Array<IIssue>) => void | null;
     readOnly: boolean;
 }
 
