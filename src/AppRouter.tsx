@@ -6,7 +6,7 @@ import TokenLoader from "./TokenLoader";
 import ETRAMeeting from "./Components/ETRA/ETRAMeeting";
 import MeetingSaved from "./Components/ETRA/MeetingSaved";
 import ETRALandingPage from "./Components/ETRA/ETRALandingPage";
-import SignOffETRAMeeting from "./Components/ETRA/SignOffETRAMeeting";
+import SignOffMeeting from "./Components/ETRA/SignOffMeeting";
 import SignOffConfirmation from "./Components/ETRA/SignOffConfirmation";
 
 export default function AppRouter() {
@@ -17,7 +17,7 @@ export default function AppRouter() {
       <Route path="/etra/" exact component={ETRALandingPage} />
       <Route path="/etra/meeting/" component={ETRAMeeting} />
       <Route path="/etra/saved/" component={MeetingSaved} />
-      <Route path="/etra/signoff/" component={SignOffETRAMeeting} />
+      <Route path="/etra/signoff/" component={SignOffMeeting} />
       <Route path="/etra/confirmation/" component={SignOffConfirmation} />
       <Route path="/meeting/" component={Meeting} />
     </Router>

@@ -158,10 +158,10 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     
                     
     return (<Redirect to={{
-      pathname: "/etra/saved/",
+      pathname: "/etra/confirmation/",
       state: { meetingname: this.props.meetingName }
     }} />);
-    
+
   }
   
   private renderSaveMeetingButtons() {

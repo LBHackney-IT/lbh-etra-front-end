@@ -63,7 +63,7 @@ const emptyState : IMeetingState = {
   }
 }
 
-export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
+export class SignOffMeeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
@@ -244,4 +244,4 @@ export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingS
   }
 }
 
-export default SignOffETRAMeeting;
+export default SignOffMeeting;
