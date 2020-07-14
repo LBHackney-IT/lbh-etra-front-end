@@ -7,6 +7,7 @@ import ETRAMeeting from "./Components/ETRA/ETRAMeeting";
 import MeetingSaved from "./Components/ETRA/MeetingSaved";
 import ETRALandingPage from "./Components/ETRA/ETRALandingPage";
 import SignOffETRAMeeting from "./Components/ETRA/SignOffETRAMeeting";
+import SignOffConfirmation from "./Components/ETRA/SignOffConfirmation";
 
 export default function AppRouter() {
   return (
@@ -17,6 +18,7 @@ export default function AppRouter() {
       <Route path="/etra/meeting/" component={ETRAMeeting} />
       <Route path="/etra/saved/" component={MeetingSaved} />
       <Route path="/etra/signoff/" component={SignOffETRAMeeting} />
+      <Route path="/etra/confirmation/" component={SignOffConfirmation} />
       <Route path="/meeting/" component={Meeting} />
     </Router>
   );

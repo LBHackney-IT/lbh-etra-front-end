@@ -13,6 +13,8 @@ import queryString from 'query-string';
 import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
 import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';
 import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
+import getEnvVariable from '../../../Utilities/environmentVariables';
+
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
@@ -63,6 +65,8 @@ const emptyState : IMeetingState = {
   }
 }
 
+const workTrayUrl = getEnvVariable("WORK_TRAY_URL")
+
 export class SignOffConfirmation extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
@@ -82,11 +86,11 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
       this.setState({errorMessage: "An error occurred."}) 
       return;
     }
-    const availableToken = await this.getToken.Execute();
+    /*const availableToken = await this.getToken.Execute();
     if(availableToken)
     {
        this.setState({isSessionLive:true});
-    }
+    }*/
     
     let loadExistingMeeting : boolean = false;
     let requestFromWorkTray: boolean=false;
@@ -112,40 +116,20 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
     //Meeting loaded from browser local storage
     const existingMeeting = this.props.location.state.meeting;
     if(existingMeeting){
-      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: true})
+      this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: false})
       return;
     }
     
     let meeting = this.state.meeting;
     meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());
-    this.setState({shouldDisplay: true, signOffIncomplete: true, detailsEditable: true});
+    this.setState({shouldDisplay: true, signOffIncomplete: true, detailsEditable: false});
   }
 
   buildMeetingName = (traName: string, date: Date): string => {
     return `${traName} meeting ${date.toLocaleDateString('en-GB')}`;
   }
 
-  onSaveComplete = (): void => {
-    this.setState({ detailsEditable: false })
-  }
-
-  onChangeAttendees = (newAttendees: IAttendees): void => {
-    let meeting = this.state.meeting;
-    meeting.meetingAttendance = newAttendees;
-    this.setState({meeting:meeting})
-  }
-
-  onChangeIssues = (newIssues: Array<IIssue>): void => {
-    let meeting = this.state.meeting;
-    meeting.issues = newIssues;
-    this.setState({meeting:meeting})
-  }
-
   render() {
-
-    if(this.state.apiError){
-      return this.renderAPIErrorScreen();
-    } 
 
     if(!this.state.shouldDisplay){
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
@@ -158,24 +142,10 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
       <div>
          {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={true}/>
+        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={() => void 0} readOnly={true}/>
         <div className="record-issues-padding">
-          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={true} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={true} onChangeIssues={() => void 0} issues={meeting.issues}/>
         </div>
-        <ReviewETRAMeeting
-          isComplete={!this.state.signOffIncomplete}
-          traId={selectedTra && selectedTra.id}
-          meetingId={meeting.id}
-          meetingName={meeting.meetingName}
-          attendees={meeting.meetingAttendance}
-          issues={meeting.issues}
-          onSaveComplete={this.onSaveComplete}
-          signOff={meeting.signOff}
-          signOffMode ={this.state.signOffMode}
-          isSessionLive={this.state.isSessionLive}
-          traEmailSignOff = {this.props.location.state.traEmailSignOff}
-          selectedTra={this.props.location.state.selectedTra}
-        />
         <div className="record-issues-padding">
         </div>
       </div>);
@@ -191,27 +161,6 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
           id="lnkBack" href="#">Back</Link>
         </div>
       </>
-    );
-  };
-
-  renderAPIErrorScreen(){
-    return (
-      <div>
-        {this.renderBackArrow()}
-        <div className="api-error">
-          <p>Sorry, something seems to have gone wrong.<br />
-          We're not sure why this has happened.<br />
-          You can try going back to your previous page or to your Home page.<br />
-          Please&nbsp; 
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpefefhPQJ9fSu-fX6-Uvyanppp480ZRUNAe5dQAr8F2dexw/viewform">
-            tell us what you were trying to do</a> when this happened so we can fix it.<br />
-          </p>
-          <p>
-           Return to the&nbsp;
-            <Link to="">ETRA meetings page.</Link>
-          </p>
-        </div>
-      </div>
     );
   };
 
@@ -233,6 +182,21 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
       </div>
     );
   };
+
+  private renderSignoffConfirmation(){
+    return (
+      <div>
+        <section className="lbh-etra-announcement">
+          <label data-test="issue-label" className="label">
+            The meeting has been emailed to the TRA representative for sign off.</label>
+          <div style={{paddingTop: "1.25rem"}}>
+          <label data-test="issue-label" className="label">
+            You can access the actions from <a href={workTrayUrl}>your work tray</a>.</label>
+            </div>
+        </section>
+    </div>
+    )
+  }
 
   private renderSpinner() {
     return (

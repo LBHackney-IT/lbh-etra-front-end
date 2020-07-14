@@ -1,7 +1,7 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewMeeting from '../ReviewETRAMeeting';
+import ReviewETRAMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
 import MeetingAttendees from '../MeetingAttendees';
 import { Location } from 'history';
@@ -13,11 +13,10 @@ import queryString from 'query-string';
 import { IServiceProvider, ServiceContext } from '../../../ServiceContext';
 import { IGetMeetingUseCase } from '../../../Boundary/GetMeeting';
 import { IGetTokenUseCase } from "../../../Boundary/GetTokensForCurrentSession";
-import SaveETRAMeeting from '../SaveETRAMeeting'
 export interface IMeetingRedirectProps {
   selectedTra: ITraInfo;
   meeting?: IMeetingModel;
- 
+  traEmailSignOff?: boolean;
 }
 
 export interface IMeetingProps {
@@ -64,7 +63,7 @@ const emptyState : IMeetingState = {
   }
 }
 
-export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
+export class SignOffETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   public static contextType = ServiceContext;
   private readonly getMeeting: IGetMeetingUseCase;
   private readonly getToken:IGetTokenUseCase;
@@ -79,8 +78,8 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 
   async componentDidMount(){
-    if(!this.props.location){
-      this.setState({errorMessage: "An error occurred."})
+    if(!this.props.location){ 
+      this.setState({errorMessage: "An error occurred."}) 
       return;
     }
     const availableToken = await this.getToken.Execute();
@@ -144,40 +143,42 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
 
   render() {
 
-    /*if(this.state.apiError){
+    if(this.state.apiError){
       return this.renderAPIErrorScreen();
-    } */
+    } 
 
     if(!this.state.shouldDisplay){
       return this.state.errorMessage ? this.renderErrorScreen() : this.renderSpinner();
     }
 
-
     const meeting = this.state.meeting;
     const selectedTra = this.props.location.state && this.props.location.state.selectedTra.tra;
 
+    /*event props not needed as copmponents are in read-only mode*/ 
     return (
       <div>
          {this.renderBackArrow()}
         <h1 className="tra-name-etra-meet">{meeting.meetingName}</h1>
-        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={this.onChangeAttendees} readOnly={!this.state.detailsEditable}/>
+        <MeetingAttendees isComplete={!this.state.signOffIncomplete} attendees={meeting.meetingAttendance} onChangeAttendees={() => void 0} readOnly={true}/>
         <div className="record-issues-padding">
-          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={!this.state.detailsEditable} onChangeIssues={this.onChangeIssues} issues={meeting.issues}/>
+          <RecordActions blocks={selectedTra && selectedTra.blocks} readOnly={true} onChangeIssues={() => void 0} issues={meeting.issues}/>
         </div>
-        <div className="review-button">
-              <SaveETRAMeeting
-                  signOff={meeting.signOff}
-                  signOffMode ={this.state.signOffMode}
-                  traId={selectedTra && selectedTra.id}
-                  meetingId={meeting.id}
-                  meetingName={meeting.meetingName}
-                  attendees={meeting.meetingAttendance}
-                  issues={meeting.issues} 
-                  isSessionLive={this.state.isSessionLive}
-                  renderSignOffLinks={this.props.location.state.meeting != undefined ? true : false}
-                  selectedTra={this.props.location.state.selectedTra}
-                  />
-          </div>
+        <ReviewETRAMeeting
+          isComplete={!this.state.signOffIncomplete}
+          traId={selectedTra && selectedTra.id}
+          meetingId={meeting.id}
+          meetingName={meeting.meetingName}
+          attendees={meeting.meetingAttendance}
+          issues={meeting.issues}
+          onSaveComplete={this.onSaveComplete}
+          signOff={meeting.signOff}
+          signOffMode ={this.state.signOffMode}
+          isSessionLive={this.state.isSessionLive}
+          traEmailSignOff = {this.props.location.state.traEmailSignOff}
+          selectedTra={this.props.location.state.selectedTra}
+        />
+        <div className="record-issues-padding">
+        </div>
       </div>);
   }
 
@@ -194,7 +195,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
     );
   };
 
- /* renderAPIErrorScreen(){
+  renderAPIErrorScreen(){
     return (
       <div>
         {this.renderBackArrow()}
@@ -213,7 +214,7 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
         </div>
       </div>
     );
-  };*/
+  };
 
   renderErrorScreen(){
     return (
@@ -243,4 +244,4 @@ export class ETRAMeeting extends React.Component<IMeetingProps, IMeetingState> {
   }
 }
 
-export default ETRAMeeting;
+export default SignOffETRAMeeting;

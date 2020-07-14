@@ -131,7 +131,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
     );
   }
 
-  //Click a link to load the SignOffETRAMeeting component
+  //Click a link to load the SignOffMeeting component
   renderSignOffMeetingOptions() {
     return (
       <>

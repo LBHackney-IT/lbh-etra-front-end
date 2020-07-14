@@ -69,6 +69,7 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
       //redirectToLandingPage: false
     }
   }
+
  /*  componentWillReceiveProps(newProps: ISaveMeetingProps){
     this.setState({isValid: this.checkIsValid(newProps)})
    
@@ -115,6 +116,7 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
       this.props.meetingId, 
     );
   }
+
 /*   handleSaveDraft = () => {
     this.setState({ isAttemptingToSave: true });
     const successful = this.saveMeetingDraft.Execute(this.getMeetingModel());
@@ -142,8 +144,24 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
     if(!this.state.meetingSaved){
       return this.renderSaveMeetingButtons();
     }
+
     //Meeting is saved
-    return this.renderSignoffConfirmation();
+    //return this.renderSignoffConfirmation();
+    /*state: { 
+          meeting: this.getMeetingModel(),
+          selectedTra: this.props.selectedTra
+         }*/
+         /* state: {
+                        meeting: this.props.location.state.meeting,
+                        selectedTra: this.props.location.state.selectedTra
+                    }*/
+    
+                    
+    return (<Redirect to={{
+      pathname: "/etra/saved/",
+      state: { meetingname: this.props.meetingName }
+    }} />);
+    
   }
   
   private renderSaveMeetingButtons() {
@@ -176,6 +194,7 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
       </div>
     );
   }
+
   private renderSignoffConfirmation(){
     return (
       <div>
