@@ -1,7 +1,6 @@
 import React from 'react';
 import { IIssue } from '../../../Domain/Issues';
 import './index.css';
-import ReviewETRAMeeting from '../ReviewETRAMeeting';
 import RecordActions from '../RecordActions'
 import MeetingAttendees from '../MeetingAttendees';
 import { Location } from 'history';
@@ -100,15 +99,15 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
       requestFromWorkTray=queries.isRequestFromWorkTray as boolean;
       this.isAnExistingMeeting=loadExistingMeeting;
     }
-    if(!loadExistingMeeting){
+    /*if(!loadExistingMeeting){
       this.handleNewMeeting();
       return;
-    }
+    }*/
     
   }
 
   private handleNewMeeting(){
-    if(!this.props.location.state || !this.props.location.state.selectedTra){
+   /* if(!this.props.location.state || !this.props.location.state.selectedTra){
       this.setState({errorMessage: "No TRA was selected."})
       return;
     }
@@ -118,7 +117,7 @@ export class SignOffConfirmation extends React.Component<IMeetingProps, IMeeting
     if(existingMeeting){
       this.setState({meeting: existingMeeting, shouldDisplay: true, signOffIncomplete: true, detailsEditable: false})
       return;
-    }
+    }*/
     
     let meeting = this.state.meeting;
     meeting.meetingName = this.buildMeetingName(this.props.location.state.selectedTra.tra.name, new Date());

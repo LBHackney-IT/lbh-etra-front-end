@@ -156,10 +156,13 @@ export class EmailSignOff extends React.Component<ISaveMeetingProps, ISaveMeetin
                         selectedTra: this.props.location.state.selectedTra
                     }*/
     
-                    
+    //Redirect to Email sign off confirmation                
     return (<Redirect to={{
       pathname: "/etra/confirmation/",
-      state: { meetingname: this.props.meetingName }
+      state: { 
+        meetingname: this.props.meetingName,
+        selectedTra: this.props.selectedTra
+       }
     }} />);
 
   }

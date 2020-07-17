@@ -145,7 +145,7 @@ export class SaveETRAMeeting extends React.Component<ISaveMeetingProps, ISaveMee
               state: {
                 meeting: this.getMeetingModel(),
                 selectedTra: this.props.selectedTra,
-                    traEmailSignOff: false
+                traEmailSignOff: false
                 }
               }}
             id="signoffsignature" href="#">Sign off agreed meeting now</Link>
