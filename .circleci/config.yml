@@ -12,7 +12,7 @@ executors:
       - image: circleci/python:3.7
 
 commands:
-  deploy-env: 
+  deploy-env:
     parameters:
       environment:
         type: string
@@ -27,31 +27,31 @@ commands:
           aws-region: AWS_REGION
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run: npm install
       - run:
           name: Build Static Files
           command: CI=false make build
       - run:
           name: Sync S3 Bucket
-          command: aws s3 sync build/ s3://<< parameters.environment >>-etra-manageatenancy --delete
+          command: aws s3 sync build/ s3://mat-etra-<< parameters.environment >> --delete
       - run:
           name: Perform Cloud Front invalidation
           command: aws cloudfront create-invalidation --distribution-id << parameters.distrbution_id >> --paths "/*"
 
 jobs:
-  build: 
+  build:
     working_directory: ~/lbh-etra-front-end
     executor: node
     steps:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
       - run: npm install
       - save_cache:
           paths:
@@ -61,26 +61,26 @@ jobs:
           name: Build Static Files
           command: CI=false make build
       - run: npm test
-      - run: 
+      - run:
           name: Run TestCafe Tests
           command: npm run test-e2e-headless
   deploy-to-development:
     executor: node
     steps:
       - deploy-env:
-          environment: 'dev'
+          environment: "dev"
           distrbution_id: $AWS_CF_DIST_ID_DEV
   deploy-to-staging:
     executor: node
     steps:
       - deploy-env:
-          environment: 'staging'
+          environment: "staging"
           distrbution_id: $AWS_CF_DIST_ID_STAGING
   deploy-to-production:
     executor: node
     steps:
       - deploy-env:
-          environment: 'production'
+          environment: "production"
           distrbution_id: $AWS_CF_DIST_ID_PRODUCTION
 workflows:
   version: 2
@@ -113,5 +113,3 @@ workflows:
           filters:
             branches:
               only: master
-
-
